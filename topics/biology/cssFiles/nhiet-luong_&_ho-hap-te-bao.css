@@ -1,0 +1,148 @@
+body{
+    background-color: #B5C99A;
+    overflow: hidden;
+}
+#help{
+    z-index: 1;
+    position: fixed;
+    cursor: pointer;
+    font-family: eleganto;
+    font-weight: bold;
+    margin: 10px 0 0 10px;
+}
+.sub-container{
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+#dead{
+    margin: -100vh 0 0 50vw;
+}
+.box{
+    z-index: -1;
+    width: 300px;
+    height: 200px;
+    background-color: #9b7f5a;
+    border: 5px solid rgb(58, 58, 58);
+    border-top: none;
+    position: absolute;
+    bottom: 40px;
+    border-radius: 0 0 10px 10px;
+}
+.binh{
+    z-index: 1;
+    position: absolute;
+    bottom: 50px;
+    width: 150px;
+    height: 250px;
+}
+#beanbox{
+    width: 300px;
+    position: fixed;
+    margin: -290px 0 0 40vw;
+}
+#ke{
+    filter: saturate(0) brightness(30%);
+    z-index: 0;
+    position: fixed;
+    margin: -115vh 0px 0 -10px;
+    width: 1500px;
+    height: 500px;
+}
+#xuc{
+    z-index: 2;
+    width: 200px;
+    position: fixed;
+    margin: -91vh 0 0 200px;
+}
+#bonggon{
+    width: 200px;
+    position: fixed;
+    margin: -94vh 0 0 400px;
+}
+.nhietke{
+    z-index: 1;
+    transform: rotate(88deg);
+    position: fixed;
+    margin: -94vh 0 0 600px;
+}
+.nhietke img{
+    position: relative;
+    width: 20px;
+    height: 300px;
+}
+.thanhchay{
+    transform: rotate(1.3deg);
+    position: absolute;
+    width: 2px;
+    height: 150px;
+    background-color: red;
+    bottom: 15px;
+    left: 6px;
+}
+.temperature{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    bottom: 120px;
+    left: 20px;
+    width: 80px;
+    height: 40px;
+    background-color: rgb(88, 103, 174);
+    border-radius:  70px 40px 70px 0px;
+}
+.gon{
+    z-index: 2;
+    width: 70px;
+    visibility: hidden;
+    position: fixed;
+}
+#bep{
+    width: 300px;
+    position: fixed;
+    margin:  -82vh 0 0 1000px;
+}
+#nap{
+    width: 200px;
+    z-index: 1;
+    position: absolute;
+    top: 80px;
+    left: 720px;
+}
+#noi{
+    width: 250px;
+    z-index: 0;
+    position: absolute;
+    top: 80px;
+    left: 700px;
+}
+#text{
+    z-index: 10;
+}
+
+/* animations */
+
+/* hiệu ứng tăng nhiệt độ */
+@keyframes increaseTemper {
+    from{
+        height: 150px;
+    }
+    to{
+        height: 250px;
+    }
+}
+@keyframes moveUp {
+    from{
+        bottom: 120px;
+    }
+    to{
+        bottom: 230px;
+    }
+}
+.hide{
+    opacity: 0;
+}

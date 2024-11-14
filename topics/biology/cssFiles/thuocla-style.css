@@ -1,0 +1,66 @@
+body{
+    background-color: rgb(61, 21, 64);
+    background-image:linear-gradient(rgb(73, 31, 77),rgb(0, 0, 0));
+    overflow: hidden;
+}
+#anatomy{ 
+    position: fixed;
+    margin: 30px 0 0 0px;
+    z-index: -1;
+    width: 300px;
+}
+#main{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+#nothing{
+    position: relative;
+}
+#lungs{
+    opacity: 0.7;
+    z-index: 0;
+    position: fixed;
+    margin: 250px 0 0 650px;
+    width: 178px;
+    height: 210px;
+    filter: brightness(100%);
+    transition: all 0.5s;
+}
+#baothuoc{
+    width: 200px;
+    position: fixed;
+    margin: 300px 0 0 1100px;
+}
+#thuocla{
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    height: 10px;
+}
+#instr{
+    color: white;
+    font-family: spline;
+    position: fixed;
+    margin: 10px 0 0 20px;
+}
+span{
+    cursor: pointer;
+}
+span:hover{
+    color: rgb(81, 81, 81);
+}
+#skip{
+    position: fixed;
+    cursor: pointer;
+    color: white;
+    margin: 10px 0 0 90vw;
+}
+#skip:hover{
+    color: rgb(161, 159, 159);
+}
+#mouth{
+    position: fixed;
+    width: 27px;
+    margin: 145px 0 0 736px;
+}

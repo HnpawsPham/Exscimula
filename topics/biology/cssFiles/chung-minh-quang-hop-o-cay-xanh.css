@@ -1,0 +1,181 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#help{
+    z-index: 1;
+    position: fixed;
+    cursor: pointer;
+    font-family: spline;
+    font-weight: bold;
+    margin: 95vh 0 0 10px;
+}
+
+.rong{
+    z-index: 4;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    margin: 530px 0 0 430px;
+}
+.coc{
+    z-index: 3;
+    position: fixed;
+    margin: 400px 0 0 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.coc .jar{
+    width: 200px;
+    height: 265px;
+}
+.liquid{
+    z-index: -1;
+    width: 160px;
+    height: 0px;
+    position: absolute;
+    bottom: 10px;
+    border-radius: 0 0 20px 40px;
+    left: 30px;
+}
+span{
+    font-size: 50px;
+    position: fixed;
+}
+#night span{
+    margin: 0 0 0 45vw;
+}
+#day{
+    width: 50vw;
+    height: 100vh;
+    background-color: rgb(249, 255, 208);
+}
+#night{
+    width: 50vw;
+    height: 100vh;
+    background-color: rgb(40, 40, 40);
+}
+#main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+.ongnghiem{
+    z-index: 6;
+    position: fixed;
+    margin: 410px 0 0 330px;
+}
+.ongnghiem .ong{
+    filter: brightness(0);
+    width: 100px;
+    height: 250px;
+}
+.pheu{
+    z-index: 6;
+    transform: rotate(180deg);
+    position: fixed;
+    margin: 550px 0 0 550px;
+    width: 100px;
+    filter: brightness(0);
+}
+#binhnuoc{
+    z-index: 1;
+    position: fixed;
+    width: 200px;
+    margin: 0 0 0 650px;
+}
+#flow{
+    z-index: 6;
+    position: fixed;
+    margin: 422px 0 0 747px;
+    width: 10px;
+    height: var(--flowHeight);
+    transition: all 3s;
+}
+.water{
+    z-index: 0;
+    border-radius:  0 0 20px 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 25px;
+    width: 51px;
+    height: 0px;
+}
+#dayCover{
+    z-index: -3;
+    right: 22px;
+    position: absolute;
+    width: 53px;
+    bottom: 10px;
+    height: 235px;
+    opacity: 0;
+}
+#text{
+    z-index: 10;
+}
+.blue{
+    background-color: rgb(132, 206, 255);
+}
+.test{
+    background-color: red;
+    filter: blur(2px);
+}
+:root{
+    --flowHeight:0px;
+    --newHeight:0px;
+}
+/* animations */
+@keyframes bling{  /*hiệu ứng nhấp nháy để gây chú ý*/
+    0%{
+        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    20%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    40%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    60%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    80%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    100%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+}
+@keyframes fill {
+    from{
+        bottom:15px;
+        height: 0px;
+    }
+    to{
+        bottom: 10px;
+        height: var(--newHeight)
+    }
+    0%{
+        opacity: 0;
+    }
+    30%{
+        opacity: 1;
+    }
+}
+@keyframes dry {
+    from{
+        height: 230px;
+    }
+    to{
+        height: 0px;
+    }
+}
+@keyframes go_up {
+    from{
+        height: 100px;
+    }
+    to{
+        height: 170px;
+    }
+}

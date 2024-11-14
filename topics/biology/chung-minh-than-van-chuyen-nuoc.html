@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chứng minh thân vận chuyển nước</title>
+    <link rel="shortcut icon" href="./assets/plant.png">
+    <link rel="stylesheet" href="./cssFiles/chung-minh-than-van-chuyen-nuoc.css">
+    <link rel="stylesheet" href="../colors&fonts.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <!-- Including Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+
+<body>
+    <div id="main">
+        <!-- thông báo -->
+        <div id="alert"></div>
+
+        <!-- menu điều khiển -->
+        <p id="help">Hướng dẫn</p>
+        <p id="restart">Restart <span class="material-symbols-outlined">restart_alt</span></p>
+          <!-- kết luận -->
+          <p id="conclu">| Kết luận<span class="material-symbols-outlined">description</span> </p>
+          <!-- content kết luận -->
+          <div id="text">
+              <p>Thân cây có chức năng vận chuyển nước (nhờ các mạch gỗ).</p>
+          </div>
+
+        <div id="chooseColor">
+            <input type="color" id="colorPicker">
+            <label for="colorPicker">Chọn phẩm màu</label>
+        </div>
+        <!-- cây nhỏ giọt -->
+        <img id="dropper" src="./assets/dropper.png" alt="">
+        <!-- 2 cốc nước -->
+        <div id="coc">
+            <div class="childContainer">
+                <img src="./assets/coc.png" alt="">
+                <div class="water"></div>
+            </div>
+
+            <div class="childContainer">
+                <img src="./assets/coc.png" alt="">
+                <div class="water"></div>
+            </div>
+        </div>
+
+        <!-- máy lấy nước -->
+        <div id="tap">
+            <img src="./assets/waterTap.png" alt="">
+            <div id="flow"></div>
+        </div>
+       
+        <!-- dao mổ -->
+        <img id="knife" src="./assets/knife.png" alt="">
+
+        <!-- hoa -->
+        <div class="rose">
+            <img src="./assets/original.png" alt="">
+            <div class="dye"></div>
+        </div>
+        <div class="rose">
+            <img src="./assets/original.png" alt="">
+            <div class="dye"></div>
+        </div>
+    </div>
+
+    <script src="./jsFiles/chung-minh-than-van-chuyen-nuoc.js"></script>
+</body>
+
+</html>

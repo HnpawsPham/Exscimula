@@ -1,0 +1,103 @@
+body{
+    background-color: var(--red);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+:root{
+    --black: #322C2B;
+    --red: #803D3B;
+    --yellow: #E4C59E;
+}
+#username{
+    margin: auto;
+    width: 60vw;
+    height: 15vh;
+    background-color: var(--yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0px 10px 10px;
+    font-size: 40px;
+}
+#home{
+    cursor: pointer;
+    position: fixed;
+    margin: -15vh 0;
+}
+#edit-username{
+    cursor: pointer;
+    position: fixed;
+    margin: -13vh 76vw;
+}
+button{
+    cursor: pointer;
+    position: absolute;
+    bottom: 170px;
+    left: 43vw;
+    color: var(--black);
+    font-weight: bold;
+    background-color: var(--yellow);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+}
+h1{
+    text-align: center;
+    color: var(--yellow);
+}
+#user-work{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    position: relative;
+    margin: auto;
+    width: 80vw;
+    min-height: 30vh;
+    background-color: var(--black);
+}
+.not-found-text{
+    color: white;
+    padding: 10px 20px;
+}
+.user-work-container{
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--red);
+    width: 300px;
+    height: 200px;
+    margin: 15px 0 15px 20px;
+}
+.user-work-container:hover{
+    filter: brightness(130%);
+}
+.user-work-container p,u{
+    margin-top: 0px;
+    height: 10px;
+    color: var(--yellow);
+}
+.user-work-container span{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.user-work-container img{
+    margin: -10px 0 10px 0;
+    width: 80%;
+    height: 40%;
+    object-fit: cover;
+}
+#sort{
+    position: fixed;
+    z-index: 6;
+    margin: -20px 0 0 80vw;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+#logout{
+    cursor: pointer;
+    position: fixed;
+    margin: -14.6vh 3.5vw;
+}

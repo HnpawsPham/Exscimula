@@ -1,0 +1,34 @@
+body{
+    background-color: #9A3B3B;
+}
+ul a{
+    font-family: gothic;
+    color: #6C5F5B;
+    text-decoration: none;
+    width: 60%;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px 40px;
+    filter: drop-shadow( 10px 10px 0px #EAD7BB);
+    background-color:#F6F1EE;
+    border-radius: 50px;
+}
+ul{
+    width: 95vw;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+span{
+    cursor: pointer;
+    position: fixed;
+    margin: 30px 0 0 97vw;
+    width: 70px;
+    height: 70px;
+}
+.send-icon {
+    color: rgb(192, 130, 97);
+    transform: scale(2);
+  }

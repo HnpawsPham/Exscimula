@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiện tượng vật lí</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="shortcut icon" href="./assets/magnetic-field.png">
+    <link rel="stylesheet" href="../menu.css">
+    <link rel="stylesheet" href="../colors&fonts.css">
+    <link rel="stylesheet" href="../../css/scrollbar.css">
+
+
+    <style>
+        .col {
+            background-color: #EAEAEA;
+        }
+
+        .col a {
+            background-color: #3C4048;
+        }
+    </style>
+</head>
+
+<body class="teal">
+    <b id="Physics"></b>
+    <!-- other languages -->
+    <div id="google_translate_element"></div>
+
+    <!-- grade selector -->
+    <ul id="suggest">
+        <li>Grade 6</li>
+        <li>Grade 7</li>
+        <li>Grade 8</li>
+        <li>All</li>
+    </ul>
+
+    <!-- search -->
+    <div id="searchbar">
+        <input id="search" type="search" placeholder="Search...">&ensp;
+        <span>🔍</span>
+    </div>
+
+    <h1 class="">CHOOSE A TOPIC<br>
+        <a href="../../pages/topic.html" style="color: white;"><span class="material-symbols-outlined">
+                home
+            </span></a>
+    </h1>
+
+    <select name="" id="sort">
+        <option value="all">All</option>
+        <option value="verified-only">Only verified experiments</option>
+        <option value="original-only">Only experiments from the owner</option>
+        <option value="added-only">Only user posted experiments</option>
+    </select>
+    
+    <div class="container">
+
+    </div>
+
+    <h3 class="notfound hide">x No result. x</h3>
+
+    <script src="../js/li.js"></script>
+    <script type="module" src="../js/search.js"></script>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'vie', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+
+</html>

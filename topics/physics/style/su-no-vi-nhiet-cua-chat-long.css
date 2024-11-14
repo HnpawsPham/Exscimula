@@ -1,0 +1,258 @@
+body {
+    overflow-x: hidden;
+}
+
+#alert {
+    display: none;
+}
+
+#restart {
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: spline;
+    position: fixed;
+    margin: 50px 0 0 10px;
+}
+
+#steam {
+    filter: brightness(200%) contrast(70%);
+    opacity: 0;
+    position: fixed;
+}
+
+#slight-steam {
+    opacity: 0;
+    margin: 100px 0 0 50vw;
+    transform: translateX(-18vw);
+    position: fixed;
+}
+
+#oil {
+    background-color: #fffb85;
+}
+
+#water {
+    background-color: #9ad5ff;
+}
+
+#wine {
+    background-color: #fa3e50;
+}
+
+.bottle {
+    position: fixed;
+}
+
+.bottle img {
+    width: 120px;
+}
+
+.in-straw {
+    position: absolute;
+    bottom: 153px;
+    left: 59.5px;
+    width: 2px;
+    height: 20px;
+}
+
+#oil-bottle {
+    margin: 100px 0 0 100px;
+}
+
+#wine-bottle {
+    margin: 100px 0 0 300px;
+}
+
+#water-bottle {
+    margin: 100px 0 0 500px;
+}
+
+#glass-container {
+    position: fixed;
+    margin: 400px 0 0 50vw;
+    transform: translateX(-20vw);
+}
+
+#ice-inside {
+    width: 350px;
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    opacity: 0;
+}
+
+#ice-bucket {
+    display: none;
+    z-index: 5;
+    width: 150px;
+    position: fixed;
+    margin: 400px 0 0 300px;
+}
+
+#main {
+    width: 500px;
+}
+
+#glass-container-water {
+    position: absolute;
+    bottom: 17px;
+    left: 45px;
+    border-radius: 0 0 13px 13px;
+    width: 82%;
+    background-color: #9ad5ff;
+}
+
+#kettle {
+    z-index: 2;
+    position: fixed;
+    margin: 190px 0 0 1200px;
+}
+
+#water-inside {
+    position: absolute;
+    top: 80px;
+    left: 10px;
+    border-radius: 0px 20px 0px 0px;
+    width: 0;
+    height: 20px;
+    background-color: #9ad5ff;
+}
+
+#tap {
+    width: 100px;
+    position: fixed;
+    margin: 10px 0 0 93vw;
+}
+
+#flow {
+    position: absolute;
+    top: 93px;
+    right: 83px;
+    width: 13px;
+    height: var(--flowHeight);
+    background-color: #9ad5ff;
+}
+
+:root {
+    --liquid-height: 0px;
+
+    --wine-height-start: 20px;
+    --oil-height-start: 20px;
+    --water-height-start: 20px;
+
+    --wine-height-after: 60px;
+    --oil-height-after: 93px;
+    --water-height-after: 35px;
+
+    --flowHeight: 0px;
+
+    --pourWaterHeight: 0px;
+    --leftPourWater-after: calc((var(--pourWaterHeight)*-1));
+    --leftPourWater-start: 30px;
+}
+
+@keyframes liquid-rising {
+    from {
+        height: 0px;
+    }
+
+    to {
+        height: var(--liquid-height);
+    }
+}
+
+@keyframes wine-rising {
+    from {
+        height: var(--wine-height-start);
+    }
+
+    to {
+        height: var(--wine-height-after);
+    }
+}
+
+@keyframes oil-rising {
+    from {
+        height: var(--oil-height-start);
+    }
+
+    to {
+        height: var(--oil-height-after)
+    }
+}
+
+@keyframes water-rising {
+    from {
+        height: var(--water-height-start);
+    }
+
+    to {
+        height: var(--water-height-after);
+    }
+}
+
+@keyframes waterflow {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: var(--flowHeight);
+    }
+}
+
+@keyframes watershrink {
+    from {
+        height: var(--flowHeight);
+    }
+
+    to {
+        height: 0px;
+    }
+}
+
+@keyframes pourWater {
+    from {
+        left: var(--leftPourWater-start);
+        width: 0px;
+    }
+
+    to {
+        left: var(--leftPourWater-after);
+        width: calc(25px + var(--pourWaterHeight));
+    }
+}
+
+@keyframes pourWaterShrink {
+    from {
+        left: var(--leftPourWater-after);
+        width: calc(var(--pourWaterHeight) + 25px);
+    }
+
+    to {
+        left: calc(var(--leftPourWater-start) - 20px);
+        width: 0px;
+    }
+}
+
+@keyframes start-steaming {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.8;
+    }
+}
+
+@keyframes end-steaming {
+    from {
+        opacity: 0.8;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

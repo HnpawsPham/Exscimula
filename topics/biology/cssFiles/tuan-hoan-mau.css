@@ -1,0 +1,272 @@
+#setting{
+    z-index: 5;
+    margin: 10px 0 0 10px;
+    border-radius: 10px;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: spline;
+    color: rgb(255, 208, 0);
+}
+h1{
+    font-family: spline;
+    font-size: 20px;
+    margin: 230px 0 0 50px;
+}
+#map{
+    z-index: 1;
+    margin: 20px 0 0 450px;
+    width: 570px;
+}
+#heart{
+    width: 177px;
+    margin: 369px 0 0 650px;
+}
+.position-fixed{
+    position: fixed;
+}
+#part1{
+    z-index: 3;
+   width: 60px;
+   margin: 208px 0 0 632px;
+}
+#part2{
+    z-index: 5;
+    width: 92px;
+    margin: 210px 0 0 792px;
+}
+#part3{
+    z-index: 4;
+    width: 77px;
+    margin: 207px 0 0 722px;
+}
+#part4{
+    z-index: 3;
+    width: 88px;
+    margin: 245px 0 0 703px;
+}
+#conclu{
+    opacity: 1;
+    margin: 10px 0 0 90vw;
+}
+#text{
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.496));
+    margin: 20px 0 0 30vw;
+    overflow-y: hidden;
+}
+.hidden{
+    visibility: hidden;
+}
+.noteText p{
+    z-index: 4;
+    font-family: spline;
+    position: fixed;
+    font-weight: bold;
+}
+.blood{
+    position: fixed;
+    z-index: 2;
+    width: 20px;
+    transition: all 0.5;
+    opacity: 1;
+    height: 20px;
+    border-radius: 100px;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.294));
+}
+.line{
+    z-index: 4;
+    position: fixed;
+    width: 2px;
+    background-color: black;
+}
+.freshBlood{
+    background-color: rgb(255, 0, 0);
+}
+.oldRedBlood{
+    background-color: darkred;
+}
+.waveUpRight{
+    animation: waveUpRight 2.5s cubic-bezier(.25,.25,.25,.25) ;
+}
+.waveUpLeft{
+    animation: waveUpLeft 3s cubic-bezier(.25,.25,.25,.25) ;
+}
+.waveDownRight{
+    animation: waveDownRight 4s cubic-bezier(.25,.25,.25,.25) ;
+}
+.waveDownLeft{
+    animation: waveDownLeft 3s cubic-bezier(.25,.25,.25,.25) ;
+}
+.HorizontalUpLeft{
+    animation: HorizontalUpLeft 3s cubic-bezier(.25,.25,.25,.25) ;
+}
+.HorizontalUpRight{
+    animation: HorizontalUpRight 3s cubic-bezier(.25,.25,.25,.25) ;
+}
+.HorizontalDownLeft{
+    animation: HorizontalDownLeft 3s cubic-bezier(.25,.25,.25,.25) ;
+}
+.HorizontalDownRight{
+    animation: HorizontalDownRight 1.5s cubic-bezier(.25,.25,.25,.25) ;
+}
+
+@keyframes waveUpRight {
+    0% {
+        margin: 400px 0 0 760px;
+    }
+    20% {
+        margin: 300px 0 0 740px;
+    }
+    40% {
+        margin: 270px 0 0 730px;
+    }
+    60% {
+        margin: 210px 0 0 790px;
+    }
+    80% {
+        margin: 150px 0 0 850px;
+    }
+    100% {
+        margin: 60px 0 0 810px;
+    }
+}
+@keyframes waveUpLeft{
+    0% {
+        margin: 90px 0 0 630px;
+    }
+    20% {
+        margin: 140px 0 0 620px;
+    }
+    40% {
+        margin: 200px 0 0 640px;
+    }
+    60% {
+        margin: 270px 0 0 680px;
+    }
+    80% {
+        margin: 380px 0 0 680px;
+    }
+    100% {
+        margin: 400px 0 0 700px;
+    }
+}
+@keyframes waveDownRight {
+    0% {
+        margin: 400px 0 0 760px;
+    }
+    5% {
+        margin: 300px 0 0 740px;
+    }
+    10% {
+        margin: 270px 0 0 730px;
+    }
+    30% {
+        margin: 210px 0 0 790px;
+    }
+    40% {
+        margin: 260px 0 0 850px;
+    }
+    90%{
+        margin: 610px 0 0 850px;
+    }
+    100% {
+        margin: 640px 0 0 800px;
+    }
+}
+@keyframes waveDownLeft {
+    0% {
+        margin: 650px 0 0 650px;
+    }
+    20% {
+        margin: 570px 0 0 610px;
+    }
+    70% {
+        margin: 400px 0 0 610px;
+    }
+    80% {
+        margin: 370px 0 0 650px;
+    }
+    100% {
+        margin: 400px 0 0 700px;
+    }
+}
+@keyframes HorizontalUpRight {
+    0% {
+        margin: 400px 0 0 700px;
+    }
+    20% {
+        margin: 330px 0 0 710px;
+    }
+    40% {
+        margin: 260px 0 0 780px;
+    }
+    60% {
+        margin: 230px 0 0 860px;
+    }
+    80% {
+        margin: 210px 0 0 890px;
+    }
+    100% {
+        margin: 230px 0 0 920px;
+    }
+}
+@keyframes HorizontalUpLeft {
+    0% {
+        margin: 400px 0 0 700px;
+    }
+    20% {
+        margin: 330px 0 0 710px;
+    }
+    40% {
+        margin: 260px 0 0 780px;
+    }
+    60% {
+        margin: 230px 0 0 730px;
+    }
+    80% {
+        margin: 220px 0 0 650px;
+    }
+    100% {
+        margin: 210px 0 0 560px;
+    }
+}
+@keyframes HorizontalDownLeft {
+    0% {
+        margin: 390px 0 0 560px;
+    }
+    20% {
+        margin: 310px 0 0 640px;
+    }
+    40% {
+        margin: 260px 0 0 700px;
+    }
+    60% {
+        margin: 280px 0 0 770px;
+    }
+    80% {
+        margin: 350px 0 0 800px;
+    }
+    100% {
+        margin: 370px 0 0 780px;
+    }
+}
+@keyframes HorizontalDownRight {
+    0% {
+        margin: 370px 0 0 950px;
+    }
+    40% {
+        margin: 390px 0 0 900px;
+    }
+    60% {
+        margin: 380px 0 0 870px;
+    }
+    80% {
+        margin: 360px 0 0 830px;
+    }
+    100% {
+        margin: 370px 0 0 780px;
+    }
+}

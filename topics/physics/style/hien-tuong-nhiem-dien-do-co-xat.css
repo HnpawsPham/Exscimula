@@ -1,0 +1,65 @@
+#nhua{
+    margin: 100px 0 0 700px;
+}
+#nhua2{
+    margin: 120px 0 0 700px;
+}
+#thuytinh{
+    margin: 200px 0 0 700px;
+}
+#thuytinh2{
+    margin: 210px 0 0 700px;
+}
+.plastic{
+    cursor: pointer;
+    z-index: 2;
+    position: fixed;
+    width: 500px;
+}
+.glass{
+    cursor: pointer;
+    z-index: 2;
+    position: fixed;
+    width: 500px;
+}
+
+#stable{
+    position: fixed;
+    margin: 50px 0 0 25vw;
+    width: 150px;
+    height: 70px;
+    background-color: rgb(220, 175, 42);
+    border: 5px solid rgb(170, 137, 37);
+}
+#straight-string{
+    width: 3px;
+    background-color: black;
+    height: 200px;
+    position: fixed;
+    margin: 130px 0 0 30.2vw;
+}
+#rotate-string{
+    position: fixed;
+    margin: 325px 0 0 30.2vw;
+    z-index: 3;
+}
+#lua{
+    margin: 400px 0 0 50px;
+    width: 200px;
+}
+#len{
+    margin: 400px 0 0 300px;
+    width: 250px;
+}
+.khan{
+    cursor: grab;
+    position: fixed;
+    z-index: 3;
+}
+.side{
+    position: absolute;
+    top: 0;
+    width: 3px;
+    background-color: black;
+    height: 30px;
+}

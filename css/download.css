@@ -1,0 +1,41 @@
+h1 {
+    margin: 70px 0 50px 32vw;
+    font-family: goodwater;
+    font-size: 80px;
+}
+
+ul {
+    margin: 0 0 0 50px;
+    list-style-type: decimal;
+}
+
+ul li {
+    font-family: monospace;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+ul img {
+    cursor: pointer;
+    width: 1000px;
+    padding-bottom: 30px;
+    object-fit: cover;
+}
+
+#btn {
+    padding: 10px 20px;
+    background-color: crimson;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    font-family: monospace;
+    margin-left: calc(50vw - 70px);
+    font-weight: bold;
+}
+#btn:hover{
+    background-color: brown;
+}
+#home{
+    position: fixed;
+    margin: 5vh 50px;
+}

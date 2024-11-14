@@ -1,0 +1,162 @@
+html{
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+.yellow{
+    color: rgb(255, 215, 93);
+}
+a{
+    margin: -20px 0 0 0;
+    cursor: pointer;
+    color: white;
+}
+#help{
+    z-index: 5;
+    color: rgb(255, 215, 93);
+}
+#backtomenu{
+    text-decoration: none;
+    position: fixed;
+    margin: 10px 0 0 97vw;
+}
+#slideshow{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 300vw;
+}
+.slide{
+    position: relative;
+    width: 100vw;
+    height: 90vh;
+    background-color: white;
+}
+#pencil{
+    width: 19.99px;
+    height: 390.04px;
+    z-index: 0;
+    position: relative;
+    display: flex;
+    margin: -400px 0 0 900px;
+}
+/* #pencil img{
+    width: 20px;
+} */
+.reference{
+    background-size: cover;
+    background-image: url(../assets/pencil.png);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 19.99px;
+    height: 390.04px;
+}
+#control-menu{
+    z-index: 0;
+    font-family: spline;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    height: 100px;
+    position: absolute;
+}
+#material{
+    bottom: 0;
+    left: 0;
+    width: 99.5vw;
+    height: 300px;
+    position: absolute;
+    background-color: rgba(141, 158, 157, 0.497)
+}
+#cupofwater{
+    position: relative;
+    margin: 600px 0 0 600px;
+    width: 250px;
+}
+#cupofwater img{
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+}
+#water{
+    z-index: 1;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    bottom: 10px;
+    left: 25px;
+    border-radius:  0 0 30px 30px;
+}
+#den{
+    background-image: url(../assets/laser.png);
+    background-size: cover;
+    position: absolute;
+    z-index: 3;
+    top: 100px;
+    left: 500px;
+    width: 199.99px;
+    height: 63.49px;
+}
+#canvas{
+    opacity: 0;
+    z-index: 0;
+    position: absolute;
+    top: 50px;
+    left: 90%;
+}
+#light{
+    opacity: 0;
+    z-index: 0;
+    position: absolute;
+    top: 170px;
+    left: 15px;
+}
+.slide span{
+    z-index: 10;
+    cursor: pointer;
+    font-size: 100px;
+    color: rgba(0, 0, 0, 0.22);
+    position: absolute;
+    top: 45%;
+    left: 93%;
+}
+#mirror{
+    bottom: 0;
+    left: 500px;
+    position: absolute;
+    width: 500px;
+    height: 100px;
+    background-color: rgb(186, 186, 255);
+}
+#flashlight{
+    background-image: url(../assets/flashlight.png);
+    z-index: 5;
+    position: absolute;
+    top: 10px;
+    left: 500px;
+    width: 30px;
+    height: 170px;
+    background-size: cover;
+}
+#settingTab{
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 10px;
+}

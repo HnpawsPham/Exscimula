@@ -1,0 +1,129 @@
+body{
+    background-color: brown;
+    overflow: hidden;
+}
+#kettle{
+    position: fixed;
+    margin: 300px 0 0 500px;
+    width: 200px;
+}
+#tap{
+    width: 100px;
+    position: fixed;
+    margin: 10px 0 0 93vw;
+}
+#flow{
+    position: absolute;
+    top: 93px;
+    right: 83px;
+    width: 13px;
+    height: var(--flowHeight);
+    background-color: aquamarine;
+}
+#steam{
+    filter: brightness(200%) contrast(70%);
+    opacity: 0;
+    position: fixed;
+}
+#bucket{
+    z-index: 3;
+    width: 150px;
+    height: 142.79px;
+    position: fixed;
+    margin: 380px 0 0 230px;
+}
+#bucket img{
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+}
+#liquid{
+    position: absolute;
+    z-index: -1;
+    bottom: 5px;
+    left: 10px;
+    width: 88%;
+    height: 0;
+    border-radius: 0px 0px 40px 40px;
+    background-color: aquamarine;
+}
+#fridge{
+    position:fixed;
+    margin: 100px 0 0 700px;
+}
+#microscope{
+    margin: 100px 0 0 40px;
+    z-index: 5;
+    position: fixed;
+    width: 300px;
+    height: 200px;
+    border-top: 5px solid rgb(17, 17, 17);
+    border-bottom: 5px solid rgb(17, 17, 17);
+    border-left: 25px solid rgb(17, 17, 17);
+    border-right: 25px solid rgb(17, 17, 17);
+    border-radius: 10px;
+    background-color: rgba(245, 245, 245, 0.247);
+}
+#elm-inside{
+    z-index: 2;
+    opacity: 0;
+    position: fixed;
+    width: 150px;
+}
+#steam-elms{
+    opacity: 0;
+    position: fixed;
+}
+:root{
+    --flowHeight: 0px;
+    --steamOpacity:0;
+}
+@keyframes waterflow {
+    from{
+        height: 0;
+    }
+    to{
+        height: var(--flowHeight);
+    }
+}@keyframes watershrink{
+    from{
+        height: var(--flowHeight);
+    }
+    to{
+        height: 0px;
+    }
+}
+@keyframes start-steaming {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: var(--steamOpacity);
+    }
+}
+@keyframes end-steaming {
+    from{
+        opacity: var(--steamOpacity);
+    }
+    to{
+        opacity: 0;
+    }
+}
+@keyframes bucket-liquid-rise {
+    from{
+        bottom: 10px;
+        left: 17px;
+        width: 77%;
+        height: 0;
+        border-radius: 0px 0px 30px 30px;
+    }
+    to{
+        bottom: 5px;
+        left: 10px;
+        width: 88%;
+        height: 60%;
+        border-radius: 0px 0px 40px 40px;
+    }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phương pháp chiết</title>
+    <link rel="stylesheet" href="../../colors&fonts.css">
+    <link rel="stylesheet" href="./style/ppChiet.css">
+    <link rel="shortcut icon" href="./assets/extraction.png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
+    </script>
+    <!-- Including Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+    </script>
+</head>
+
+<body contextmenu="return false;">
+    </div>
+
+    <!-- thông báo -->
+    <div id="alert" class="alert alert-success"></div>
+
+    <div id="main">
+        <!-- mấy obj có thể di chuyển -->
+        <div id="tools">
+            <p id="help">Hướng dẫn</p>
+            <!-- kết luận -->
+            <p id="conclu">| Kết luận<span class="material-symbols-outlined">description</span> </p>
+            <!-- content kết luận -->
+            <div id="text">
+                <p>Phương pháp chiết là phương pháp dùng dụng cụ chiết để tách dầu và nước ra, 
+                    do dầu nhẹ hơn nước và không hoà tan nên ta có thể dễ dàng tách hỗn hợp nước và dầu ra bằng phương pháp này.</p>
+            </div>
+
+                <div class="canRotate" id="nuoc">
+                    <img class="ong-nghiem" src="./assets/ongnghiem.png" alt="">
+                    <img class="liquid" src="./assets/nuoc.png" alt="">
+                    <img id="pourwater" src="./assets/pourwater.png" alt="">
+                </div>
+                <div class="canRotate" id="dau">
+                    <img class="ong-nghiem" src="./assets/ongnghiem.png" alt="">
+                    <img class="liquid" src="./assets/dau.png" alt="">
+                    <img id="pourdau" src="./assets/pouroil.png" alt="">
+                </div>
+                <div id="coc" class="canRotate">
+                    <img id="cup" src="./assets/coc.png" alt="">
+                    <div id="inside"></div>
+                    <div id="outside"></div>
+                    <div id="oil"></div>
+                    <div id="water"></div>
+                </div>
+            </div>
+            <!-- mấy obj đứng yên -->
+            <div id="stable">
+                <div id="machine">
+                    <img id="de" src="./assets/dechiet.png" alt="">
+                    <img id="chiet" src="./assets/chiet.png" alt="">
+                    <img id="nut" src="./assets/nut.png" alt="">
+                    <img id="khoa" src="./assets/khoa.png" alt="">
+                    <div id="chietOil"></div>
+                    <div id="chietWater"></div>
+                </div>
+            </div>
+            <div id="bottle">
+                <img id="lo" src="./assets/lo.png" alt="">
+                <div id="nuocDcTach"></div>
+            </div>
+        </div>
+        <!--MAIN SCRIPT-  -->
+        <script src="./js/ppChiet.js"></script>
+</body>
+
+</html>

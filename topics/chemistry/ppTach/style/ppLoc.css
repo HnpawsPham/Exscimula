@@ -1,0 +1,233 @@
+body{
+    background-color: #419197;
+    overflow-y: hidden;
+}
+#help{
+    cursor: pointer;
+    position: fixed;
+    font-family: eleganto;
+    font-weight: bold;
+    margin:10px;
+}
+#table{
+    z-index: -4;
+    position: fixed;
+    margin: 550px 0 0 0;
+}
+#lohh{
+    z-index: 0;
+    position: fixed;
+    width: 200px;
+    margin: 330px 0 0 100px;
+}
+#lo{
+    filter: brightness(0%);
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#flow{
+    position: absolute;
+    top: 15px;
+    left: 47%;
+    width: 10px;
+    height: 0px;
+    background-color: rgb(142, 197, 255);
+}
+#water{
+    z-index: -1;
+    position: absolute;
+    border-radius: 0px 0px 10px 10px;
+    top: 160px;
+    left: 20px;
+    width: 160px;
+    height: 0px;
+    background-color: rgb(142, 197, 255);
+}
+#de{
+    z-index: -4;
+    padding: 50px 150px 150px 150px;
+    background-color:#cdfcda;
+    position: fixed;
+    margin: 0px 0px 0 780px;
+    width: 400px;
+}
+#pheu{
+    z-index: -1;
+    position: fixed;
+    width: 100px;
+    margin: 500px 0 0 500px;
+    transform: rotate(70deg);
+}
+#loc{
+    z-index: -1;
+    position: fixed;
+    filter: drop-shadow(0 10px 10px rgb(72, 72, 72));
+    margin: 520px 0 0 400px;
+    transform: rotate(50deg);
+}
+#giayloc{
+    z-index: -1;
+    width: 105px;
+}
+#coc{
+    z-index: -3;
+    position: fixed;
+    margin: 390px 0 0 300px;
+}
+#container{
+    width: 150px;
+}
+#liquid{
+    z-index: -1;
+    border-radius: 0 0 20px 30px;
+    position: absolute;
+    bottom: 12px;
+    left: 20px;
+    width: 120px;
+    height: 130px;
+    background-color: rgb(230, 255, 108);
+}
+#sulfur{
+    opacity: 0;
+    width: 58px;
+    position: absolute;
+    top: 40px;
+    right:22px;
+    transition: all 15s;
+}
+#inside{
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    width: 170px;
+    top: 80px;
+    right: 35px;
+    transform: rotate(90deg);
+    height: 25px; 
+    background-color:rgb(230, 255, 108);
+    border-radius: 100px;
+}
+#outside{
+    opacity: 0;
+    z-index: -2;
+    position: absolute;
+    width: 20px;
+    top: -45px; 
+    left: -30px;
+    transform: rotate(100deg);
+    height: 100px; 
+    background-color: rgb(230, 255, 108);
+    border-radius: 100px;
+}
+#alert{
+    position: fixed;
+    margin: 10px 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:80vw;
+    height: 10vh;
+    background-color: rgb(31, 31, 31);
+    border-radius: 10px;
+    color: white;
+    font-family: spline;
+}
+#main{
+    width: 100vw;
+    height: 100vh;
+}
+
+/* animations */
+
+@keyframes fill {
+    from{
+        border-radius: 0px 0px 10px 10px;
+        top: 240px;
+        height: 0px;
+    }
+    to{
+        border-radius: 60px 60px 10px 10px;
+        top: 160px;
+        height: 80px;
+    }
+}
+@keyframes run{
+    from{
+        height: 0px;
+    }
+    to{
+        height: 220px;
+    }
+}
+@keyframes stop {
+    from{
+        height: 200px;
+    }
+    to{
+        height: 0px;
+    }
+}
+@keyframes bling{  /*hiệu ứng nhấp nháy để gây chú ý*/
+    0%{
+        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    20%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    40%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    60%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    80%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    100%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+}
+/* đổ hỗn hợp */
+@keyframes pour {
+    from{
+        height: 130px;
+        width: 120px;
+        left: 20px;
+    }
+    to{
+        height: 0px;
+        width: 115px;
+        left: 25px;
+    }
+}
+/* hiệu ứng đổ dầu */
+@keyframes shrink {
+    from{
+        width: 170px;
+        top: 80px;
+        right: 35px;
+        height: 25px;
+    }
+    to{
+        width: 160px;
+        top: 100px;
+        right: 45px;
+        height: 0px;
+    }
+}
+@keyframes drop {
+    from{
+        width: 20px;
+        top: -45px; 
+        left: -30px;
+        height: 100px;
+    }
+    to{
+        width: 0px;
+        top: 5px; 
+        left: -70px;
+        height: 0px;
+    }
+}

@@ -1,0 +1,177 @@
+#thuoctim{
+    width: 60px;
+    z-index: 3;
+    position: fixed;
+    margin: 580px 0 0 700px;
+    height: 40px;
+    background-color: rgb(92, 5, 109);
+    border-radius: 20px 70px;
+}
+#kieng{
+    position: fixed;
+    margin: 380px 700px;
+    z-index: -1;
+}
+.thanhchay{
+    transform: rotate(1.3deg);
+    position: absolute;
+    width: 2px;
+    height: 80px;
+    background-color: red;
+    bottom: 15px;
+    left: 3px;
+}
+.temperature{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    bottom: 60px;
+    left: -120px;
+    width: 80px;
+    height: 40px;
+    background-color: rgb(88, 103, 174);
+    border-radius:  70px 0px 70px 40px;
+}
+#boil{
+    z-index: -1;
+    width: 160px;
+    height: 140px;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    opacity: 0;
+    border-radius: 0 0 20px 20px;
+}
+#den{
+    width: 100px;
+    position: fixed;
+    margin: 500px 0 0 200px;
+}
+#nhietke{
+    position: fixed;
+    margin: 370px 0 0 600px;
+}
+#nhietke img{
+    width: 10px;
+    z-index: 3;
+}
+#coc{
+    z-index: 1;
+    position: fixed;
+    margin: 400px 0 0 300px;
+}
+#main{
+    width: 200px;
+}
+#batlua{
+    position: fixed;
+    margin: 400px 0 0 700px;
+    z-index: -1;
+    width: 70px;
+}
+#help{
+    cursor: pointer;
+    position: fixed;
+    font-family: spline;
+    font-weight: bold;
+    margin: 10px 0 0 10px;
+}
+#water{
+    z-index: -1;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    width: 160px;
+    border-radius:  0 0 20px 20px ;
+    height: 0px;
+}
+#tap{
+    width: 100px;
+    position: fixed;
+    margin: 10px 0 0 1350px;
+}
+#flow{
+    z-index: -1;
+    width: 15px;
+    position: fixed;
+    margin: 90px 0 0 1356px;
+    height: 0px;
+}
+.blue{
+    background-color: rgba(180, 239, 255, 0.712);
+}
+
+:root{
+    --flowheight:100px;
+}
+@keyframes visibleBubbles {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 0.6;
+    }
+}
+@keyframes increaseTemper {
+    from{
+        height: 80px;
+    }
+    to{
+        height: 200px;
+    }
+}
+@keyframes moveTemperIndex {
+    from{
+        bottom: 60px;
+    }
+    to{
+       bottom: 180px;
+    }
+}
+@keyframes changeColor {
+    from{
+        background-color: rgba(180, 239, 255, 0.712);
+    }
+    to{
+       background-color: rgba(92, 5, 109, 0.674);
+    }
+}
+@keyframes  disappear {
+    from{
+        width: 60px;
+        opacity: 1;
+        filter: drop-shadow(0 0 0px rgb(92, 5, 109));
+    }
+    to{
+        width: 0px;
+        opacity: 0;
+        filter: drop-shadow(0 0 100px rgb(92, 5, 109));
+    }
+}
+@keyframes flowEffect {
+    from{
+        height: 0px;
+    }
+    to{
+        height: var(--flowheight);
+    }
+}
+@keyframes fill {
+    from{
+        height: 0px;
+    }
+    to{
+        height: 150px;
+    }
+}
+@keyframes off {
+    from{
+        height: 150px;
+    }
+    to{
+        height: 0px;
+    }
+}

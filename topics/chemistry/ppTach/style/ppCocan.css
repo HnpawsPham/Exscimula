@@ -1,0 +1,100 @@
+
+#help{
+    z-index: 1;
+    position: fixed;
+    cursor: pointer;
+    margin: 10px 0 0 10px;
+    font-family: 'Lucida Sans';
+    font-weight: bold;
+}
+#xo{
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
+    width: 200px;
+}
+#den{
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
+    width: 120px;
+}
+#de{
+    position: relative;
+    margin: 60vh 0 0 600px;
+    width: 200px;
+}
+#chat{
+    top: -100px;
+    position: relative;
+    width: 250px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#muoi{
+    position: absolute;
+    width: 150px;
+    z-index: 0;
+    bottom: 10px;
+    left: 35px;
+}
+@keyframes dry{
+    from{
+        width: 180px;
+        height: 200px;
+    }
+    to{
+        left: 25px;
+        width: 170px;
+        height: 0px;
+}
+60%{
+    opacity: 1;
+    border-radius: 40px;
+}
+100%{
+    opacity: 0;
+    border-radius: 400px;
+}
+}
+@keyframes disappear {
+   from{ opacity: 1;}
+   to{opacity: 0.7;}
+}
+
+#ncmuoi{
+    position: absolute;
+    width: 180px;
+    z-index: 1;
+    bottom: 10px;
+    left: 20px;
+}
+#container{
+    margin: -70vh 0 0 30px;
+    height: 100px;
+}
+#batlua{
+    cursor: pointer;
+    z-index: 0;
+    width: 70px;
+    position: relative;
+}
+#elmsContainer img{
+    margin-top: 50vh;
+}
+#steam{
+    z-index: 2;
+    position: absolute;
+    top: -280px;
+    left: -90px;
+    opacity: 0;
+}
+#main{
+    height: 100vh;
+}
+#toScroll{
+    height: 0.2vh;
+}

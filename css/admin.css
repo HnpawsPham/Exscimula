@@ -1,0 +1,26 @@
+#table, #comments{
+    margin: 10vh auto;
+    width: 80vw;
+}
+
+table th,td{
+    text-align: center;
+    border: 2px solid black;
+}
+table td div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+table u:hover{
+    color: rgb(255, 0, 0);
+}
+table input{
+    text-align: center;
+}
+h1{
+    padding-left: 40px;
+}
+#note ul{
+    list-style-type: "- ";
+}

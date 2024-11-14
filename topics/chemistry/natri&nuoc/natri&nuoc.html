@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natri và Nước</title>
+    <link rel="stylesheet" href="../../colors&fonts.css">
+    <link rel="stylesheet" href="./natri&nuoc.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <!-- Including Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+
+<body class="monochrome">
+    <!-- thông báo -->
+    <div id="alert"></div>
+
+    <!-- menu điều khiển -->
+    <p id="help">Hướng dẫn</p>
+    <!-- kết luận -->
+    <p id="conclu">| Kết luận<span class="material-symbols-outlined">description</span> </p>
+    <!-- content kết luận -->
+    <div id="text">
+        <p>Khi bỏ Natri: <br>
+        &ensp;- Cỡ nhỏ vào nước: an toàn <br>
+        &ensp;- Cỡ vừa vào nước: xảy ra hiện tượng nổ</p>
+    </div>
+
+    <div id="small" class="natri"></div>
+    <div id="medium" class="natri"></div>
+    <div class="large natri" style="display: none;"></div>
+
+    <div id="bowl">
+        <img id="main" src="./assets/bowl.png" alt="">
+        <audio id="mainSound" src="./assets/xixeo.mp3"></audio>
+        <div id="water"></div>
+        <img id="splash" class="effect" src="./assets/splash.gif" alt="">
+        <audio id="splashSound" src="./assets/explosion.wav"></audio>
+        <img id="explosion" class="effect" src="./assets/explosion.gif" alt="">
+        <img id="sparkles" class="effect" src="./assets/spark.gif" alt="">
+    </div>
+    
+    <script src="./run.js"></script>
+</body>
+
+</html>

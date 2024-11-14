@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự tạo thành khí O2 trong quá trình quang hợp</title>
+    <link rel="shortcut icon" href="./assets/oxygen.png">
+    <link rel="stylesheet" href="./cssFiles/chung-minh-quang-hop-o-cay-xanh.css">
+    <link rel="stylesheet" href="../colors&fonts.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <!-- Including Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- thông báo -->
+    <div id="alert"></div>
+
+    <!-- menu điều khiển -->
+    <p id="help">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Hướng dẫn</p>
+      <!-- kết luận -->
+      <p id="conclu">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;| Kết luận</p>
+      <audio id="voice" src="./assets/voices/chung-minh-quang-hop-o-cay-xanh.mp3"></audio>
+      <!-- content kết luận -->
+      <div id="text">
+          <p>- Ban ngày: khi quang hợp, cây rong đuôi chó lấy khí CO2 thải ra khí Oxi mà Oxi nhẹ hơn nên đẩy nước ra
+             ngoài cốc<br>
+             -Ban đêm: cây rong đuôi chó lấy khí O2 thải ra khí CO2<br>
+            * Thời gian mô phỏng nhanh hơn thực tế! *</p>
+      </div>
+    
+    <div id="main">
+        <div id="day">
+            <span>🌥</span>
+            <img class="rong" src="./assets/rong.png" alt="">
+            <!-- cốc -->
+            <div class="coc">
+                <img class="jar" src="./assets/coc.png" alt="">
+                <div class="liquid blue"></div>
+            </div>
+            <!-- ống nghiệm -->
+            <div class="ongnghiem">
+                <img class="ong" src="./assets/ongnghiem.png" alt="">
+                <div class="water blue"></div>
+                <img class="cover" id="dayCover" src="./assets/day.png" alt="">
+            </div>
+          
+            <img class="pheu" src="./assets/pheu.png" alt="">
+            <img id="binhnuoc" src="./assets/binhnuoc.png" alt="">
+            <div class="blue" id="flow"></div>
+        </div>
+        <div id="night">
+            <span>🌑</span>
+            <img class="rong" src="./assets/rong.png" alt="">
+            <!-- cốc -->
+            <div class="coc">
+                <img class="jar" src="./assets/coc.png" alt="">
+                <div class="liquid blue"></div>
+            </div>
+            <!-- ống nghiệm -->
+            <div class="ongnghiem">
+                <img class="ong" src="./assets/ongnghiem.png" alt="">
+                <div class="water blue"></div>
+            </div>
+            <img class="pheu" src="./assets/pheu.png" alt="">
+        </div>
+    </div>
+
+    <script src="./jsFiles/chung-minh-quang-hop-o-cay-xanh.js"></script>
+</body>
+
+</html>
