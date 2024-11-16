@@ -72,3 +72,10 @@ body{
     font-size: 15px;
     line-height: 25px;
 }
+#login-btn{
+    position: fixed;
+    display: flex;
+    margin-top: 10px;
+    width: 98vw;
+    justify-content: end;
+}

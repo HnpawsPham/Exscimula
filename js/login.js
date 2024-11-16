@@ -7,9 +7,12 @@ const emailInput = document.getElementById("email-input");
 const passInput = document.getElementById("pass-input");
 const notice = document.getElementById("notice");
 const forgetPass = document.getElementById("forget-pass");
+const cookie = document.cookie;
 
 // DELAY
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+let token = (Math.random() * 2834 + 1).toString(36) + (Math.random() * 2834 + 1).toString(24) + '=' + (Math.random() * 2834 + 1).toString(24).toUpperCase();
 
 // notice appear
 function visibleNotice(text){
@@ -29,6 +32,7 @@ form.addEventListener("submit",function(e){
     if(check.length != 0){
         visibleNotice("Login successfully");
 
+        cookie = token;
         sessionStorage.setItem("isLoggedIn",true);
         sessionStorage.setItem("accountID", check[0].index);
 

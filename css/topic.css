@@ -2,7 +2,7 @@
     --blurwhite: rgba(255, 255, 255, 0.129);
 }
 body{
-    background-image: url(../assets/starsky.jpg);
+    background-image: url(../assets/icon.jpg);
     background-size: cover;
     overflow: hidden;
 }
