@@ -7,7 +7,7 @@ body{
 }
 #first{
     background-size: cover;
-    background-image: url(../assets/test.jpg);
+    background-image: url(/assets/test.jpg);
     display: flex;
     flex-direction: column;
     justify-content: center;

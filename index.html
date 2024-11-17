@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EXSCIMULA</title>
-    <link rel="shortcut icon" href="./assets/icon.jpg">
-    <link rel="stylesheet" href="./css/colors&fonts.css">
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/scrollbar.css">
+    <link rel="shortcut icon" href="/assets/icon.jpg">
+    <link rel="stylesheet" href="/css/colors&fonts.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/scrollbar.css">
 </head>
 
 <body>
-    <div id="account" class="hidden">
+    <div id="account" class="hidden" onclick="goToProfile()">
         <img id="avt" src="./assets/skystar.webp" alt="">
     </div>
 
@@ -48,6 +48,11 @@
     </div>
 
     <script type="module" src="./js/checkLoggedIn.js"></script>
+    <script>
+        function goToProfile(){
+            window.location.href = "./pages/profile.html";
+        }
+    </script>
 </body>
 
 </html>

@@ -1,4 +1,3 @@
-
 import { findData, saveToStorage } from "./firebase.js";
 
 let accountID = sessionStorage.getItem("accountID");
