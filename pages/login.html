@@ -5,40 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="../css/colors&fonts.css">
     <link rel="stylesheet" href="../css/login&signup.css">
 </head>
 
 <body>
     <div id="notice"></div>
+    <a id="back-home" href="../index">↩</a><br><br>
 
-    <svg style="margin: 17vh 35vw;" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960"
-        width="40px" fill="#F3F7EC">
-        <path
-            d="M226.67-186.67h140v-246.66h226.66v246.66h140v-380L480-756.67l-253.33 190v380ZM160-120v-480l320-240 320 240v480H526.67v-246.67h-93.34V-120H160Zm320-352Z" />
-    </svg>
-    <h1 style="margin: -12vh 40vw; width: 20vw;">LOGIN</h1>
-    <form style="height: 50vh; margin: 25vh auto;" action="" id="form">
-        <input id="email-input" type="text" placeholder="Email" required>
-        <input id="pass-input" type="password" placeholder="Password" required>
-        <a href="./signup.html">Don't have an account?</a>
-        <a href="" id="forget-pass">Forget password?</a>
-        <input type="submit" value="Login">
+    <form action="" id="form">
+        <h2>LOGIN | <a href="./signup.html">OR SIGNUP?</a></h2>
+        <div>
+            <label for="email-input">Email: </label>
+            <input id="email-input" type="email" placeholder="Your email here" required> 
+        </div>
+
+        <div>
+            <label for="pass-input">Password: </label>
+            <input id="pass-input" type="password" placeholder="Your password here" required>
+        </div>
+
+        <div>
+            <div class="left">
+                <label for="remember-check">Remember me</label>
+                <input type="checkbox" name="" id="remember-check">
+            </div>
+            
+            <a href="">Forget password?</a>
+        </div>
+
+        <input type="submit" name="" id="submit-btn" value="Login">
     </form>
 
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-    <script type="text/javascript">
-        emailjs.init('nFzoq_5gaytaGj80f')
-    </script>
-    <script>
-        const homeBtn = document.getElementsByTagName("svg")[0];
-
-        homeBtn.addEventListener("click", function () {
-            window.location.href = "../index.html";
-        })
-    </script>
-    <script type="module" src="../js/login.js"></script>
 </body>
 
 </html>

@@ -1,51 +1,67 @@
-*{
-    padding: 0;
-    margin: 0;
+body{
+    background-color: rgb(10, 10, 10);
+    overflow: hidden;
 }
-#notice{
-    color: white;
-    font-weight: bold;
-    display: none;
-    margin: -24vh 0;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.339);
-    text-align: center;
-    height: 10vh;
-    min-width: 30vw;
-    border-radius: 0 15px 15px 0px;
+
+#form{
+    margin: 22vh 20vw;
+    width: 60vw;
+    height: 50vh;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#form div{
+    width: 100%;
+    height: 10%;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
-body{
-    background-color: #006989;
-}
-svg{
-    position: fixed;
-    cursor: pointer;
-}
-h1{
-    color: #F3F7EC;
-    position: fixed;
-    text-align: center;
-    font-size: 50px;
-}
-form{
-    background-color: #F3F7EC;
-    width: 20vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-form input{
-    border: none;
-    border-radius: 15px;
-    padding: 10px;
-    background-color: #E88D67;
-    color: #F3F7EC;
+
+#form div label{
+    width: 20%;
+    text-align: left;
 }
 
-a{
-    color: #005C78;
-    font-weight: bold;
+#form div input{
+    color: white;
+    margin-left: 20px;
+    padding: 10px 20px;
+    width: 60%;
+    border-radius: 15px;
+    font-size: 15px;
+    border: none;
+    background-color: black;
+    outline: none;
+}
+
+#submit-btn{
+    cursor: pointer;
+    color: white;
+    background-color: rgb(123, 0, 0);
+    border-radius: 15px;
+    border: none;
+    padding: 10px 20px;
+    width: 90%;
+}
+
+#form div .left{
+    width: 30%;
+}
+#form div .left label{
+    text-wrap: nowrap;
+}
+#form div a{
+    display: inline-block;
+    width: 60%;
+    text-align: right;
+}
+
+h2 a{
+    color: rgb(80, 80, 80);
 }

@@ -1,11 +1,13 @@
-body{
+body {
     overflow-x: hidden;
 }
-.part{
+
+#requirement {
     width: 100vw;
-    height: 100vh;
 }
-#first{
+
+#first {
+    height: 100vh;
     background-size: cover;
     background-image: url(/assets/test.jpg);
     display: flex;
@@ -15,13 +17,16 @@ body{
     color: white;
     box-shadow: black 0px -23px 100px 0px inset, rgba(0, 0, 0, 0.665) 0px -36px 100px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
-#first h1{
+
+#first h1 {
     font-size: 100px;
 }
-#first p{
+
+#first p {
     opacity: 0.7;
 }
-#first a{
+
+#first a {
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 30px;
@@ -32,18 +37,7 @@ body{
     filter: drop-shadow(0 0 10px black);
 }
 
-#introduction{
-    height: 120vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    background-color: black;
-    color: white;
-    filter: drop-shadow(0 0 30px black);
-}
-
-#account{
+#account {
     z-index: 10;
     position: fixed;
     width: 98vw;
@@ -51,8 +45,36 @@ body{
     display: flex;
     justify-content: right;
     align-items: center;
+    filter: drop-shadow(0 0 20px black);
 }
-#avt{
+
+#account .user-info {
+    padding: 5px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 25px;
+    color: black;
+    margin-right: 15px;
+}
+
+#accoutn .user-info p {
+    font-size: 2rem;
+}
+
+#account .user-info i {
+    opacity: 0.6;
+    font-size: 1rem;
+}
+
+#account .user-info i::after {
+    content: " point(s)";
+}
+
+#avt {
+    z-index: 2;
     cursor: pointer;
     border: 2px solid white;
     object-fit: cover;
@@ -60,22 +82,189 @@ body{
     height: 70px;
     border-radius: 100px;
 }
-.info-part{
-    width: 50%;
-    margin-left: 30px;
+
+#introduction {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: max-content;
 }
-.info-part h2{
+
+#introduction h2 {
     margin-bottom: 10px;
 }
-.info-part p{
+
+#introduction p {
+    width: 90%;
     opacity: 0.6;
     font-size: 15px;
     line-height: 25px;
 }
-#login-btn{
+
+#login-btn {
     position: fixed;
     display: flex;
-    margin-top: 10px;
+    margin-top: 30px;
     width: 98vw;
     justify-content: end;
+}
+
+#manage-btn {
+    position: fixed;
+    color: black;
+    background-color: white;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 15px;
+    margin: 30px;
+    filter: drop-shadow(0 0 20px black);
+}
+
+#topics {
+    filter: drop-shadow(0 0 50px black);
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: black;
+}
+
+.card {
+    border: 10px solid white;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--blurwhite);
+    border-radius: 20px;
+    width: 28%;
+    height: 70%;
+    transition: all 0.2s;
+    color: white;
+}
+
+.card img {
+    width: 90%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.card div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card div p {
+    font-size: 10px;
+    opacity: 0.6;
+    width: 100%;
+    text-align: center;
+}
+
+.card:hover {
+    transform: rotate(-2deg) scale(1.1);
+}
+
+#footer {
+    color: white;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+}
+
+#footer .part {
+    height: 100%;
+}
+
+#requirement {
+    width: 60%;
+}
+
+#credit {
+    width: 40%;
+    border-left: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#credit a {
+    color: rgb(122, 180, 255);
+    line-height: 30px;
+    transition: all 0.2s;
+}
+
+#credit a:hover {
+    color: rgb(32, 129, 255);
+}
+
+#requirement h2 {
+    width: 100%;
+    text-align: center;
+}
+
+#requirement p,
+b {
+    line-height: 30px;
+    margin-left: 2vw;
+}
+
+#requirement p {
+    color: rgba(255, 255, 255, 0.508);
+}
+
+#requirement b {
+    color: rgb(255, 255, 255);
+    margin-right: 5px;
+}
+
+#anim-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    background-color: black;
+}
+
+#anim-img img {
+    width: 400px;
+    height: 200px;
+    object-fit: cover;
+    transition: all 0.8s ease-in-out;
+}
+
+#anim-img img:nth-child(2) {
+    width: 500px;
+    height: 300px;
+    filter: drop-shadow(0 0 20px black);
+}
+
+.heart-btn-container{
+    width: 100%;
+}
+
+#donate-btn{
+    margin-top: 3%;
+    padding: 5px 10%;
+    background-color: crimson;
+    color: white !important;
+    border-radius: 30px;
+}
+#donate-btn:hover{
+    filter: brightness(40%);
 }

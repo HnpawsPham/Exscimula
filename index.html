@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXSCIMULA</title>
-    <link rel="shortcut icon" href="/assets/icon.jpg">
+    <title>Exscimula</title>
+    
     <link rel="stylesheet" href="/css/colors&fonts.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/scrollbar.css">
@@ -13,44 +13,99 @@
 
 <body>
     <div id="account" class="hidden" onclick="goToProfile()">
-        <img id="avt" src="./assets/skystar.webp" alt="">
+        <div class="user-info">
+            <p>HnpawsPham</p>
+            <i></i>
+        </div>
+        <img id="avt" src="/assets/skystar.webp" alt="">
     </div>
 
-    <a id="login-btn" href="./pages/login.html"><svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFFFF"><path d="M480.67-120v-66.67h292.66v-586.66H480.67V-840h292.66q27 0 46.84 19.83Q840-800.33 840-773.33v586.66q0 27-19.83 46.84Q800.33-120 773.33-120H480.67Zm-63.34-176.67-47-48 102-102H120v-66.66h351l-102-102 47-48 184 184-182.67 182.66Z"/></svg></a>
+    <a id="manage-btn" href="./pages/admin.html">Manage</a>
+
+    <a id="login-btn" href="/pages/login.html"><svg xmlns="http://www.w3.org/2000/svg" height="35px"
+            viewBox="0 -960 960 960" width="35px" fill="#FFFFFF">
+            <path
+                d="M480.67-120v-66.67h292.66v-586.66H480.67V-840h292.66q27 0 46.84 19.83Q840-800.33 840-773.33v586.66q0 27-19.83 46.84Q800.33-120 773.33-120H480.67Zm-63.34-176.67-47-48 102-102H120v-66.66h351l-102-102 47-48 184 184-182.67 182.66Z" />
+        </svg></a>
 
     <div id="first" class="part">
         <h1>Exscimula</h1>
         <p>Science experiments simulator.</p><br>
-        <a href="./pages/topic.html">Discover</a>
+        <a href="#topics">Discover</a>
+    </div>
+
+    <div id="topics" class="part">
+        <div id="chemis" class="card">
+            <img src="./assets/chemistry.jpg" alt="">
+            <div>
+                <h1>Chemistry</h1>
+                <p>lorem ipsum ncap iwe cna w cna caw</p>
+            </div>
+        </div>
+
+        <div id="phys" class="card">
+            <img src="./assets/physics.jpg" alt="">
+            <div>
+                <h1>Physics</h1>
+                <p>lorem ipsum ncap iwe cna w cna caw</p>
+            </div>
+        </div>
+
+        <div id="bio" class="card">
+            <img src="./assets/biology.jpg" alt="">
+            <div>
+                <h1>Biology</h1>
+                <p>lorem ipsum ncap iwe cna w cna caw</p>
+            </div>
+        </div>
     </div>
 
     <div id="introduction" class="part">
-        <br><br>
-        <div class="info-part">
-            <h2>Your Portal to Hands-On Science Discoveries</h2>
-            <p> &ensp;&ensp;&ensp;&ensp; Welcome to Exscimula, a comprehensive online platform where students, educators, and science
-                enthusiasts can delve into the wonders of natural science through interactive experiments! Our website
-                offers a vast collection of experiments across various fields, including biology, chemistry, physics, and
-                earth sciences. Each experiment is presented with clear instructions, detailed explanations, and engaging
-                visuals that make science accessible and exciting for learners of all ages. With easy-to-follow steps,
-                safety tips, and explanations of scientific principles, Exscimula encourages curiosity and hands-on
-                learning.</p>
+        <h2>About this project</h2>
+        <p> &ensp;&ensp;&ensp;&ensp; Welcome to Exscimula, a comprehensive online platform where students, educators,
+            and science
+            enthusiasts can delve into the wonders of natural science through interactive experiments! Our website
+            offers a vast collection of experiments across various fields, including biology, chemistry, physics, and
+            earth sciences. Each experiment is presented with clear instructions, detailed explanations, and engaging
+            visuals that make science accessible and exciting for learners of all ages. With easy-to-follow steps,
+            safety tips, and explanations of scientific principles, Exscimula encourages curiosity and hands-on
+            learning.</p>
+    </div>
+
+    <div id="anim-img" class="part">
+        <img src="./assets/test.jpg" alt="">
+        <img src="./assets/48056cd9-b427-4de3-948e-f26ae8381382.png" alt="">
+        <img src="./assets/f8ca75cabe50639e2d55bedc4464904dfd465df0_2000x2000.webp" alt="">
+    </div>
+
+    <div id="footer" class="part">
+        <div id="requirement">
+            <h2>Requirement</h2><br>
+            <p><b>Device: </b>PC, Ipad</p>
+            <p><b>Browser: </b>Microsoft Egde, Chrome, Firefox, Safari (latest version)</p>
         </div>
 
-        <div class="info-part">
-            <h2>About our work</h2>
-            <p>Provides structured categories to suit different learning levels and interests. Users can also explore supplementary videos, downloadable worksheets, and experiment templates to enhance learning outcomes. For educators, our platform offers lesson plans and ideas on incorporating these experiments into classrooms.</p>
-        </div>
+        <div id="credit" class="part">
+            <h2>Credit</h2><br>
+            <a target="_blank" href="https://github.com/HnpawsPham">Author</a>
+            <a target="_blank" href="">API for DEVs</a>
+            <a href="./pages/download.html">Offline version</a>
 
-        <div class="info-part">
-            <p>This type of website description can engage visitors, providing them with a clear idea of what the site offers and how it supports interactive and practical learning in natural sciences.</p>
+            <div class="heart-btn-container">
+                <a id="donate-btn" class="heart-btn" href="#">Donate</a>
+                <div class="heart-container"></div>
+            </div>
         </div>
     </div>
 
-    <script type="module" src="./js/checkLoggedIn.js"></script>
+    <script src="./js/anim/slide-show-anim.js"></script>
+    <script src="./js/anim/fly-heart-anim.js"></script>
+    <script type="module" src="/js/checkLoggedIn.js"></script>
     <script>
-        function goToProfile(){
-            window.location.href = "./pages/profile.html";
+        const cards = document.querySelectorAll(".card");
+        for(let card of cards) card.addEventListener("click", () => window.location.href = "./pages/topic-menu.html");
+        function goToProfile() {
+            window.location.href = "/pages/profile.html";
         }
     </script>
 </body>

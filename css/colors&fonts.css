@@ -1,8 +1,11 @@
+html, body{
+    overflow-x: hidden;
+    font-size: 15px;
+    scroll-behavior: smooth;
+}
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-attachment: fixed;
     font-family: nimbus !important;
 }
 .hidden{
@@ -10,6 +13,7 @@
 }
 :root{
     --yellow: rgb(255, 210, 28);
+    --blurwhite: rgba(255, 255, 255, 0.129);
 }
 .star {
     color: #ddd;
@@ -124,6 +128,38 @@
 a{
     z-index: 1000;
     text-decoration: none;
+}
+
+.heart-btn-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.heart {
+    position: absolute;
+    opacity: 1;
+    animation: heart-fly 1s forwards;
+}
+
+.heart-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 30%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+@keyframes heart-fly {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
 }
 
 @keyframes bling{  /*hiệu ứng nhấp nháy để gây chú ý*/
