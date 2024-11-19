@@ -93,28 +93,21 @@ html, body{
     display: flex;
     align-items: center;
 }
-#alert{
-    border: none;
-    z-index: 10;
+
+#noti{
     position: fixed;
-    margin: 10px 10vw;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width:80vw;
+    background-color: white;
+    border-radius: 20px;
+    min-width: 30vw;
     height: 10vh;
-    background-color: rgb(31, 31, 31);
-    border-radius: 10px;
-    color: white;
-    font-family: spline;
-}
-#help{
-    z-index: 10;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: spline;
-    position: fixed;
-    margin: 10px  0  0 10px;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    width: max-content;
+    padding: 0 20px;
 }
 
 #back-home{

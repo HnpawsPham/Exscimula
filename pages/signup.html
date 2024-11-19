@@ -10,8 +10,13 @@
 </head>
 
 <body>
-    <div id="notice"></div>
+    <div id="noti" class="hidden"></div>
     <a id="back-home" href="../index">↩</a><br><br>
+
+    <div id="other-option">
+        <div id="google-sign-in-btn" class="circle"><img src="https://www.cdnlogo.com/logos/g/35/google-icon.svg" alt=""></div>
+
+    </div>
 
     <form action="" id="form">
         <h2>SIGNUP | <a href="./login.html">OR LOGIN?</a></h2>
@@ -32,6 +37,10 @@
         <input type="submit" name="" id="submit-btn" value="Signup">
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/joi@17.6.0/dist/joi-browser.min.js"></script>
+    <script type="module" src="../js/firebase.js"></script>
+    <script type="module" src="../js/auth/google.js"></script>
+    <script type="module" src="../js/auth/email-password.js"></script>
 </body>
 
 </html>

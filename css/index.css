@@ -112,6 +112,7 @@ body {
     margin-top: 30px;
     width: 98vw;
     justify-content: end;
+    filter: drop-shadow(0 0 5px black);
 }
 
 #manage-btn {
@@ -233,27 +234,6 @@ b {
     margin-right: 5px;
 }
 
-#anim-img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-    background-color: black;
-}
-
-#anim-img img {
-    width: 400px;
-    height: 200px;
-    object-fit: cover;
-    transition: all 0.8s ease-in-out;
-}
-
-#anim-img img:nth-child(2) {
-    width: 500px;
-    height: 300px;
-    filter: drop-shadow(0 0 20px black);
-}
-
 .heart-btn-container{
     width: 100%;
 }
@@ -267,4 +247,48 @@ b {
 }
 #donate-btn:hover{
     filter: brightness(40%);
+}
+
+#anim-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    background-color: black;
+}
+
+.slider {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider img {
+    position: absolute;
+    width: 450px;
+    height: 250px;
+    transition: transform 1.5s, opacity 2s, z-index 2s;
+    opacity: 0;
+    transform: scale(0.5) translateX(0);
+    z-index: 0;
+    object-fit: cover;
+}
+
+.slider img.middle {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+    z-index: 3;
+}
+
+.slider img.left {
+    transform: scale(0.8) translateX(-450px);
+    opacity: 0.7;
+    z-index: 1;
+}
+
+.slider img.right {
+    transform: scale(0.8) translateX(450px);
+    opacity: 0.7;
+    z-index: 2;
 }
