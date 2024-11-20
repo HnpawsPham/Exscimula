@@ -2,14 +2,13 @@ body {
     overflow-x: hidden;
 }
 
-#requirement {
+#additional {
     width: 100vw;
 }
 
 #first {
     height: 100vh;
     background-size: cover;
-    background-image: url(/assets/test.jpg);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,11 +18,13 @@ body {
 }
 
 #first h1 {
-    font-size: 100px;
+    filter: drop-shadow(0 0 30px black);
+    font-size: 9.5vw;
 }
 
 #first p {
-    opacity: 0.7;
+    opacity: 1;
+    filter: drop-shadow(0 0 10px black);
 }
 
 #first a {
@@ -34,7 +35,18 @@ body {
     border: none;
     color: black;
     background-color: white;
-    filter: drop-shadow(0 0 10px black);
+    filter: drop-shadow(0 0 30px black);
+}
+
+#first .bg-img{
+    z-index: -1;
+    position: absolute;
+    filter: brightness(90%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #account {
@@ -96,6 +108,7 @@ body {
 }
 
 #introduction h2 {
+    z-index: 3;
     margin-bottom: 10px;
 }
 
@@ -107,22 +120,23 @@ body {
 }
 
 #login-btn {
-    position: fixed;
+    position: absolute;
+    right: 20px;
+    top: 20px;
     display: flex;
-    margin-top: 30px;
-    width: 98vw;
     justify-content: end;
     filter: drop-shadow(0 0 5px black);
 }
 
 #manage-btn {
-    position: fixed;
+    position: absolute;
+    left: 20px;
+    top: 30px;
     color: black;
     background-color: white;
     border-radius: 30px;
     padding: 10px 30px;
     font-size: 15px;
-    margin: 30px;
     filter: drop-shadow(0 0 20px black);
 }
 
@@ -191,7 +205,7 @@ body {
     height: 100%;
 }
 
-#requirement {
+#additional {
     width: 60%;
 }
 
@@ -204,32 +218,32 @@ body {
     align-items: center;
 }
 
-#credit a {
+#credit a, #additional a {
     color: rgb(122, 180, 255);
     line-height: 30px;
     transition: all 0.2s;
 }
 
-#credit a:hover {
+#credit a:hover, #additional a:hover {
     color: rgb(32, 129, 255);
 }
 
-#requirement h2 {
+#additional h2 {
     width: 100%;
     text-align: center;
 }
 
-#requirement p,
+#additional p,
 b {
     line-height: 30px;
     margin-left: 2vw;
 }
 
-#requirement p {
+#additional p {
     color: rgba(255, 255, 255, 0.508);
 }
 
-#requirement b {
+#additional b {
     color: rgb(255, 255, 255);
     margin-right: 5px;
 }

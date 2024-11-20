@@ -1,3 +1,8 @@
+body{
+    background-color: black;
+    color: white;
+}
+
 #table, #comments{
     margin: 10vh auto;
     width: 80vw;
@@ -5,7 +10,9 @@
 
 table th,td{
     text-align: center;
-    border: 2px solid black;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 2px solid rgb(255, 255, 255);
 }
 table td div{
     display: flex;
@@ -19,8 +26,6 @@ table input{
     text-align: center;
 }
 h1{
-    padding-left: 40px;
-}
-#note ul{
-    list-style-type: "- ";
+    width: 100vw;
+    text-align: center;
 }

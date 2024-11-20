@@ -95,6 +95,7 @@ html, body{
 }
 
 #noti{
+    z-index: 1000;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -115,7 +116,6 @@ html, body{
     font-size: 40px;
     position: fixed;
     margin-left: 20px;
-    font-weight: bold;
 }
 
 a{

@@ -1,16 +1,20 @@
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { visibleNoti } from "../notification.js";
-
+import { setData, getData } from "../firebase.js";
+import {setKeyLocal, setKeySession} from "./storing.js";
+import Joi from 'https://cdn.jsdelivr.net/npm/joi@17.13.3/+esm'
 const auth = getAuth();
 
-const signUpBtn = document.getElementById("submit-btn");
+const formSignUp = document.querySelector(".form#sign-up");
+const formLogIn = document.querySelector(".form#log-in");
 const emailInp = document.getElementById("email-input");
 const passInp = document.getElementById("pass-input");
 const nameInp = document.getElementById("name-input");
+const rememberCheckBox = document.getElementById("remember-check");
 
 function checkUser(info){
     const check = Joi.object().keys({
-        name: Joi.string().min(1).required(),
+        name: Joi.string().min(1),
         email: Joi.string().email({tlds: {allow : false}}).required(),
         pass: Joi.string().min(6).alphanum().required(),
     });
@@ -19,23 +23,83 @@ function checkUser(info){
     return err;
 }
 
-signUpBtn.addEventListener(async () => {
+if(formSignUp)
+formSignUp.addEventListener("submit", function(e) {
+    e.preventDefault();
+
     let userInfo = {
-        name : nameInp.value,
+        name: nameInp.value,
         email: emailInp.value,
         pass: passInp.value,
     }
 
-    const {err} = checkUser(userInfo);
-    if(err) return visibleNoti(err.details, 2000);
+    const err = checkUser(userInfo);
+    if(err) {
+        visibleNoti(err.details, 2000);
+        return;
+    }
 
-    try{
-        const credential = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.pass);
+    let name = userInfo.name;
+    let email = userInfo.email;
+    let pass = userInfo.pass;
+
+    createUserWithEmailAndPassword(auth, email, pass).then((credential) => {
         const user = credential.user;
-        console.log(user);
-        visibleNoti("Signed up successfully!", 1500);
+
+        let date = new Date();
+        date = date.toLocaleDateString();
+
+        const info = {
+            name: name,
+            email: email,
+            pass: pass,
+            uid: user.uid,
+            role: 0,
+            provider: user.providerId,
+            avt: null,
+            joined_since: date,
+            activities: {
+                point: 0,
+                comment: [],
+                achievement: [],
+                saved: [],
+                work: [],
+                rate: [],
+            }
+        }   
+        setData(`users/${user.uid}`, info);
+
+        visibleNoti("Signed in successfully", 1500);
+    })
+    .catch((err) => {
+        visibleNoti(err.message, 5000);
+    })
+})
+
+if(formLogIn)
+formLogIn.addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    let userInfo = {
+        email: emailInp.value,
+        pass: passInp.value,
     }
-    catch(err){
-        visibleNoti(err.message, 2000);
+
+    const err = checkUser(userInfo);
+    if(err) {
+        visibleNoti(err.details, 2000);
+        return;
     }
+
+    let remember = rememberCheckBox.checked;
+
+    await signInWithEmailAndPassword(auth, userInfo.email, userInfo.pass).then((credential) => {
+        const user = credential.user;
+        (remember ? setKeyLocal("uid", user.uid) : setKeySession("uid", user.uid));
+
+        visibleNoti("Logged in successfully!", 1500)
+    })
+    .catch((err) => {
+        visibleNoti(err.message);
+    })
 })

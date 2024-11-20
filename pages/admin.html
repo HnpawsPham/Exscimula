@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage users permission</title>
     <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../topicChildFiles/colors&fonts.css">
+    <link rel="stylesheet" href="../css/colors&fonts.css">
 </head>
 <body>
-    <a href="../index">Home</a>
+    <a id="back-home" href="../index">↩</a><br><br>
 
     <h1 id="admin-name"></h1>
 
+    <h1>Users list</h1>
     <table id="table">
         <tr>
             <th>Index</th>
@@ -34,16 +35,6 @@
             <th>Block user</th>
         </tr>
     </table>
-
-    <div id="note">
-        <u>Note: </u>
-        <ul>
-            <li>Block a user will prevent them from commenting and posting experiment.</li>
-            <li>Check on the box of any user work to verify their work.</li>
-            <li>Role 0: normal user; role 1: admin.</li>
-            <li>Click on any user work name will open that work.</li>
-        </ul>
-    </div>
 
     <script type="module" src="../js/admin.js"></script>
 </body>

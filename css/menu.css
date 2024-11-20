@@ -96,7 +96,8 @@ body{
 #search input{
     border: none;
     border-radius: 30px;
-    padding: 6px 20px;
+    padding: 8px 20px;
+    font-size: 15px;
 }
 
 #sort{

@@ -1,6 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-// https://firebase.google.com/docs/web/setup#available-libraries
-
+import { initializeApp} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCR1_KRvwc4CAX8_shJRfjEzqpjpbNadTE",
@@ -13,5 +12,21 @@ const firebaseConfig = {
   measurementId: "G-5KX0B7RE6K"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+export function setData(name, data) {
+  set(ref(db, name), data)
+  .catch(err => console.log(err.message));
+}
+
+export async function getData(name){
+  try{
+    const snapshot = await get(child(ref(db), name));
+    if(snapshot.exists()) return snapshot.val();
+    else return null;
+  }
+  catch(err) {
+    console.log(err.message);
+  }
+}

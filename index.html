@@ -12,23 +12,26 @@
 </head>
 
 <body>
+    <div id="noti" class="hidden"></div>
     <div id="account" class="hidden" onclick="goToProfile()">
         <div class="user-info">
-            <p>HnpawsPham</p>
-            <i></i>
+            <p class="username"></p>
+            <i class="user-point"></i>
         </div>
-        <img id="avt" src="/assets/skystar.webp" alt="">
+        <img id="avt" src="" alt="">
     </div>
 
-    <a id="manage-btn" href="./pages/admin.html">Manage</a>
+    <a id="manage-btn" href="/admin">Manage</a>
 
-    <a id="login-btn" href="/pages/login.html"><svg xmlns="http://www.w3.org/2000/svg" height="35px"
+    <a id="login-btn" href="/login"><svg xmlns="http://www.w3.org/2000/svg" height="35px"
             viewBox="0 -960 960 960" width="35px" fill="#FFFFFF">
             <path
                 d="M480.67-120v-66.67h292.66v-586.66H480.67V-840h292.66q27 0 46.84 19.83Q840-800.33 840-773.33v586.66q0 27-19.83 46.84Q800.33-120 773.33-120H480.67Zm-63.34-176.67-47-48 102-102H120v-66.66h351l-102-102 47-48 184 184-182.67 182.66Z" />
-        </svg></a>
+        </svg>
+    </a>
 
     <div id="first" class="part">
+        <img class="bg-img" src="./assets/test8.png" alt="">
         <h1>Exscimula</h1>
         <p>Science experiments simulator.</p><br>
         <a href="#topics">Discover</a>
@@ -79,19 +82,20 @@
     </div>
 
     <div id="footer" class="part">
-        <div id="requirement">
-            <h2>Requirement</h2><br>
+        <div id="additional">
+            <h2>Additional</h2><br>
             <p><b>Device: </b>PC, Ipad</p>
             <p><b>Browser: </b>Microsoft Egde, Chrome, Firefox, Safari (latest version)</p>
             <p><b>Connection: </b>Yes</p>
-            <p><b>Full screen: </b>Yes, horizontally</p>
+            <p><b>Responsive: </b>Updating</p>
+            <p><b>Open source: </b><a target="_blank" href="https://github.com/HnpawsPham/Exscimula">here</a></p>
         </div>
 
         <div id="credit" class="part">
             <h2>Credit</h2><br>
             <a target="_blank" href="https://github.com/HnpawsPham">Author</a>
             <a target="_blank" href="">API for DEVs</a>
-            <a href="./pages/download.html">Offline version</a>
+            <a href="/offline-download">Offline version</a>
 
             <div class="heart-btn-container">
                 <a id="donate-btn" class="heart-btn" href="#">Donate</a>
@@ -105,9 +109,10 @@
     <script type="module" src="/js/checkLoggedIn.js"></script>
     <script>
         const cards = document.querySelectorAll(".card");
-        for(let card of cards) card.addEventListener("click", () => window.location.href = "./pages/topic-menu.html");
+        for(let card of cards) card.addEventListener("click", () => window.location.href = "/topic-menu");
+        
         function goToProfile() {
-            window.location.href = "/pages/profile.html";
+            window.location.href = "/profile";
         }
     </script>
 </body>
