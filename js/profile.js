@@ -1,11 +1,9 @@
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { app, getData } from "./firebase.js";
+import { forkOff } from "./auth/storing.js";
+import { visibleNoti } from "./notification.js";
 
 const auth = getAuth(app);
-
-function forkOff(){
-    window.location.href = "/index";
-}
 
 const defaultAvt = "/assets/default.jpg";
 
@@ -29,4 +27,14 @@ auth.onAuthStateChanged(async (user) => {
     joinSince.innerHTML = data.joined_since;
 })
 
+// LOG OUT HANDLE
+const logoutBtn = document.getElementById("logout-btn");
+
+logoutBtn.addEventListener("click", function(){
+    signOut(auth).then(() => {
+        window.location.href = "/index";
+    }).catch((err) => {
+        visibleNoti("There was an error occur. Please try again.", 5000);
+    })
+})
 

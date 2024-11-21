@@ -13,3 +13,7 @@ export function setKeySession(name, val){
 export function getKeySession(name){
     return JSON.parse(sessionStorage.getItem(name));
 }
+
+export function forkOff(){
+    window.location.href = "/index";
+}

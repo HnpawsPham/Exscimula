@@ -24,9 +24,13 @@ export async function getData(name){
   try{
     const snapshot = await get(child(ref(db), name));
     if(snapshot.exists()) return snapshot.val();
-    else return null;
+    else {
+      console.log(`Path '${name}' does not exist.`);
+      return null;
+    }
   }
   catch(err) {
     console.log(err.message);
+    return null;
   }
 }

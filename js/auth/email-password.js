@@ -43,17 +43,19 @@ formSignUp.addEventListener("submit", function(e) {
     let email = userInfo.email;
     let pass = userInfo.pass;
 
-    createUserWithEmailAndPassword(auth, email, pass).then((credential) => {
+    createUserWithEmailAndPassword(auth, email, pass).then(async (credential) => {
         const user = credential.user;
 
         let date = new Date();
         date = date.toLocaleDateString();
 
+        const uid = user.uid;
+
         const info = {
             name: name,
             email: email,
             pass: pass,
-            uid: user.uid,
+            uid: uid,
             role: 0,
             provider: user.providerId,
             avt: null,
@@ -67,9 +69,10 @@ formSignUp.addEventListener("submit", function(e) {
                 rate: [],
             }
         }   
-        setData(`users/${user.uid}`, info);
+        setData(`users/${uid}`, info);
 
-        visibleNoti("Signed in successfully", 1500);
+        await visibleNoti("Signed up successfully", 1500);
+        window.location.href = "/login";
     })
     .catch((err) => {
         visibleNoti(err.message, 5000);
@@ -87,17 +90,19 @@ formLogIn.addEventListener("submit", async function(e){
 
     const err = checkUser(userInfo);
     if(err) {
-        visibleNoti(err.details, 2000);
+        visibleNoti(err.details, 5000);
         return;
     }
 
     let remember = rememberCheckBox.checked;
 
-    await signInWithEmailAndPassword(auth, userInfo.email, userInfo.pass).then((credential) => {
+    await signInWithEmailAndPassword(auth, userInfo.email, userInfo.pass).then(async (credential) => {
         const user = credential.user;
+        console.log(user)
         (remember ? setKeyLocal("uid", user.uid) : setKeySession("uid", user.uid));
 
-        visibleNoti("Logged in successfully!", 1500)
+        await visibleNoti("Logged in successfully!", 1500);
+        window.location.href = "/index";
     })
     .catch((err) => {
         visibleNoti(err.message);

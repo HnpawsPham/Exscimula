@@ -180,7 +180,7 @@ body{
     color: var(--cwhite);
     background-color: brown;
 }
-#logout{
+#logout-btn{
     width: 45%;
 }
 #delete-account{
