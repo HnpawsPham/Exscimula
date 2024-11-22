@@ -15,28 +15,25 @@
 
     <div id="top">
         <div id="user">
-            <img id="avt" src="" alt="">
-
-            <ul id="avt-options">
-                <li id="view-avt">Xem ảnh đại diện</li>
-                <li id="change-avt">Đổi ảnh đại diện <input id="choose-avt" type="file"></li>
-            </ul>
-
-            <div id="info">
-                <h2 id="nickname">HnpawsPham</h2>
-                <i id="email">hanpham123th@gmail.com</i><br>
-                <span id="join-since">11/11/1111</span>
-            </div>
-
-            <div id="rank-container">
-                <img id="rank" src="../assets/ranks/dong.png" alt="">
+            <div id="avt">
+                <img src="" alt="">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M446.67-315.33v-356L332-556.67l-47.33-48L480-800l195.33 195.33-47.33 48-114.67-114.66v356h-66.66ZM226.67-160q-27 0-46.84-19.83Q160-199.67 160-226.67V-362h66.67v135.33h506.66V-362H800v135.33q0 27-19.83 46.84Q760.33-160 733.33-160H226.67Z"/></svg>
+                    <input type="file" accept="image/*">
+                </div>
             </div>
             
+            <div id="info">
+                <h2 id="nickname"></h2>
+                <i id="email"></i><br>
+                <span id="join-since"></span>
+            </div>
+            <img class="rank" alt="">
         </div>
 
         <div id="achievement">
             <h2>Achievement</h2>
-            <div id="armorial">
+            <div>
             </div>
         </div>
     </div>
@@ -44,23 +41,22 @@
     <div id="rank-progress">
         <p>Progress: </p>
         <div id="progress-bar">
-            <div id="current-progress"></div>
+            <div></div>
         </div>
         <i id="progress-count"></i>
-        <img id="current-rank-progress" src="" alt="">
+        <img class="rank" src="" alt="">
     </div>
 
     <div id="body">
-        <div id="uploaded-experiment" class="goal-container">
+        <div id="user-works" class="container">
             <h2>Your works</h2><br>
 
-            <button>Add</button>
+            <a class="add-btn" href="/pages/upload-works.html">Add</a>
         </div>
 
-        <div id="saved" class="goal-container">
+        <div id="saved" class="container">
             <h2>Saved</h2><br>
 
-            <button>Add</button>
         </div>
     </div>
 

@@ -8,6 +8,7 @@ body{
     --red-brown: #481E14;
     --cwhite: #F8EDED;
     --text-color: #362a20;
+    --blue: rgb(115, 192, 255);
 }
 #back-home{
     filter: drop-shadow(0 0 5px black);
@@ -30,16 +31,56 @@ body{
     display: flex;
     align-items: center;
 }
+#user .rank{
+    width: 10vw;
+    aspect-ratio: 1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 #avt{
     position: relative;
     cursor: pointer;
     border: 5px solid var(--beige);
     margin-left: 30px;
     width: 150px;
-    height: 150px;
+    aspect-ratio: 1;
     object-fit: cover;
     border-radius: 100px;
 }
+#avt img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+#avt div{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    aspect-ratio: inherit;
+    background-color: rgba(0, 0, 0, 0.773);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: inherit;
+    transition: all 0.2s;
+}
+#avt div input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: inherit;
+    opacity: 0;
+    cursor: pointer;
+}
+
 #info{
     margin-left: 40px;
 }
@@ -69,14 +110,14 @@ body{
 #achievement h2{
     margin-top: 20px;
 }
-#armorial{
+#achievement div{
     margin-top: 25px;
     width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#armorial img{
+#achievement div img{
     width: 80px;
     height: 80px;
     object-fit: cover;
@@ -84,50 +125,8 @@ body{
     margin: 0 5px;
     border: 5px solid var(--beige);
 }
-#armorial b{
+#achievement div b{
     font-size: 40px;
-}
-#rank-container{
-    position: absolute;
-    right: 20px;
-    top: 40px;
-    height: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#rank{
-    width: 100px;
-}
-#avt-options{
-    display: none;
-    background-color: var(--red-brown);
-    border-radius: 10px;
-    position: absolute;
-    bottom: -70px;
-    left: 20px;
-    list-style-type: none;
-}
-#avt-options li{
-    cursor: pointer;
-    color: var(--cwhite);
-    padding: 10px 20px;
-    transition: all 0.2s;
-}
-#avt-options li:hover{
-    color: var(--dark);
-}
-#change-avt{
-    position: relative;
-}
-#choose-avt{
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    position: absolute;
-    z-index: 10;
-    opacity: 0;
-    padding: 10px 0;
 }
 #body{
     display: flex;
@@ -155,12 +154,12 @@ body{
     border-radius: 20px;
     background-color: rgb(143, 143, 143);
 }
-#current-progress{
+#progress-bar div{
     height: inherit;
     border-radius: 20px;
     background-color: var(--blue);
 }
-#current-rank-progress{
+#rank-progress .rank{
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -186,19 +185,19 @@ body{
 #delete-account{
     width: 50%;
 }
-.goal-container{
+.container{
     position: relative;
     background-color: var(--cwhite);
     border-radius: 20px;
     min-height: 50vh;
     color: var(--text-color);
 }
-.goal-container h2{
+.container h2{
     margin-top: 20px;
     width: 100%;
     text-align: center;
 }
-.goal-container button, #input-popup input[type="submit"]{
+.container .add-btn{
     left: 20%;
     bottom: 10px;
     position: absolute;
@@ -211,12 +210,13 @@ body{
     background-color: var(--red-brown);
     font-family: lcsac;
     transition: all 0.2s;
+    text-align: center;
 }
-.goal-container button:hover{
+.container .add-btn:hover{
     transform: scale(1.1);
     filter: invert(100%);
 }
-#uploaded-experiment{
+#user-works{
     width: 63vw;
 }
 #saved{

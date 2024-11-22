@@ -65,7 +65,7 @@ formSignUp.addEventListener("submit", function(e) {
                 comment: [],
                 achievement: [],
                 saved: [],
-                work: [],
+                works: [],
                 rate: [],
             }
         }   

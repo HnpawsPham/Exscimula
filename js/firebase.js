@@ -15,9 +15,9 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-export function setData(name, data) {
+export async function setData(name, data) {
   set(ref(db, name), data)
-  .catch(err => console.log(err.message));
+  .catch(err => {return err});
 }
 
 export async function getData(name){

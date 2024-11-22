@@ -2,7 +2,6 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth
 import { getData, setData } from "./firebase.js";
 import { forkOff } from "./auth/storing.js"
 
-const admin = require("firebase/admin");
 
 const auth = getAuth();
 
