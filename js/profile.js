@@ -184,3 +184,9 @@ logoutBtn.addEventListener("click", function () {
 })
 
 
+// DELETE ACCOUNT HANDLE
+const deleteBtn = document.getElementById("delete-account");
+
+deleteBtn.addEventListener("click", function(){
+    
+})

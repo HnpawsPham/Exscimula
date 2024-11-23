@@ -42,6 +42,14 @@ app.get("/profile", (req, res) => {
     res.sendFile(path.join(__dirname, "../pages/profile.html"));
 })
 
+app.get("/upload-works", (req, res) => {
+    res.sendFile(path.join(__dirname, "../pages/upload-works.html"));
+})
+
+app.get("/tags", (req, res) => {
+    res.sendFile(path.join(__dirname, "../pages/search-by-tags.html"));
+})
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Running on port ${port}`);

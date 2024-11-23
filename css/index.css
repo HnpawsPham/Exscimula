@@ -78,11 +78,51 @@ body {
 
 #account .user-info i {
     opacity: 0.6;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 #account .user-info i::after {
     content: " point(s)";
+}
+
+#nav{
+    position: fixed;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 75vw;
+    margin: 33px 0 0 1.5vw;
+    padding: 12px 0;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    filter: drop-shadow(0 0 20px black);
+    border: 1px solid white;
+    border-radius: 30px;
+}
+
+#nav .btn{
+    width: calc(100% /  var(--quantity));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+#nav .btn svg {
+    width: 1.5em;
+    padding-right: 5px;
+}
+
+#nav .btn a{
+    color: white;
+    margin-top: 5px;
+}
+
+#nav .btn:hover a{
+    text-decoration: underline;
+}
+#nav .btn:hover{
+    transform: scale(1.1);
 }
 
 #avt {
@@ -126,18 +166,6 @@ body {
     display: flex;
     justify-content: end;
     filter: drop-shadow(0 0 5px black);
-}
-
-#manage-btn {
-    position: absolute;
-    left: 20px;
-    top: 30px;
-    color: black;
-    background-color: white;
-    border-radius: 30px;
-    padding: 10px 30px;
-    font-size: 15px;
-    filter: drop-shadow(0 0 20px black);
 }
 
 #topics {

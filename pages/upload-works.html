@@ -5,214 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload your work!</title>
-    <link rel="stylesheet" href="../css/uploadExperiment.css">
+    <link rel="stylesheet" href="../css/colors&fonts.css">
+    <link rel="stylesheet" href="../css/upload-works.css">
     <link rel="stylesheet" href="../css/scrollbar.css">
 </head>
 
 <body>
-    <!-- other languages -->
-    <div id="google_translate_element"></div>
+    <div id="noti" class="hidden"></div>
+    <a id="back-home" href="./profile">↩</a><br><br>
 
-    <svg id="return" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-        fill="#161215">
-        <path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z" />
-    </svg>
-
-    <div id="main">
-
-        <div id="experiment-info" class="box">
-            <h1>Experiment Info</h1>
-
-            <!-- FORM -->
-            <div style="display: flex; justify-content: space-between; width: 90%;">
-                <input id="work-name" type="text" placeholder="Name">
-
-                <select name="" id="grade">
-                    <option value="grade">Grade</option>
-                    <option value="0">All</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-
-                <select name="" id="topic">
-                    <option value="topic">Topic</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Physics">Physics</option>
-                </select>
-            </div>
-
-            <!-- DESCRIPTION -->
-            <textarea name="" id="description" placeholder="Describe about your experiment" rows="5"
-                cols="36"></textarea>
-
-            <!-- COVER IMAGE -->
-            <img id="cover-img" src="" alt="">
-            <p id="cover-img-text">Input cover image here
-                <input id="cover-img-input" type="file"
-                    accept=".jpg, .jpeg, .png, .gif, .bmp, .tif, .tiff, .svg, .heif, .heic, .webp, .raw, .ico">
-            </p>
-
-        </div>
-
-
-        <div id="upload-source" class="box">
-            <h1>Source</h1>
-
-            <div id="upload-field">
-                <div class="field" id="code">
-                    <p>Upload HTML file (please put all CSS and JS commands into this file, required)</p>
-                    <input id="upload-code" type="file" accept=".html">
-                </div>
-
-                <div class="field" id="asset">
-                    <p>Upload assets (required)</p>
-                    <input id="upload-assets" type="file" multiple
-                        accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .tif, .webp, .svg, .heic, .heif, .raw, .ico, .mp4, .avi, .mkv, .mov, .wmv, .flv, .webm, .mpg, .mpeg, .3gp, .m4v">
-                </div>
-
-                <div class="field" id="audio">
-                    <p>Upload audios (optional)</p>
-                    <input id="upload-audios" type="file" multiple accept=".mp3, .wav, .ogg, .aac, .flac">
-                </div>
-
-            </div>
-        </div>
+    <div id="top">
+        <button id="build-from-stock">Build from stock</button>
+        <button id="upload-custom">Upload your own code</button>
     </div>
 
-    <button id="submit">Submit</button>
-
-    <h1>NOTICE!</h1>
-    <img id="notice" src="../assets/notice.jpg" alt="">
-
-    <h1 class="others">YOU MAY NEED</h1>
-
-    <h3>Move object commands</h3>
-    <div class="example-code">
-        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-            fill="#e8eaed">
-            <path
-                d="M320-213.33q-27 0-46.83-19.84Q253.33-253 253.33-280v-533.33q0-27 19.84-46.84Q293-880 320-880h413.33q27 0 46.84 19.83Q800-840.33 800-813.33V-280q0 27-19.83 46.83-19.84 19.84-46.84 19.84H320Zm0-66.67h413.33v-533.33H320V-280ZM186.67-80q-27 0-46.84-19.83Q120-119.67 120-146.67v-600h66.67v600h480V-80h-480ZM320-280v-533.33V-280Z" />
-        </svg>
-        <pre>
-            function moveObj(obj, move) {
-
-                // Click again to stop moving
-                obj.addEventListener("click", function () {
-                    move = false
-                })
-
-                document.addEventListener("mousemove", function (event) {
-                    // get mouse position
-                    let mX = event.clientX
-                    let mY = event.clientY
-            
-                    if (move) {
-                        obj.style.position = "absolute"
-                        obj.style.margin = "0"
-
-                        // To position the mouse in the center of the object, it should be divided by 2
-                        obj.style.top = mY - obj.getBoundingClientRect().height / 2 + "px"
-                        obj.style.left = mX - obj.getBoundingClientRect().width / 2 + "px"
-                    }
-                })
-            }
-    </pre>
+    <div id="container">
+        
     </div>
-
-    <h3>Bling effect</h3>
-    <div class="example-code">
-        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-            fill="#e8eaed">
-            <path
-                d="M320-213.33q-27 0-46.83-19.84Q253.33-253 253.33-280v-533.33q0-27 19.84-46.84Q293-880 320-880h413.33q27 0 46.84 19.83Q800-840.33 800-813.33V-280q0 27-19.83 46.83-19.84 19.84-46.84 19.84H320Zm0-66.67h413.33v-533.33H320V-280ZM186.67-80q-27 0-46.84-19.83Q120-119.67 120-146.67v-600h66.67v600h480V-80h-480ZM320-280v-533.33V-280Z" />
-        </svg>
-        <pre>
-            //CSS
-            @keyframes bling{  /*Flashing effect to attract attention*/
-                0%{
-                    filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
-                }
-                20%{
-                    filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
-                }
-                40%{
-                    filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
-                }
-                60%{
-                    filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
-                }
-                80%{
-                    filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
-                }
-                100%{
-                    filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
-                }
-            }
-        </pre>
-    </div>
-
-    <div class="example-code">
-        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-            fill="#e8eaed">
-            <path
-                d="M320-213.33q-27 0-46.83-19.84Q253.33-253 253.33-280v-533.33q0-27 19.84-46.84Q293-880 320-880h413.33q27 0 46.84 19.83Q800-840.33 800-813.33V-280q0 27-19.83 46.83-19.84 19.84-46.84 19.84H320Zm0-66.67h413.33v-533.33H320V-280ZM186.67-80q-27 0-46.84-19.83Q120-119.67 120-146.67v-600h66.67v600h480V-80h-480ZM320-280v-533.33V-280Z" />
-        </svg>
-        <pre>
-            //JS
-            function bling(obj) {
-                obj.style.animation = "bling 3s ease"
-                obj.addEventListener("animationend", function () {
-                    obj.style.animation = "none"
-                })
-            }
-        </pre>
-    </div>
-
-    <h3>Wait function</h3>
-    <div class="example-code">
-        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-            fill="#e8eaed">
-            <path
-                d="M320-213.33q-27 0-46.83-19.84Q253.33-253 253.33-280v-533.33q0-27 19.84-46.84Q293-880 320-880h413.33q27 0 46.84 19.83Q800-840.33 800-813.33V-280q0 27-19.83 46.83-19.84 19.84-46.84 19.84H320Zm0-66.67h413.33v-533.33H320V-280ZM186.67-80q-27 0-46.84-19.83Q120-119.67 120-146.67v-600h66.67v600h480V-80h-480ZM320-280v-533.33V-280Z" />
-        </svg>
-        <pre>
-        // sleep function: delay
-        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-        </pre>
-    </div>
-
-    <h3>Alert function</h3>
-
-    <div class="example-code">
-        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-        fill="#e8eaed">
-        <path
-            d="M320-213.33q-27 0-46.83-19.84Q253.33-253 253.33-280v-533.33q0-27 19.84-46.84Q293-880 320-880h413.33q27 0 46.84 19.83Q800-840.33 800-813.33V-280q0 27-19.83 46.83-19.84 19.84-46.84 19.84H320Zm0-66.67h413.33v-533.33H320V-280ZM186.67-80q-27 0-46.84-19.83Q120-119.67 120-146.67v-600h66.67v600h480V-80h-480ZM320-280v-533.33V-280Z" />
-        </svg>
-        <pre>
-            function tb(content, ms) {
-                let tb = document.getElementById("alert");   //the id is changable
-                tb.innerHTML = content;
-                tb.style.display = "flex";
-
-                setTimeout(function () {
-                    tb.style.display = "none";
-                }, ms)
-            }
-        </pre>
-    </div>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'vie', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <script type="module" src="../js/uploadExperiment.js"></script>
 </body>
 
 </html>

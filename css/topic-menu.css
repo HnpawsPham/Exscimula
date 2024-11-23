@@ -1,12 +1,11 @@
 body{
-    background-color: rgb(12, 8, 18);
+    background-color: var(--dark-blue);
     font-family: nimbus;
     overflow-x: hidden;
     font-size: 15px;
 }
 
 :root{
-    --cyan: rgb(134, 210, 255);
     --blur: rgba(255, 255, 255, 0.264);
 }
 
@@ -19,21 +18,38 @@ body{
 }
 
 .card{
+    position: relative;
+    color: var(--red-brown);
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
-    background-color: white;
+    background-color: var(--cwhite);
     border-radius: 30px;
     width: 95vw;
     height: 32vh;
     cursor: pointer;
+}
+.card b{
+    padding: 10px 0;
+    position: relative;
+}
+.card b svg{
+    position: absolute;
+    top: 15%;
+    left: -20%;
 }
 .card img{
     height: 90%;
     width: 30%;
     object-fit: cover;
     border-radius: 20px;
+}
+.card .date{
+    opacity: 0.6;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
 }
 .info{
     width: 67%;
@@ -58,7 +74,7 @@ body{
     border: none;
     padding: 10px 20px;
     text-align: center;
-    color: white;
+    color: var(--cwhite);
     background-color: crimson;
 }
 .tag{
@@ -71,7 +87,7 @@ body{
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 10px;
-    color: white;
+    color: var(--cwhite);
     background-color: crimson;
 }
 
@@ -112,13 +128,13 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--cyan);
+    background-color: brown;
     border-radius: 15px;
 }
 
 .category span{
     font-size: 15px;
-    color: white;
+    color: var(--cwhite);
     padding: 10px 20px;
     cursor: pointer;
     transition: all 0.2s;
@@ -136,8 +152,8 @@ body{
 }
 
 .chosen{
-    color: var(--cyan) !important;
-    background-color: rgba(255, 255, 255, 0.716);
+    color: brown !important;
+    background-color: rgba(255, 255, 255, 0.51);
 }
 #back-home{
     filter: drop-shadow(0 0 5px black);

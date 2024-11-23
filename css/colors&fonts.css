@@ -3,6 +3,9 @@ html, body{
     font-size: 15px;
     scroll-behavior: smooth;
 }
+html{
+    font-size: 16px;
+}
 *{
     margin: 0;
     padding: 0;
@@ -12,8 +15,13 @@ html, body{
     visibility: hidden;
 }
 :root{
+    /* COLORS */
     --yellow: rgb(255, 210, 28);
     --blurwhite: rgba(255, 255, 255, 0.129);
+    --blue: rgb(115, 192, 255);
+    --dark-blue: #173B45;
+    --cwhite: #F8EDED;
+    --red-brown: #481E14;
 }
 .star {
     color: #ddd;

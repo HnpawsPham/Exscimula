@@ -1,14 +1,10 @@
 body{
-    background-color: var(--dark);
+    background-color: var(--dark-blue);
     font-family: lcsac;
 }
 :root{
-    --dark: #173B45;
     --beige: #D5CEA3;
-    --red-brown: #481E14;
-    --cwhite: #F8EDED;
     --text-color: #362a20;
-    --blue: rgb(115, 192, 255);
 }
 #back-home{
     filter: drop-shadow(0 0 5px black);
@@ -242,7 +238,7 @@ body{
     border-radius: 10px;
     width: 60%;
     padding: 10px 0;
-    background-color: var(--dark);
+    background-color: var(--dark-blue);
     color: var(--cwhite);
     color-scheme: dark;
     text-align: center;

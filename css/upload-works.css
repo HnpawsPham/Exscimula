@@ -1,0 +1,31 @@
+body{
+    background-color: var(--dark-blue);
+    color: var(--red-brown);
+}
+#top{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#top button{
+    cursor: pointer;
+    background-color: var(--cwhite);
+    border-radius: 20px;
+    padding: 20px 0;
+    width: 47%;
+    border: none;
+    transition: all 0.2s;
+    color: var(--red-brown);
+}
+#top button:hover{
+    filter: brightness(70%);
+}
+#container{
+    width: 96vw;
+    margin: 5vh 2vw;
+    background-color: var(--cwhite);
+    border-radius: 20px;
+    min-height: 70vh;
+}

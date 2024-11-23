@@ -3,7 +3,7 @@ export function setKeyLocal(name, val){
 }
 
 export function getKeyLocal(name){
-    return JSON.parse(localStorage.getItem(name));
+    return localStorage.getItem(name);
 }
 
 export function setKeySession(name, val){
@@ -11,7 +11,7 @@ export function setKeySession(name, val){
 }
 
 export function getKeySession(name){
-    return JSON.parse(sessionStorage.getItem(name));
+    return sessionStorage.getItem(name);
 }
 
 export function forkOff(){
