@@ -1,6 +1,6 @@
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { app, getData, setData } from "./firebase.js";
-import { forkOff } from "./auth/storing.js";
+import { forkOff, getImgBase64 } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
 const auth = getAuth(app);
@@ -116,17 +116,6 @@ function loadAchievement(data){
     }
 }
 
-async function getImgBase64(input){
-    const file = input.files[0];
-    const reader = new FileReader();
-    return new Promise(r => {
-        reader.onload = e => {
-          r(e.target.result);
-        }
-        reader.readAsDataURL(file);
-    });
-}
-
 function changeAvt(data, UID) {
     // VISIBLE CHANGE AVT OPTION WHEN HOVER ONTO AVT IMG
     const avt = document.querySelector("#avt");
@@ -143,7 +132,7 @@ function changeAvt(data, UID) {
     // INPUT AVT
     const input = document.querySelector("#avt>div>input");
     input.addEventListener("change", async function(){
-        let base64 = await getImgBase64(input);
+        let base64 = await getImgBase64(input.files[0]);
         avtImg.src = base64;
 
         data["avt"] = base64;

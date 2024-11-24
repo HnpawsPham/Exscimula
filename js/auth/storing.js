@@ -17,3 +17,13 @@ export function getKeySession(name){
 export function forkOff(){
     window.location.href = "/index";
 }
+
+export async function getImgBase64(file){
+    const reader = new FileReader();
+    return new Promise(r => {
+        reader.onload = e => {
+          r(e.target.result);
+        }
+        reader.readAsDataURL(file);
+    });
+}

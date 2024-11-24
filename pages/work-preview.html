@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Exscimula</title>
     <link rel="stylesheet" href="../css/colors&fonts.css">
     <link rel="stylesheet" href="../css/scrollbar.css">
     <link rel="stylesheet" href="../css/work-preview.css">
@@ -12,6 +12,51 @@
     <div id="noti" class="hidden"></div>
     <a id="back-home" href="../index">↩</a><br><br>
     
+    <div id="bottom">
+        <div class="option-btn">
+            <button name="rating">Rate</button>
+            <button name="question">Ask</button>
+        </div>
+        <div id="rating" class="container">
+            <h1>Rate this simulation</h1>
+
+            <div class="star-range">
+                <span class="star">☆</span>
+                <span class="star">☆</span>
+                <span class="star">☆</span>
+                <span class="star">☆</span>
+                <span class="star">☆</span>
+            </div>
+
+            <div class="img-preview"></div>
+
+            <div class="prompt">
+                <input type="text" placeholder="Comment here">
+
+                <div class="file-attach">
+                    <input type="file" multiple accept="image/*">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25px" width="25px" viewBox="0 0 384 512"><path fill="#434343" d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 288c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128z"/></svg>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#434343"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>
+            </div>
+        </div>
+        <div id="question" class="container hidden">
+            <h1>Leave a question</h1>
+
+            <div class="prompt">
+                <input type="text" placeholder="Question here">
+
+                <div class="file-attach">
+                    <input type="file" multiple accept="image/*">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25px" width="25px" viewBox="0 0 384 512"><path fill="#434343" d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 288c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128z"/></svg>
+                </div>
+              
+                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#434343"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="../js/work-preview.js"></script>
 </body>
 </html>

@@ -92,6 +92,10 @@ function loadSim(work){
     info.appendChild(rating);
     div.appendChild(info);
     container.appendChild(div);
+
+    container.addEventListener("click", function(){
+        window.location.href = "/preview";
+    })
 }
 
 function searchSim(data){
