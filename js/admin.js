@@ -10,10 +10,8 @@ auth.onAuthStateChanged(async (res) => {
 
     const UID = res.uid;
     const data = await getData(`users/`);
+
+    if(!data[UID].role) forkOff();
     
     console.log(data);
-    // const user = data[UID];
-
-    // if(!user || !user.role) forkOff();
-    // console.log(data)
 })

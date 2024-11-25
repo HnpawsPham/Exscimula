@@ -17,6 +17,9 @@ html{
     height: 0;
     visibility: hidden;
 }
+.option-chosen{
+    box-shadow: 0 5px #999;
+}
 :root{
     /* COLORS */
     --yellow: rgb(255, 210, 28);

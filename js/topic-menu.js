@@ -4,9 +4,34 @@ import { getKeySession } from "./auth/storing.js";
 const container = document.getElementById("main");
 const searchBar = document.querySelector("#search>input");
 
-const data = await getData(`works/`);
+const data = await getData(`works/`) || [];
 const subject = getKeySession("subject");
 sessionStorage.removeItem("subject");
+
+let workId = data.length;
+
+// TEST
+// let work = {
+//     id: ++workId,
+//     name: "tuyet voi ong mat troi",
+//     img: "/assets/codecat.jpg",
+//     preview: [],
+//     rate: [],
+//     question: [],
+//     star: {
+//         value: 4.5,
+//         rate_times: 1000,
+//     },
+//     author: {
+//         name: "HnpawsPham", 
+//         uid: "rU32BMEXHabxrY63BzOoRRH34f73", 
+//     },
+//     tags: ["hoa hoc", "sim"],
+//     description: "This is description.",
+//     subject: "chemis"
+// }
+
+// setData(`works/${workId}` ,work);
 
 // CHECK IF THERE IS ANY SIMUALATIONS
 function emptyHandle(){
@@ -43,7 +68,7 @@ function loadSim(work){
 
     let author = document.createElement("b");
     author.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#481E14"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>`;
-    author.innerHTML += work.author;
+    author.innerHTML += work.author.name;
     info.appendChild(author);
 
     let tags = document.createElement("div");
@@ -60,8 +85,9 @@ function loadSim(work){
     let rating = document.createElement("div");
     rating.classList.add("rating");
 
-    let rate = work.star;
+    let rate = work.star.value;
     let full = Math.floor(rate);
+    console.log(full)
 
     for(let i = 0; i < full; i++){
         let star = document.createElement("span");
@@ -72,6 +98,7 @@ function loadSim(work){
 
     if(rate != full){
         let star = document.createElement("span");
+        star.style.setProperty("--percentage", `${(rate - full) * 100}%`);
         star.classList.add("star", "half");
         star.innerHTML = "☆";
         rating.appendChild(star);

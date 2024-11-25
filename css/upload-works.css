@@ -3,6 +3,7 @@ body{
     color: var(--red-brown);
 }
 #top{
+    margin-top: 2vh;
     width: 100vw;
     height: 10vh;
     display: flex;
@@ -27,5 +28,5 @@ body{
     margin: 5vh 2vw;
     background-color: var(--cwhite);
     border-radius: 20px;
-    min-height: 70vh;
+    height: 72vh;
 }
