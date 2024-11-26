@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getImgBase64} from "./auth/storing.js";
+import { getImgBase64, searchQuery} from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -13,6 +13,62 @@ auth.onAuthStateChanged(async (user) => {
     let data = await getData(`users/${UID}`);
     userName = data.name;
 })
+
+// LOAD SIM
+const simId = searchQuery("id");
+const curSim = await getData(`works/${simId}`);
+console.log(curSim)
+
+// Load sim: Load main preview and queue
+const screen = document.querySelector("#top>.screen");
+const imgPreviewContainer = document.querySelector("#top>.img-query");
+
+let previewImgs = curSim.preview;
+screen.src = previewImgs[0];
+
+for(let pic of previewImgs){
+    let img = document.createElement("img");
+    img.src = pic;
+
+    img.addEventListener("click", function(){
+        let chosen = document.querySelector(".preview-chosen");
+        if(chosen) chosen.classList.remove("preview-chosen");
+        
+        img.classList.add("preview-chosen");
+        screen.src = pic;
+    })
+
+    imgPreviewContainer.appendChild(img);
+}
+imgPreviewContainer.firstChild.classList.add("preview-chosen");
+
+// Load sim: Load rated stars
+const simStarRange = document.querySelector("#top>.star-range");
+const rateVal = curSim.star.value;
+let full = Math.floor(rateVal);
+
+for(let i = 0; i < full; i++){
+    let star = document.createElement("span");
+    star.classList.add("star", "full");
+    simStarRange.appendChild(star);
+}
+
+if(rateVal != full){
+    let star = document.createElement("span");
+    star.style.setProperty("--percentage", `${(rateVal - full) * 100}%`);
+    star.classList.add("star", "half");
+    simStarRange.appendChild(star);
+}
+
+for(let i = 0; i < 5 - Math.ceil(rateVal); i++){
+    let star = document.createElement("span");
+    star.classList.add("star");
+    simStarRange.appendChild(star);
+}
+
+let rateTimes = document.createElement("b");
+rateTimes.innerHTML = curSim.star.rate_times;
+simStarRange.appendChild(rateTimes);
 
 // CHANGE RATE OR ASK QUESTION
 const optionBtns = document.querySelectorAll(".option-btn>button");
@@ -149,9 +205,6 @@ const questionInput = document.querySelector("#question>.prompt>input");
 const questionSendBtn = document.querySelector("#question>.prompt>svg");
 const questionFileAttach = document.querySelector("#question>.prompt>.file-attach>input");
 const questionImgContainer = document.querySelector("#question>.img-preview");
-
-console.log(questionFileAttach);
-console.log(questionImgContainer)
 
 let questionsData = await getData("questions/") || [];
 let questionId = questionsData.length;

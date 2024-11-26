@@ -27,3 +27,8 @@ export async function getImgBase64(file){
         reader.readAsDataURL(file);
     });
 }
+
+export function searchQuery(name){
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}

@@ -1,12 +1,11 @@
 import { getData, setData } from "./firebase.js";
-import { getKeySession } from "./auth/storing.js";
+import { searchQuery } from "./auth/storing.js";
 
 const container = document.getElementById("main");
 const searchBar = document.querySelector("#search>input");
 
 const data = await getData(`works/`) || [];
-const subject = getKeySession("subject");
-sessionStorage.removeItem("subject");
+const subject = searchQuery("subject");
 
 let workId = data.length;
 
@@ -121,7 +120,7 @@ function loadSim(work){
     container.appendChild(div);
 
     container.addEventListener("click", function(){
-        window.location.href = "/preview";
+        window.location.href = `/preview?id=${work.id}`;
     })
 }
 

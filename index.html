@@ -137,8 +137,7 @@
     <script>
         const cards = document.querySelectorAll(".card");
         for(let card of cards) card.addEventListener("click", () => {
-            sessionStorage.setItem("subject", card.id);
-            window.location.href = "/topic-menu";
+            window.location.href = `/topics?subject=${card.id}`;
         });
         
         function goToProfile() {

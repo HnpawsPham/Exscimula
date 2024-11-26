@@ -8,22 +8,24 @@ app.use((req, res, next) => {
     next();
 });
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../pages'));
+
 app.use("/css", express.static(path.join(__dirname, "../css")));
 app.use("/assets", express.static(path.join(__dirname, "../assets")));
 app.use("/fonts", express.static(path.join(__dirname, "../fonts")));
 app.use("/js", express.static(path.join(__dirname, "../js")));
-// app.use("/pages", express.static(path.join(__dirname, "../pages")));
 
 app.get("/index", (req, res) => {
     res.sendFile(path.join(__dirname, "../index.html"));
 })
 
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/login.html"));
+    res.render("login");
 })
 
 app.get("/signup", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/signup.html"));
+    res.render("signup");
 })
 
 app.get("/admin", (req, res) => {
@@ -31,11 +33,12 @@ app.get("/admin", (req, res) => {
 })
 
 app.get("/offline-download", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/download.html"));
+    res.render("download");
 })
 
-app.get("/topic-menu", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/topic-menu.html"));
+app.get("/topics", (req, res) => {
+    const subject = req.query.subject;
+    res.render("topic-menu", {subject});
 })
 
 app.get("/profile", (req, res) => {
@@ -47,11 +50,11 @@ app.get("/upload-works", (req, res) => {
 })
 
 app.get("/tags", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/search-by-tags.html"));
+    res.render("search-by-tags");
 })
 
 app.get("/preview", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/work-preview.html"));
+    res.render("work-preview");
 })
 
 const port = process.env.PORT || 3000;

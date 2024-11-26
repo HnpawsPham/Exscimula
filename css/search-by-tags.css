@@ -12,14 +12,19 @@ body{
     align-items: center;
 }
 #main{
+    width: 90vw;
+    margin-left: 10vw;
+    margin-top: 10vh;
     display: flex;
+    justify-content: left;
     flex-wrap: wrap;
 }
 #main details{
+    cursor: pointer;
     width: calc(100% / 4);
-    margin: 2vh 2vw;
+    margin-top: 20px;
     padding: 10px 0;
-    text-align: center;
+    text-align: left;
 }
 #main details summary{
     font-size: 40px;
@@ -36,4 +41,22 @@ body{
 
 #main details p:hover{
     color: brown;
+}
+
+#top{
+    display: flex;
+    width: 90vw;
+    margin-left: 10vw;
+    justify-content: left;
+    align-items: center;
+}
+
+#top .option{
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--cwhite);
+    color: var(--red-brown);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 10px;
 }
