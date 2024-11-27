@@ -46,7 +46,7 @@ function loadSim(work){
     div.classList.add("card");
 
     let img = document.createElement("img");
-    img.src = work.img;
+    img.src = work.preview[0];
     div.appendChild(img);
 
     let date = document.createElement("i");
@@ -84,7 +84,7 @@ function loadSim(work){
     let rating = document.createElement("div");
     rating.classList.add("rating");
 
-    let rate = work.star.value;
+    let rate = work.star.value / work.star.rate_times;
     let full = Math.floor(rate);
     console.log(full)
 

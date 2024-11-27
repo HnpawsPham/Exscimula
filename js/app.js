@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const Joi = require("joi");
 
 app.use((req, res, next) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
@@ -38,7 +37,8 @@ app.get("/offline-download", (req, res) => {
 
 app.get("/topics", (req, res) => {
     const subject = req.query.subject;
-    res.render("topic-menu", {subject});
+    const tag = req.query.tag || null;
+    res.render("topic-menu", {subject, tag});
 })
 
 app.get("/profile", (req, res) => {

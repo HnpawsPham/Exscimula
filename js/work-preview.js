@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getImgBase64, searchQuery} from "./auth/storing.js";
+import { getImgBase64, searchQuery, shortenNum, loadStarRange } from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -20,7 +20,7 @@ const curSim = await getData(`works/${simId}`);
 console.log(curSim)
 
 // Load sim: Load main preview and queue
-const screen = document.querySelector("#top>.screen");
+const screen = document.querySelector("#top>.screen>img");
 const imgPreviewContainer = document.querySelector("#top>.img-query");
 
 let previewImgs = curSim.preview;
@@ -44,35 +44,25 @@ imgPreviewContainer.firstChild.classList.add("preview-chosen");
 
 // Load sim: Load rated stars
 const simStarRange = document.querySelector("#top>.star-range");
-const rateVal = curSim.star.value;
-let full = Math.floor(rateVal);
 
-for(let i = 0; i < full; i++){
-    let star = document.createElement("span");
-    star.classList.add("star", "full");
-    simStarRange.appendChild(star);
+if(curSim.star.rate_times > 0){
+    const rateVal = curSim.star.value / curSim.star.rate_times;
+    loadStarRange(rateVal, simStarRange);
+
+    let rateTimes = document.createElement("b");
+    rateTimes.innerHTML = `&ensp; ${rateVal.toFixed(1)} / ${shortenNum(curSim.star.rate_times)} rated`;
+    simStarRange.appendChild(rateTimes);
 }
-
-if(rateVal != full){
-    let star = document.createElement("span");
-    star.style.setProperty("--percentage", `${(rateVal - full) * 100}%`);
-    star.classList.add("star", "half");
-    simStarRange.appendChild(star);
+else{
+    let b = document.createElement("b");
+    b.innerHTML = "This simulation is unrated.";
+    simStarRange.appendChild(b);
 }
-
-for(let i = 0; i < 5 - Math.ceil(rateVal); i++){
-    let star = document.createElement("span");
-    star.classList.add("star");
-    simStarRange.appendChild(star);
-}
-
-let rateTimes = document.createElement("b");
-rateTimes.innerHTML = curSim.star.rate_times;
-simStarRange.appendChild(rateTimes);
 
 // CHANGE RATE OR ASK QUESTION
 const optionBtns = document.querySelectorAll(".option-btn>button");
 const containers = document.querySelectorAll(".container");
+let optionChosen = "rates";
 
 for(let i in optionBtns){
     try{
@@ -84,7 +74,8 @@ for(let i in optionBtns){
             optionBtns[(i + 1) % optionBtns.length].classList.remove("option-chosen");
             
             for(let container of containers) container.classList.add("hidden");
-            document.getElementById(btn.name).classList.remove("hidden");
+            optionChosen = btn.name;
+            document.getElementById(optionChosen).classList.remove("hidden");
         })
     }
     catch{}
@@ -124,11 +115,11 @@ async function createPreviewImg(container, arr, inp){
 }
 
 // RATE HANDLE
-const rateInput = document.querySelector("#rating>.prompt>input");
-const rateStarRange = document.querySelectorAll("#rating>.star-range>.star");
-const rateFileAttach = document.querySelector("#rating>.prompt>.file-attach>input");
-const rateSendBtn = document.querySelector("#rating>.prompt>svg");
-const rateImgContainer = document.querySelector("#rating>.img-preview");
+const rateInput = document.querySelector("#rates>.prompt>input");
+const rateStarRange = document.querySelectorAll("#rates>.star-range>.star");
+const rateFileAttach = document.querySelector("#rates>.prompt>.file-attach>input");
+const rateSendBtn = document.querySelector("#rates>.prompt>svg");
+const rateImgContainer = document.querySelector("#rates>.img-preview");
 
 const ratesData = await getData("rates/") || [];
 let rateId = ratesData.length;
@@ -148,6 +139,8 @@ async function sendRate(){
 
     let date = new Date();
     date = date.toLocaleDateString();
+    
+    let star = document.querySelectorAll("#bottom>#rates>.star-range>.full").length;
 
     let rate = {
         id: ++rateId,
@@ -157,11 +150,16 @@ async function sendRate(){
         },
         comment: rateInput.value,
         imgs: rateImgs,
-        star: document.querySelectorAll(".full").length,   
+        star: star,   
         date: date, 
     }
 
-    await setData(`rates/${rateId}`, rate);
+    curSim.star.rate_times++;
+    curSim.star.value += star;
+    if(!curSim.rates) curSim[`rates`] = {};
+    curSim.rates[rateId] = rate;
+
+    await setData(`works/${simId}`, curSim);
 
     // Reset
     rateInput.value = "";
@@ -237,7 +235,8 @@ async function sendQuestion(){
         like: 0,
         reply: []
     }
-    await setData(`questions/${questionId}`, ques);
+    
+    await setData(`works/${simId}/questions/${questionId}`, ques);
 
     // Reset
     questionInput.value = "";
@@ -256,4 +255,16 @@ questionSendBtn.addEventListener("click" , () => sendQuestion());
 // Question: Attach files
 questionFileAttach.addEventListener("change", async () => {
     createPreviewImg(questionImgContainer, questionImgs, questionFileAttach);
- })
+})
+
+
+// DISPLAY DISCUSS (RATES AND QUESTION) DATA
+const discussContainer = document.querySelector("#discuss");
+const discussData = curSim[optionChosen];
+
+for(let mess of discussData){
+    console.log(mess)
+    // let div = document.createElement("div");
+    // loadStarRange(mess.star, div);
+    // discussContainer.appendChild(div);
+}
