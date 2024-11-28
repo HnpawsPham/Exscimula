@@ -54,7 +54,8 @@ app.get("/tags", (req, res) => {
 })
 
 app.get("/preview", (req, res) => {
-    res.render("work-preview");
+    const subject = req.query.subject;
+    res.render("work-preview", {subject});
 })
 
 const port = process.env.PORT || 3000;

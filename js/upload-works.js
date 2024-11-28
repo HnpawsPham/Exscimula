@@ -17,3 +17,17 @@ for(let i in optionBtns){
     }
     catch{}
 }
+
+// INPUT COMPRESSED FILE HANDLE
+const fileInput = document.querySelector("#container>input");
+
+fileInput.addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file.size > 524288000){
+        visibleNoti("File is too large!", 2000);
+        return;
+    }
+
+    visibleNoti("Uploaded successfully!", 2000);
+    // process
+})

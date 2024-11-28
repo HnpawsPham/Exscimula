@@ -50,7 +50,8 @@ function loadSim(work){
     div.appendChild(img);
 
     let date = document.createElement("i");
-    date.innerHTML = "&ensp; " + work.date;
+    console.log(work.date)
+    date.innerHTML = "&ensp; " + moment(work.date, "MMDDYYYY").fromNow();
     date.classList.add("date");
     div.appendChild(date);
 
@@ -84,7 +85,7 @@ function loadSim(work){
     let rating = document.createElement("div");
     rating.classList.add("rating");
 
-    let rate = work.star.value / work.star.rate_times;
+    let rate = (work.star.value / work.star.rate_times).toFixed(1);
     let full = Math.floor(rate);
     console.log(full)
 

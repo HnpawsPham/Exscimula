@@ -20,9 +20,54 @@
     </div>
 
     <div id="container">
-        
+        <input type="file" accept=".zip,.rar,.7zip">
     </div>
 
+    <div id="instruction">
+        <h1>Requirement</h1>
+        <div class="field">
+            <p>- Please put all your files into a compressed file.</p>
+            <p>- Compressed files mustn't exceed 500 MB.</p>
+        </div>
+        <h1>Warning</h1>
+        <div class="field">
+            <ul>
+                <li>Our website doesn't support any framework JS.</li>
+                <li>You should make sure to write the write path correctly.</li>
+                <li>You shouldn't name the main html file <b>index.html</b>!</li>
+            </ul>
+        </div>
+
+        <h1>Example scripts</h1>
+        <div class="field">
+            <pre>
+                /* FLASHING EFFECT TO ATTRACT ATTENTION */
+                <code>
+                @keyframes bling {  
+                    0% {
+                        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+                    }
+                    20% {
+                        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+                    }
+                    40% {
+                        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+                    }
+                    60% {
+                        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+                    }
+                    80% {
+                        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+                    }
+                    100% {
+                        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+                    }
+                }
+                </code>
+            </pre>
+        </div>
+    </div>
     <script type="module" src="../js/upload-works.js"></script>
 </body>
+
 </html>

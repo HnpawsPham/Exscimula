@@ -1,5 +1,5 @@
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { app, getData, setData } from "./firebase.js";
+import { app, delData, getData, setData } from "./firebase.js";
 import { forkOff, getImgBase64 } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
@@ -145,10 +145,11 @@ function changeAvt(data, UID) {
 }
 
 // MAIN EVENT
+let UID = null;
 auth.onAuthStateChanged(async (user) => {
     if (!user) forkOff();
 
-    const UID = user.uid;
+    UID = user.uid;
     data = await getData(`users/${UID}`);
 
     if (!data) forkOff();
@@ -176,6 +177,18 @@ logoutBtn.addEventListener("click", function () {
 // DELETE ACCOUNT HANDLE
 const deleteBtn = document.getElementById("delete-account");
 
-deleteBtn.addEventListener("click", function(){
+deleteBtn.addEventListener("click", async function(){
+    await delData(`users/${UID}`);
+
+    const user = auth.currentUser;
+    console.log(user);
     
+    await user.delete().then(() => {
+        visibleNoti("Deleted successfully.", 2000);
+    })
+    .catch(err => {
+        visibleNoti(err.message, 5000);
+    })
+
+    window.location.href = "/index";
 })

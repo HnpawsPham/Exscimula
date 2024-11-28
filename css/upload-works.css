@@ -25,8 +25,47 @@ body{
 }
 #container{
     width: 96vw;
-    margin: 5vh 2vw;
+    margin: 5vh 0 0 2vw;
     background-color: var(--cwhite);
     border-radius: 20px;
     height: 72vh;
+}
+
+#instruction .field{
+    padding: 20px 0;
+    margin: 0 2vw;
+    width: 96vw;
+    height: auto;
+    background-color: var(--cwhite);
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+}
+#instruction h1{
+    margin-top: 30px;
+    margin-left: 5vw;
+    color: brown;
+    font-size: 3em;
+    text-shadow: -1px -1px 0 var(--cwhite), 1px -1px 0 var(--cwhite), -1px 1px 0 var(--cwhite), 1px 1px 0 var(--cwhite);
+}
+
+#instruction .field ul, pre{
+    width: 90%;
+    list-style-type: decimal;
+}
+
+#instruction .field code, #instruction .field p{
+    font-size: 1em;
+    width: 92%;
+    text-align: left;
+    line-height: 30px;
+}
+
+#instruction .field ul li{
+    font-size: 1em;
+    width: 100%;
+    text-align: left;
+    line-height: 30px;
 }

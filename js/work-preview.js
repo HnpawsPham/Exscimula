@@ -3,6 +3,12 @@ import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
 import { getImgBase64, searchQuery, shortenNum, loadStarRange } from "./auth/storing.js";
 
+// RETURN BACK
+// const returnBtn = document.querySelector("#back-home");
+// returnBtn.addEventListener("click", function(){
+//     window.location.href = `/topics?subject=`;
+// })
+
 // GET USER UID
 let UID = null;
 let userName = null;
@@ -59,10 +65,62 @@ else{
     simStarRange.appendChild(b);
 }
 
+// DISPLAY DISCUSS (RATES AND QUESTION) DATA
+async function loadDiscuss(){
+    discussContainer.replaceChildren();
+
+    let h1 = document.createElement("h1");
+    h1.innerHTML = "Discuss";
+    discussContainer.appendChild(h1);
+
+    const discussData = curSim[optionChosen];
+
+    if(!discussData || Object.keys(discussData).length == 0){
+        let p = document.createElement("p");
+        p.innerHTML = "There is nothing.";
+        discussContainer.appendChild(p);
+    }
+
+    for(let i in discussData){
+        const mess = discussData[i];
+        let person  = await getData(`users/${mess.from}`);
+
+        let div = document.createElement("div");
+
+        let personAvt = document.createElement("img");
+        personAvt.src = person.avt;
+        div.appendChild(personAvt);
+        
+        let personName = document.createElement("u");
+        personName.innerHTML = person.name;
+        div.appendChild(personName);
+
+        let date = document.createElement("i");
+        date.innerHTML = moment(mess.date, "MMDDYYYY").fromNow();
+        div.appendChild(date);
+    
+        if(optionChosen == "rates"){
+            let starRange = document.createElement("div");
+            starRange.classList.add("star-range");
+            loadStarRange(mess.star, starRange);
+            div.appendChild(starRange);
+        }
+    
+        let content = document.createElement("p");
+        content.innerHTML = mess.content;
+        div.appendChild(content);
+    
+        discussContainer.appendChild(div);
+    }
+}
+
 // CHANGE RATE OR ASK QUESTION
 const optionBtns = document.querySelectorAll(".option-btn>button");
 const containers = document.querySelectorAll(".container");
+const discussContainer = document.querySelector("#discuss");
+
 let optionChosen = "rates";
+loadDiscuss();
 
 for(let i in optionBtns){
     try{
@@ -73,9 +131,11 @@ for(let i in optionBtns){
             btn.classList.add("option-chosen");
             optionBtns[(i + 1) % optionBtns.length].classList.remove("option-chosen");
             
-            for(let container of containers) container.classList.add("hidden");
             optionChosen = btn.name;
             document.getElementById(optionChosen).classList.remove("hidden");
+            containers[(i + 1) % 2].classList.add("hidden");
+
+            loadDiscuss();
         })
     }
     catch{}
@@ -121,7 +181,7 @@ const rateFileAttach = document.querySelector("#rates>.prompt>.file-attach>input
 const rateSendBtn = document.querySelector("#rates>.prompt>svg");
 const rateImgContainer = document.querySelector("#rates>.img-preview");
 
-const ratesData = await getData("rates/") || [];
+const ratesData = await getData(`works/${simId}/rates/`) || [];
 let rateId = ratesData.length;
 let rateImgs = [];
 let rated = false;
@@ -144,11 +204,8 @@ async function sendRate(){
 
     let rate = {
         id: ++rateId,
-        from: {
-            uid: UID,
-            name: userName,
-        },
-        comment: rateInput.value,
+        from: UID,
+        content: rateInput.value,
         imgs: rateImgs,
         star: star,   
         date: date, 
@@ -199,12 +256,12 @@ for(let i in rateStarRange){
 }
 
 // ASK QUESTION HANDLE
-const questionInput = document.querySelector("#question>.prompt>input");
-const questionSendBtn = document.querySelector("#question>.prompt>svg");
-const questionFileAttach = document.querySelector("#question>.prompt>.file-attach>input");
-const questionImgContainer = document.querySelector("#question>.img-preview");
+const questionInput = document.querySelector("#questions>.prompt>input");
+const questionSendBtn = document.querySelector("#questions>.prompt>svg");
+const questionFileAttach = document.querySelector("#questions>.prompt>.file-attach>input");
+const questionImgContainer = document.querySelector("#questions>.img-preview");
 
-let questionsData = await getData("questions/") || [];
+let questionsData = await getData(`works/${simId}/questions/`) || [];
 let questionId = questionsData.length;
 let questionImgs = [];
 
@@ -225,10 +282,7 @@ async function sendQuestion(){
 
     let ques = {
         id: ++questionId,
-        from: {
-            uid: UID,
-            name: userName,
-        },
+        from: UID,
         content: questionInput.value,
         imgs: questionImgs,
         date: date, 
@@ -258,13 +312,3 @@ questionFileAttach.addEventListener("change", async () => {
 })
 
 
-// DISPLAY DISCUSS (RATES AND QUESTION) DATA
-const discussContainer = document.querySelector("#discuss");
-const discussData = curSim[optionChosen];
-
-for(let mess of discussData){
-    console.log(mess)
-    // let div = document.createElement("div");
-    // loadStarRange(mess.star, div);
-    // discussContainer.appendChild(div);
-}

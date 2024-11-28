@@ -193,8 +193,63 @@ body{
     border: 2px solid var(--cwhite);
 }
 
+#discuss{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    overflow-y: auto;
+    height: 50vh;
+}
+
 #discuss h1{
+    margin: 30px 0;
+}
+
+#discuss div{
+    margin-bottom: 50px;
+    position: relative;
+    width: 90%;
+    background-color: white;
+    border-radius: 10px;
+    height: auto;
+}
+
+#discuss div img{
     position: absolute;
-    top: 5px;
-    left: 5px;
+    left: 20px;
+    top: -30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+}
+
+#discuss div i{
+    display: inline-block;
+    opacity: 0.6;
+    margin: 10px 95px;
+    font-size: 0.8em;
+}
+
+#discuss div p{
+    margin: 0 0 20px 48px;
+}
+
+#discuss div u{
+    position: absolute;
+    top: -20px;
+    left: 95px;
+    font-size: 1.2em;
+}
+
+#discuss div .star-range{
+    margin: 0;
+    background-color: none;
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+}
+
+#discuss div .star-range b{
+    margin-top: 8px;
 }

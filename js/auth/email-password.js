@@ -98,13 +98,12 @@ formLogIn.addEventListener("submit", async function(e){
 
     await signInWithEmailAndPassword(auth, userInfo.email, userInfo.pass).then(async (credential) => {
         const user = credential.user;
-        console.log(user)
         (remember ? setKeyLocal("uid", user.uid) : setKeySession("uid", user.uid));
 
-        await visibleNoti("Logged in successfully!", 1500);
+        await visibleNoti("Logged in successfully!", 2000);
         window.location.href = "/index";
     })
     .catch((err) => {
-        visibleNoti(err.message);
+        visibleNoti(err.message, 5000);
     })
 })
