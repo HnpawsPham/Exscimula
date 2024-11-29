@@ -1,18 +1,4 @@
-export function setKeyLocal(name, val){
-    localStorage.setItem(name, val);
-}
-
-export function getKeyLocal(name){
-    return localStorage.getItem(name);
-}
-
-export function setKeySession(name, val){
-    sessionStorage.setItem(name, val);
-}
-
-export function getKeySession(name){
-    return sessionStorage.getItem(name);
-}
+import * as unzipit from 'https://unpkg.com/unzipit@1.4.0/dist/unzipit.module.js';
 
 export function forkOff(){
     window.location.href = "/index";
@@ -65,4 +51,28 @@ export function shortenNum(num){
     if(num < 1000000000) return `${(num / 1000000).toFixed(1)} M`;
     if(num < 1000000000000) return `${(num / 1000000000).toFixed(1)} B`;
     // ...
+}
+
+export async function unZip(file){
+    const data = await unzipit.unzip(file); 
+    let res = {};
+    let fnames = [];
+    let urls = [];
+
+    for (let [filename, entry] of Object.entries(data.entries)) { 
+        if (!entry.directory) {
+            console.log(`File: ${filename}`); 
+
+            const buffer = await entry.arrayBuffer();
+            const blob = new Blob([buffer]);
+            const url = URL.createObjectURL(blob);
+            urls.push(url);
+            fnames.push(filename);
+        } 
+    }
+
+    res["url"] = urls;
+    res["fname"] = fnames;
+
+    return res;
 }
