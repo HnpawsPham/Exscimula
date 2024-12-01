@@ -13,7 +13,7 @@
 
 <body>
     <div id="noti" class="hidden"></div>
-    <div id="account" class="hidden" onclick="goToProfile()">
+    <div id="account" class="hidden">
         <div class="user-info">
             <p class="username"></p>
             <i class="user-point"></i>
@@ -106,7 +106,13 @@
         <img src="./assets/dvh2.png" alt="">
     </div>
 
-    <div id="ranking"></div>
+    <div id="leader-board" class="part">
+        <h1><svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="var(--blue)"><path d="M160-200h160v-320H160v320Zm240 0h160v-560H400v560Zm240 0h160v-240H640v240ZM80-120v-480h240v-240h320v320h240v400H80Z"/></svg> 
+           &ensp;Bảng xếp hạng</h1>
+        <br>
+        <div class="leader-card">
+        </div>
+    </div>
 
     <div id="footer" class="part">
         <div id="additional">
@@ -133,17 +139,7 @@
 
     <script src="./js/anim/slide-show-anim.js"></script>
     <script src="./js/anim/fly-heart-anim.js"></script>
-    <script type="module" src="/js/checkAccount.js"></script>
-    <script>
-        const cards = document.querySelectorAll(".card");
-        for(let card of cards) card.addEventListener("click", () => {
-            window.location.href = `/topics?subject=${card.id}`;
-        });
-        
-        function goToProfile() {
-            window.location.href = "/profile";
-        }
-    </script>
+    <script type="module" src="/js/homepage.js"></script>
 </body>
 
 </html>

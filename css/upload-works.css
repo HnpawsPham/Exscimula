@@ -23,12 +23,12 @@ body{
 #top button:hover{
     filter: brightness(70%);
 }
-#container{
+#form{
     width: 96vw;
     margin: 5vh 0 0 2vw;
     background-color: var(--cwhite);
     border-radius: 20px;
-    height: 72vh;
+    height: 75vh;
 }
 
 #instruction .field{
@@ -68,4 +68,127 @@ body{
     width: 100%;
     text-align: left;
     line-height: 30px;
+}
+
+#form{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+#form fieldset {
+    position: relative;
+    width: 80%;
+    min-height: 7%;
+    padding: 10px;
+    border: 2px solid #b22222;
+    border-radius: 8px;
+    background-color: white;
+}
+
+#form fieldset legend {
+    font-size: 1rem;
+    color: #b22222;
+    font-weight: bold;
+    padding: 0 10px; 
+}
+
+#form fieldset input {
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding: 10px 20px;
+    width: 100%; 
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: inherit;
+    border: none; 
+    outline: none; 
+    font-size: 1rem;
+}
+
+#form .inp{
+    display: flex;
+    justify-content: left;
+}
+
+#form input[type="submit"]{
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: inherit;
+    border: none;
+    background-color: brown;
+    color: white;
+}
+
+#form .tags-container{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#form .tags-container .tag{
+    position: relative;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+#form .tags-container .tag:hover span{
+    visibility: visible;
+}
+
+#form .tags-container .tag i{
+    font-size: 1em;
+}
+
+#form .tags-container .tag span{
+    visibility: hidden;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #b22222;
+    color: white;
+    border-radius: 100px;
+    padding: 0 5px;
+}
+
+#form .tags-container .tag i::before{
+    content: '#';
+    font-size: 1.5em;
+}
+
+#form .inp div{
+    margin: 2px 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+    background-color: var(--dark-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#form .inp div input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+}
+
+#form .img-preview{
+    width: 80%;
+}
+
+#form .file-preview{
+    width: 80%;
+    max-height: 20%;
+    overflow-y: scroll;
+    background-color: white;
+    border-radius: inherit;
+}
+
+#form .file-preview p{
+    margin-left: 20px;
 }

@@ -76,11 +76,24 @@ function setCurrentRank(data) {
     progressBar.style.width = `${userPoint / max * 100}%`;
 }
 
-function loadWorks(data) {
-    const userWork = data.activities.works || [];
+function loadSimCard(work){
+    let div = document.createElement("div");
+    
+    let name = document.createElement("p");
+    name.innerHTML = work.name;
+    div.appendChild(name);
+
+    let subject = document.createElement("b");
+    subject.innerHTML = work.subject;
+    div.appendChild(subject);
+    return div;
+}
+
+async function loadWorks(data) {
+    const workIds = data.works || [];
     const container = document.getElementById("user-works");
 
-    if (userWork.length == 0) {
+    if (workIds.length == 0) {
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You haven't contributed anything.";
@@ -88,31 +101,44 @@ function loadWorks(data) {
         return;
     }
 
+    for(let id of workIds){
+        const work = await getData(`works/${id}`);
+        container.appendChild(loadSimCard(work));
+    }
 }
 
-function loadSaved(data) {
-    const userSave = data.activities.saved || [];
+async function loadSaved(data) {
+    const saveIds = data.activities.saved || [];
     const container = document.getElementById("saved");
 
-    if (userSave.length == 0) {
+    if (saveIds.length == 0) {
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You haven't saved anything.";
         container.appendChild(p);
         return;
     }
+
+    for(let id of saveIds){
+        const save = await getData(`works/${id}`);
+        container.appendChild(loadSimCard(save));
+    }
 }
 
-function loadAchievement(data){
-    const userAchievement = data.activities.achievement || [];
+async function loadAchievement(data){
+    const achievementIds = data.activities.achievement || [];
     const container = document.querySelector("#achievement>div");
 
-    if(userAchievement.length == 0){
+    if(achievementIds.length == 0){
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You don't have any achievement.";
         container.appendChild(p);
         return;
+    }
+
+    for(let id of achievementIds){
+        const achievement = await getData(`achievements/${id}`);
     }
 }
 
@@ -181,7 +207,6 @@ deleteBtn.addEventListener("click", async function(){
     await delData(`users/${UID}`);
 
     const user = auth.currentUser;
-    console.log(user);
     
     await user.delete().then(() => {
         visibleNoti("Deleted successfully.", 2000);

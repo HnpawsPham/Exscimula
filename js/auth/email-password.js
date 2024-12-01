@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { visibleNoti } from "../notification.js";
 import { setData, getData } from "../firebase.js";
-import {setKeyLocal, setKeySession} from "./storing.js";
+import {getDate, setKeyLocal, setKeySession} from "./storing.js";
 import Joi from 'https://cdn.jsdelivr.net/npm/joi@17.13.3/+esm'
 const auth = getAuth();
 
@@ -45,10 +45,6 @@ formSignUp.addEventListener("submit", function(e) {
 
     createUserWithEmailAndPassword(auth, email, pass).then(async (credential) => {
         const user = credential.user;
-
-        let date = new Date();
-        date = date.toLocaleDateString();
-
         const uid = user.uid;
 
         const info = {
@@ -59,7 +55,7 @@ formSignUp.addEventListener("submit", function(e) {
             role: 0,
             provider: user.providerId,
             avt: null,
-            joined_since: date,
+            joined_since: getDate(),
             activities: {
                 point: 0,
                 comment: [],

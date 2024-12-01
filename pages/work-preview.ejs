@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="noti" class="hidden"></div>
-    <a id="back-home" href="/topics?subject="<%= subject %>>↩</a><br><br>
+    <a id="back-home" href="/topics?subject=<%= encodeURIComponent(subject) %>">↩</a><br><br>
     
     <div id="top">
         <div class="screen">

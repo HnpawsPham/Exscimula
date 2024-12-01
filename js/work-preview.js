@@ -1,13 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getImgBase64, searchQuery, shortenNum, loadStarRange } from "./auth/storing.js";
-
-// RETURN BACK
-// const returnBtn = document.querySelector("#back-home");
-// returnBtn.addEventListener("click", function(){
-//     window.location.href = `/topics?subject=`;
-// })
+import { getImgBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg } from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -23,13 +17,12 @@ auth.onAuthStateChanged(async (user) => {
 // LOAD SIM
 const simId = searchQuery("id");
 const curSim = await getData(`works/${simId}`);
-console.log(curSim)
 
 // Load sim: Load main preview and queue
 const screen = document.querySelector("#top>.screen>img");
 const imgPreviewContainer = document.querySelector("#top>.img-query");
 
-let previewImgs = curSim.preview;
+let previewImgs = curSim.preview || [defaultImg];
 screen.src = previewImgs[0];
 
 for(let pic of previewImgs){
@@ -51,18 +44,14 @@ imgPreviewContainer.firstChild.classList.add("preview-chosen");
 // Load sim: Load rated stars
 const simStarRange = document.querySelector("#top>.star-range");
 
-if(curSim.star.rate_times > 0){
-    const rateVal = curSim.star.value / curSim.star.rate_times;
-    loadStarRange(rateVal, simStarRange);
 
+const rateVal = curSim.star.value / curSim.star.rate_times;
+loadStarRange(rateVal, simStarRange);
+
+if(curSim.star.rate_times > 0){
     let rateTimes = document.createElement("b");
     rateTimes.innerHTML = `&ensp; ${rateVal.toFixed(1)} / ${shortenNum(curSim.star.rate_times)} rated`;
     simStarRange.appendChild(rateTimes);
-}
-else{
-    let b = document.createElement("b");
-    b.innerHTML = "This simulation is unrated.";
-    simStarRange.appendChild(b);
 }
 
 // DISPLAY DISCUSS (RATES AND QUESTION) DATA
@@ -88,6 +77,7 @@ async function loadDiscuss(){
         let div = document.createElement("div");
 
         let personAvt = document.createElement("img");
+        personAvt.classList.add("avt");
         personAvt.src = person.avt;
         div.appendChild(personAvt);
         
@@ -106,6 +96,17 @@ async function loadDiscuss(){
             div.appendChild(starRange);
         }
     
+        let imgPreview = document.createElement("div");
+        imgPreview.classList.add("img-preview");
+
+        let imgs = mess.imgs || [];
+        for(let pic of imgs){
+            let img = document.createElement("img");
+            img.src = pic;
+            imgPreview.appendChild(img); 
+        }
+        div.appendChild(imgPreview);
+
         let content = document.createElement("p");
         content.innerHTML = mess.content;
         div.appendChild(content);
@@ -143,35 +144,13 @@ for(let i in optionBtns){
 
 // CREATE PREVIEW IMAGES FOR RATE AND QUESTION CONTAINER
 async function createPreviewImg(container, arr, inp){
-    container.replaceChildren();
-    arr.splice(0, arr.length);
-
     const files = inp.files;
-    console.log(files)
 
     if(files.length > 5){
         visibleNoti("You can only upload maximum of 5 files.", 3000);
-        return;
+        return [];
     }
-
-    for(let file of files){
-        let base64 = await getImgBase64(file);
-
-        let div = document.createElement("div");
-
-        let img = document.createElement("img");
-        img.src = base64;
-        div.appendChild(img);
-
-        let delImgBtn = document.createElement("span");
-        delImgBtn.innerHTML = "x";
-        div.appendChild(delImgBtn);
-
-        delImgBtn.addEventListener("click", () => container.removeChild(div));
-
-        container.appendChild(div);
-        arr.push(base64);
-    }
+    return await loadPreviewImg(files, container, arr);
 }
 
 // RATE HANDLE
@@ -196,9 +175,6 @@ async function sendRate(){
         visibleNoti("Please rate first.", 1000);
         return;
     }
-
-    let date = new Date();
-    date = date.toLocaleDateString();
     
     let star = document.querySelectorAll("#bottom>#rates>.star-range>.full").length;
 
@@ -208,7 +184,7 @@ async function sendRate(){
         content: rateInput.value,
         imgs: rateImgs,
         star: star,   
-        date: date, 
+        date: getDate(), 
     }
 
     curSim.star.rate_times++;
@@ -234,7 +210,8 @@ rateInput.addEventListener("keypress", function(e){
 
 // Rate: Input images
 rateFileAttach.addEventListener("change", async () => {
-   createPreviewImg(rateImgContainer, rateImgs, rateFileAttach);
+   rateImgs = await createPreviewImg(rateImgContainer, rateImgs, rateFileAttach);
+   console.log(rateImgs)
 })
 
 // Rate: Stars display
@@ -277,15 +254,12 @@ async function sendQuestion(){
         return;
     }
 
-    let date = new Date();
-    date = date.toLocaleDateString();
-
     let ques = {
         id: ++questionId,
         from: UID,
         content: questionInput.value,
         imgs: questionImgs,
-        date: date, 
+        date: getDate(), 
         like: 0,
         reply: []
     }
@@ -308,7 +282,7 @@ questionSendBtn.addEventListener("click" , () => sendQuestion());
 
 // Question: Attach files
 questionFileAttach.addEventListener("change", async () => {
-    createPreviewImg(questionImgContainer, questionImgs, questionFileAttach);
+    questionImgs = await createPreviewImg(questionImgContainer, questionImgs, questionFileAttach);
 })
 
 

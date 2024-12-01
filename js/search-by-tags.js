@@ -1,4 +1,3 @@
-import { setKeySession } from "./auth/storing.js";
 import { getData } from "./firebase.js";
 
 const data = await getData("tags/") || ['test'];

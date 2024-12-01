@@ -37,3 +37,11 @@ auth.onAuthStateChanged(async (user) => {
     
     visibleNoti(`Welcome, ${data.name}`, 3000);
 });
+
+// TOPIC SELECT HANDLE
+const cards = document.querySelectorAll(".card");
+for(let card of cards) card.addEventListener("click", () => {
+    window.location.href = `/topics?subject=${card.id}`;
+});
+
+account.addEventListener("click", () => window.location.href = "/profile");

@@ -88,34 +88,9 @@ body{
 }
 
 .container .img-preview{
-    display: flex;
-    justify-content: left;
-    min-height: max-content;
     max-height: 10vh;
     width: 90%;
     margin: 10px 20px;
-}
-.container .img-preview div{
-    position: relative;
-    margin-right: 15px;
-    width: 10%;
-}
-.container .img-preview div img{
-    width: 100%;
-    object-fit: cover;
-    aspect-ratio: 1.2;
-}
-.container .img-preview div span{
-    cursor: pointer;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: rgb(1, 1, 1);
-    border-radius: 100px;
-    padding: 5px 10px;
-    color: white;
-    font-weight: bold;
-    font-family: monospace !important;
 }
 
 #top {
@@ -215,7 +190,19 @@ body{
     height: auto;
 }
 
-#discuss div img{
+#discuss .img-preview{
+    width: 80%;
+    margin: 10px 50px;
+}
+
+#discuss .img-preview img{
+    margin: 0 5px;
+    width: 20%;
+    object-fit: cover;
+    aspect-ratio: 1.2;
+}
+
+#discuss div .avt{
     position: absolute;
     left: 20px;
     top: -30px;

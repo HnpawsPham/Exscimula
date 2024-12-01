@@ -19,10 +19,46 @@
         <button id="build-from-stock">Build from stock</button>
     </div>
 
-    <div id="container">
-        <input type="file" accept=".zip">
-        <div class="file-preview"></div>
-    </div>
+    <form id="form">
+        <a href="#instruction">Don't know how to upload?</a>
+
+        <fieldset class="sim-name">
+            <legend>Simulation name</legend>
+            <input type="text" required>
+        </fieldset>
+        
+        <fieldset class="desc">
+            <legend>Description</legend>
+            <input type="text">
+        </fieldset>
+
+        <fieldset class="tag-inp">
+            <legend>Tags</legend>
+            <input type="text" placeholder="Press space to comfirm a tag">
+        </fieldset>
+
+        <div class="tags-container"></div>
+        
+        <div class="inp">
+            <h3>Upload your simulation preview images</h3>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><path fill="#f8eded" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
+                <input class="preview-img-inp" type="file" accept="image/*" multiple>
+            </div>
+        </div>
+        <div class="img-preview"></div>
+
+        <div class="inp">
+            <h3>Upload your simulation source code (.zip)</h3>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><path fill="#f8eded" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
+                <input class="zip-inp" type="file" accept=".zip" required>
+            </div>
+        </div>
+        <div class="file-preview custom-scrollbar"></div>
+
+        <input type="submit" value="Submit">
+    </form>
 
     <div id="instruction">
         <h1>Requirement</h1>
@@ -68,7 +104,7 @@
             </pre>
         </div>
     </div>
-    
+
     <script type="module" src="../js/upload-works.js"></script>
 </body>
 

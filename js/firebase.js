@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getDatabase, ref, set, get, child, remove } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { getDatabase, ref, set, get, child, remove, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCR1_KRvwc4CAX8_shJRfjEzqpjpbNadTE",
@@ -31,7 +31,7 @@ export async function getData(name) {
   }
   catch (err) {
     console.log(err.message);
-    return null;
+    return null
   }
 }
 
@@ -40,4 +40,20 @@ export async function delData(name) {
     .catch(err => {
       console.log(err.message);
     })
+}
+
+export async function updateData_list(name, value) {
+  try {
+    let data = await getData(name);
+    if (!data) data = [];
+
+    data.push(value);
+    await setData(name, data);
+
+    console.log("updated successfuly");
+  }
+  catch (err) {
+    console.log(err.message);
+    return null
+  }
 }

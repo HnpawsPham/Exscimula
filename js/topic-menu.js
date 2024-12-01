@@ -1,8 +1,7 @@
 import { getData, setData } from "./firebase.js";
-import { searchQuery } from "./auth/storing.js";
+import { loadStarRange, searchQuery } from "./auth/storing.js";
 
 const container = document.getElementById("main");
-const searchBar = document.querySelector("#search>input");
 
 const data = await getData(`works/`) || [];
 const subject = searchQuery("subject");
@@ -42,11 +41,14 @@ function emptyHandle(){
 }
 
 function loadSim(work){
+    let preview = work.preview || [];
     let div = document.createElement("div");
     div.classList.add("card");
 
     let img = document.createElement("img");
-    img.src = work.preview[0];
+
+    if(preview.length == 0) img.src = "/assets/default.jpg";
+    else img.src = work.preview[0];
     div.appendChild(img);
 
     let date = document.createElement("i");
@@ -84,44 +86,22 @@ function loadSim(work){
     // RATING DISPLAY
     let rating = document.createElement("div");
     rating.classList.add("rating");
-
+    
     let rate = (work.star.value / work.star.rate_times).toFixed(1);
-    let full = Math.floor(rate);
-    console.log(full)
+    loadStarRange(rate, rating);
 
-    for(let i = 0; i < full; i++){
-        let star = document.createElement("span");
-        star.innerHTML = "☆";
-        star.classList.add("star", "full");
-        rating.appendChild(star);
+    if(work.star.rate_times > 0){
+        let i = document.createElement("i");
+        i.innerHTML = `&ensp; ${rate}`;
+        rating.appendChild(i);
     }
-
-    if(rate != full){
-        let star = document.createElement("span");
-        star.style.setProperty("--percentage", `${(rate - full) * 100}%`);
-        star.classList.add("star", "half");
-        star.innerHTML = "☆";
-        rating.appendChild(star);
-    }
-
-    let left = 5 - Math.ceil(rate);
-    for(let i = 0; i < left; i++){
-        let star = document.createElement("span");
-        star.innerHTML = "☆";
-        star.classList.add("star");
-        rating.appendChild(star);
-    }
-
-    let i = document.createElement("i");
-    i.innerHTML = `&ensp; ${rate}`;
-    rating.appendChild(i);
 
     info.appendChild(rating);
     div.appendChild(info);
     container.appendChild(div);
 
     container.addEventListener("click", function(){
-        window.location.href = `/preview?id=${work.id}`;
+        window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(subject)}`;
     })
 }
 
@@ -149,6 +129,12 @@ for(let workID in data){
 
 if(!exist) emptyHandle();
 
+// Search sims
+const searchBar = document.querySelector("#search>input");
+const searchBtn = document.querySelector("#search>svg");
+
 searchBar.addEventListener("keypress", () => {
     searchSim(data);
 });
+
+searchBtn.addEventListener("click", () => searchSim(data));

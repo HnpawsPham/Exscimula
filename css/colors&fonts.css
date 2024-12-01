@@ -109,7 +109,7 @@ html{
 }
 
 #noti{
-    z-index: 1000;
+    z-index: 100000;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -156,6 +156,37 @@ a{
     width: 30%;
     transform: translateX(-50%);
     pointer-events: none;
+}
+
+.img-preview{
+    display: flex;
+    justify-content: left;
+    min-height: max-content;
+    position: relative;
+}
+
+.img-preview div{
+    position: relative;
+    margin-right: 15px;
+    width: 10%;
+}
+
+.img-preview div img{
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1.2;
+}
+.img-preview div span{
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: rgb(1, 1, 1);
+    border-radius: 100px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+    font-family: monospace !important;
 }
 
 @keyframes heart-fly {
