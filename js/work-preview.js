@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getImgBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg } from "./auth/storing.js";
+import { getImgBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip } from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -25,14 +25,14 @@ const imgPreviewContainer = document.querySelector("#top>.img-query");
 let previewImgs = curSim.preview || [defaultImg];
 screen.src = previewImgs[0];
 
-for(let pic of previewImgs){
+for (let pic of previewImgs) {
     let img = document.createElement("img");
     img.src = pic;
 
-    img.addEventListener("click", function(){
+    img.addEventListener("click", function () {
         let chosen = document.querySelector(".preview-chosen");
-        if(chosen) chosen.classList.remove("preview-chosen");
-        
+        if (chosen) chosen.classList.remove("preview-chosen");
+
         img.classList.add("preview-chosen");
         screen.src = pic;
     })
@@ -48,14 +48,14 @@ const simStarRange = document.querySelector("#top>.star-range");
 const rateVal = curSim.star.value / curSim.star.rate_times;
 loadStarRange(rateVal, simStarRange);
 
-if(curSim.star.rate_times > 0){
+if (curSim.star.rate_times > 0) {
     let rateTimes = document.createElement("b");
     rateTimes.innerHTML = `&ensp; ${rateVal.toFixed(1)} / ${shortenNum(curSim.star.rate_times)} rated`;
     simStarRange.appendChild(rateTimes);
 }
 
 // DISPLAY DISCUSS (RATES AND QUESTION) DATA
-async function loadDiscuss(){
+async function loadDiscuss() {
     discussContainer.replaceChildren();
 
     let h1 = document.createElement("h1");
@@ -64,15 +64,15 @@ async function loadDiscuss(){
 
     const discussData = curSim[optionChosen];
 
-    if(!discussData || Object.keys(discussData).length == 0){
+    if (!discussData || Object.keys(discussData).length == 0) {
         let p = document.createElement("p");
         p.innerHTML = "There is nothing.";
         discussContainer.appendChild(p);
     }
 
-    for(let i in discussData){
+    for (let i in discussData) {
         const mess = discussData[i];
-        let person  = await getData(`users/${mess.from}`);
+        let person = await getData(`users/${mess.from}`);
 
         let div = document.createElement("div");
 
@@ -80,7 +80,7 @@ async function loadDiscuss(){
         personAvt.classList.add("avt");
         personAvt.src = person.avt;
         div.appendChild(personAvt);
-        
+
         let personName = document.createElement("u");
         personName.innerHTML = person.name;
         div.appendChild(personName);
@@ -88,29 +88,29 @@ async function loadDiscuss(){
         let date = document.createElement("i");
         date.innerHTML = moment(mess.date, "MMDDYYYY").fromNow();
         div.appendChild(date);
-    
-        if(optionChosen == "rates"){
+
+        if (optionChosen == "rates") {
             let starRange = document.createElement("div");
             starRange.classList.add("star-range");
             loadStarRange(mess.star, starRange);
             div.appendChild(starRange);
         }
-    
+
         let imgPreview = document.createElement("div");
         imgPreview.classList.add("img-preview");
 
         let imgs = mess.imgs || [];
-        for(let pic of imgs){
+        for (let pic of imgs) {
             let img = document.createElement("img");
             img.src = pic;
-            imgPreview.appendChild(img); 
+            imgPreview.appendChild(img);
         }
         div.appendChild(imgPreview);
 
         let content = document.createElement("p");
         content.innerHTML = mess.content;
         div.appendChild(content);
-    
+
         discussContainer.appendChild(div);
     }
 }
@@ -123,15 +123,15 @@ const discussContainer = document.querySelector("#discuss");
 let optionChosen = "rates";
 loadDiscuss();
 
-for(let i in optionBtns){
-    try{
+for (let i in optionBtns) {
+    try {
         i = parseInt(i);
         let btn = optionBtns[i];
-        
-        btn.addEventListener("click", function(){
+
+        btn.addEventListener("click", function () {
             btn.classList.add("option-chosen");
             optionBtns[(i + 1) % optionBtns.length].classList.remove("option-chosen");
-            
+
             optionChosen = btn.name;
             document.getElementById(optionChosen).classList.remove("hidden");
             containers[(i + 1) % 2].classList.add("hidden");
@@ -139,14 +139,14 @@ for(let i in optionBtns){
             loadDiscuss();
         })
     }
-    catch{}
+    catch { }
 }
 
 // CREATE PREVIEW IMAGES FOR RATE AND QUESTION CONTAINER
-async function createPreviewImg(container, arr, inp){
+async function createPreviewImg(container, arr, inp) {
     const files = inp.files;
 
-    if(files.length > 5){
+    if (files.length > 5) {
         visibleNoti("You can only upload maximum of 5 files.", 3000);
         return [];
     }
@@ -165,17 +165,17 @@ let rateId = ratesData.length;
 let rateImgs = [];
 let rated = false;
 
-async function sendRate(){
-    if(!UID || !userName){
+async function sendRate() {
+    if (!UID || !userName) {
         visibleNoti("Please log in to rate.", 2000);
         return;
     }
 
-    if(!rated){
+    if (!rated) {
         visibleNoti("Please rate first.", 1000);
         return;
     }
-    
+
     let star = document.querySelectorAll("#bottom>#rates>.star-range>.full").length;
 
     let rate = {
@@ -183,13 +183,13 @@ async function sendRate(){
         from: UID,
         content: rateInput.value,
         imgs: rateImgs,
-        star: star,   
-        date: getDate(), 
+        star: star,
+        date: getDate(),
     }
 
     curSim.star.rate_times++;
     curSim.star.value += star;
-    if(!curSim.rates) curSim[`rates`] = {};
+    if (!curSim.rates) curSim[`rates`] = {};
     curSim.rates[rateId] = rate;
 
     await setData(`works/${simId}`, curSim);
@@ -198,38 +198,38 @@ async function sendRate(){
     rateInput.value = "";
     rateImgs.splice(0, rateImgs.length);
     rateImgContainer.replaceChildren();
-    for(let star of rateStarRange) star.classList.remove("full");
+    for (let star of rateStarRange) star.classList.remove("full");
 
     visibleNoti("Rated successfully", 2000);
 }
 
 rateSendBtn.addEventListener("click", () => sendRate());
-rateInput.addEventListener("keypress", function(e){
-    if(e.key == "Enter") sendRate();
+rateInput.addEventListener("keypress", function (e) {
+    if (e.key == "Enter") sendRate();
 })
 
 // Rate: Input images
 rateFileAttach.addEventListener("change", async () => {
-   rateImgs = await createPreviewImg(rateImgContainer, rateImgs, rateFileAttach);
-   console.log(rateImgs)
+    rateImgs = await createPreviewImg(rateImgContainer, rateImgs, rateFileAttach);
+    console.log(rateImgs)
 })
 
 // Rate: Stars display
-for(let i in rateStarRange){
+for (let i in rateStarRange) {
     i = parseInt(i);
     let star = rateStarRange[i];
-    
-    try{
-        star.addEventListener("click", function(){
+
+    try {
+        star.addEventListener("click", function () {
             star.classList.add("full");
-    
-            for(let j = 0; j < i; j++) rateStarRange[j].classList.add("full");
-            for(let j = i + 1; j < rateStarRange.length; j++) rateStarRange[j].classList.remove("full");
-    
+
+            for (let j = 0; j < i; j++) rateStarRange[j].classList.add("full");
+            for (let j = i + 1; j < rateStarRange.length; j++) rateStarRange[j].classList.remove("full");
+
             rated = true;
         });
     }
-    catch{};
+    catch { };
 }
 
 // ASK QUESTION HANDLE
@@ -243,13 +243,13 @@ let questionId = questionsData.length;
 let questionImgs = [];
 
 // Question: Send questions
-async function sendQuestion(){
-    if(!UID){
+async function sendQuestion() {
+    if (!UID) {
         visibleNoti("Please log in to ask.", 2000);
         return;
     }
 
-    if(questionInput.value.trim().length == 0){
+    if (questionInput.value.trim().length == 0) {
         visibleNoti("Please type something first.", 1500);
         return;
     }
@@ -259,30 +259,63 @@ async function sendQuestion(){
         from: UID,
         content: questionInput.value,
         imgs: questionImgs,
-        date: getDate(), 
+        date: getDate(),
         like: 0,
         reply: []
     }
-    
+
     await setData(`works/${simId}/questions/${questionId}`, ques);
 
     // Reset
     questionInput.value = "";
     questionImgs.splice(0, questionImgs.length);
     questionImgContainer.replaceChildren();
-    
+
     visibleNoti("Asked successfully.", 2000);
 }
 
 questionInput.addEventListener("keypress", (e) => {
-    if(e.key == "Enter") sendQuestion();
+    if (e.key == "Enter") sendQuestion();
 })
 
-questionSendBtn.addEventListener("click" , () => sendQuestion());
+questionSendBtn.addEventListener("click", () => sendQuestion());
 
 // Question: Attach files
 questionFileAttach.addEventListener("change", async () => {
     questionImgs = await createPreviewImg(questionImgContainer, questionImgs, questionFileAttach);
 })
 
+// PLAY SIM
+const playSimBtn = document.querySelector("#top>.screen>svg");
+const zipFile = curSim.zip;
+
+playSimBtn.addEventListener("click", async function () {
+    const srcCode = await unZip(zipFile);
+    const indexFile = srcCode.index;
+
+    if (fileSystem['index.html']) {
+        const blob = new Blob([fileSystem['index.html']], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        simulationFrame.src = url;
+
+        simulationFrame.onload = () => {
+            const doc = simulationFrame.contentDocument;
+
+            Object.entries(fileSystem).forEach(([path, content]) => {
+                if (path.endsWith('.css')) {
+                    const style = doc.createElement('style');
+                    style.textContent = content;
+                    doc.head.appendChild(style);
+                } else if (path.endsWith('.js')) {
+                    const script = doc.createElement('script');
+                    script.textContent = content;
+                    doc.body.appendChild(script);
+                }
+            });
+        };
+    } 
+    else {
+        alert('No index.html found in the ZIP file.');
+    }
+})
 

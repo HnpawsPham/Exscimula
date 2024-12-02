@@ -1,49 +1,12 @@
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { app, delData, getData, setData } from "./firebase.js";
-import { forkOff, getImgBase64 } from "./auth/storing.js";
+import { forkOff, getImgBase64, ranksList, defaultAvt, getUserRank, setToLeaderBoard } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
 const auth = getAuth(app);
 let data;
 
-const defaultAvt = "/assets/default.jpg";
-
 // RANK HANDLE
-const ranksList = {
-    bronze: {
-        min: 0,
-        src: "/assets/ranks/bronze.png"
-    },
-    silver: {
-        min: 10,
-        src: "/assets/ranks/silver.png"
-    },
-    gold: {
-        min: 20,
-        src: "/assets/ranks/gold.png"
-    },
-    diamond: {
-        min: 30,
-        src: "/assets/ranks/diamond.png"
-    },
-    emerald: {
-        min: 40,
-        src: "/assets/ranks/emerald.png"
-    },
-    vip1: {
-        min: 1000,
-        src: "/assets/ranks/vip1.png"
-    },
-    vip2: {
-        min: 10000,
-        src: "/assets/ranks/vip2.png"
-    },
-    vip3: {
-        min: 100000,
-        src: "/assets/ranks/vip3.png"
-    },
-}
-
 function setInterface(data) {
     const avt = document.querySelector("#avt>img");
     const nickname = document.getElementById("nickname");
@@ -60,20 +23,11 @@ function setCurrentRank(data) {
     const userPoint = data.activities.point;
     const rankImgs = document.querySelectorAll(".rank");
     const progressBar = document.querySelector("#progress-bar>div");
-    let userRankImg = "/assets/ranks/bronze.png";
-    let max;
 
-    for (let rank in ranksList) {
-        let min = ranksList[rank].min;
-        if (userPoint >= min) userRankImg = ranksList[rank].src;
-        else {
-            max = ranksList[rank].min - 1;
-            break;
-        }
-    }
-
-    for (let img of rankImgs) img.src = userRankImg;
-    progressBar.style.width = `${userPoint / max * 100}%`;
+    let userRank = getUserRank(userPoint);
+    
+    for (let img of rankImgs) img.src = userRank.img;
+    progressBar.style.width = `${userPoint / userRank.max * 100}%`;
 }
 
 function loadSimCard(work){

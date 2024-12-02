@@ -178,7 +178,7 @@ body {
     background-color: black;
 }
 
-.card {
+#topics .card {
     border: 10px solid white;
     cursor: pointer;
     backdrop-filter: blur(10px);
@@ -194,14 +194,14 @@ body {
     color: white;
 }
 
-.card img {
+#topics .card img {
     width: 90%;
     height: 70%;
     object-fit: cover;
     border-radius: inherit;
 }
 
-.card div {
+#topics .card div {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -209,14 +209,14 @@ body {
     flex-direction: column;
 }
 
-.card div p {
+#topics .card div p {
     font-size: 10px;
     opacity: 0.6;
     width: 100%;
     text-align: center;
 }
 
-.card:hover {
+#topics .card:hover {
     transform: rotate(-2deg) scale(1.1);
 }
 
@@ -307,6 +307,7 @@ b {
 }
 
 .slider img {
+    border-radius: 20px;
     position: absolute;
     width: 450px;
     height: 250px;
@@ -335,16 +336,54 @@ b {
     z-index: 2;
 }
 
-#leader-board{
-    margin: 5vh auto;
-    border-radius: 20px;
-    width: 90vw;
-    background-color: white;
+.part{
+    width: 100vw;
     height: auto;
+    background-color: black;
+}
+
+#leader-board{
+    width: 90vw;
+    margin: 0 5vw;
+    background-color: white;
+    border-radius: 20px;
+    min-height: 20vh;
 }
 #leader-board h1{
+    padding: 30px 0 0 0;
     color: var(--blue);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#leader-board h1 svg{
+    margin-top: -10px;
+    margin-right: -10px;
+}
+
+#leader-board div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#leader-board div .card{
+    width: 90%;
+    color: var(--red-brown);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 20px;
+    background-color: var(--cwhite);
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+#leader-board div .card .avt{
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    border: 2px solid brown;
 }

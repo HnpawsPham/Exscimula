@@ -1,6 +1,62 @@
 import * as unzipit from 'https://unpkg.com/unzipit@1.4.0/dist/unzipit.module.js';
+import { getData, setData } from '../firebase.js';
+import { visibleNoti } from '../notification.js';
 
 export const defaultImg = "/assets/default.jpg";
+export const defaultAvt = "/assets/default.jpg";
+
+export const ranksList = {
+    bronze: {
+        min: 0,
+        src: "/assets/ranks/bronze.png"
+    },
+    silver: {
+        min: 10,
+        src: "/assets/ranks/silver.png"
+    },
+    gold: {
+        min: 20,
+        src: "/assets/ranks/gold.png"
+    },
+    diamond: {
+        min: 30,
+        src: "/assets/ranks/diamond.png"
+    },
+    emerald: {
+        min: 40,
+        src: "/assets/ranks/emerald.png"
+    },
+    vip1: {
+        min: 1000,
+        src: "/assets/ranks/vip1.png"
+    },
+    vip2: {
+        min: 10000,
+        src: "/assets/ranks/vip2.png"
+    },
+    vip3: {
+        min: 100000,
+        src: "/assets/ranks/vip3.png"
+    },
+}
+
+export function getUserRank(point){
+    let max;
+    let imgSrc = "/assets/ranks/bronze.png";
+
+    for (let rank in ranksList) {
+        let min = ranksList[rank].min;
+        if (point >= min) imgSrc = ranksList[rank].src;
+        else {
+            max = ranksList[rank].min - 1;
+            break;
+        }
+    }
+    return {
+        max: max,
+        img: imgSrc
+    }
+}
 
 export function forkOff() {
     window.location.href = "/index";
@@ -67,6 +123,7 @@ export async function unZip(file) {
     let res = {};
     let fnames = [];
     let urls = [];
+    let found = false;
 
     for (let [filename, entry] of Object.entries(data.entries)) {
         if (!entry.directory) {
@@ -74,9 +131,22 @@ export async function unZip(file) {
             const blob = new Blob([buffer]);
             const url = URL.createObjectURL(blob);
             urls.push(url);
+
+            if(filename.split('/').pop() == "index.html"){
+                found = true;
+                res["index"] = url;
+            }
+
             fnames.push(filename);
         }
     }
+
+    if(!found){
+        visibleNoti("Index.html not found! Please try again.", 5000);
+        return null;
+    }
+
+    console.log(res.index)
 
     res["url"] = urls;
     res["fname"] = fnames;
@@ -112,4 +182,29 @@ export async function loadPreviewImg(files, container, arr) {
         arr.push(base64);
     }
     return arr;
+}
+
+function sortLeaderBoardCompare(a, b){
+    return a.point > b.point;
+}
+
+export async function setToLeaderBoard(user){
+    const leaderboard_data = await getData(`leaderboard/`) || [];
+    let leaderId = leaderboard_data.length;
+
+    let person = {
+        name: user.name, 
+        point: user.activities.point,
+        avt: user.avt,
+    }
+
+    if(leaderId == 0){
+        await setData(`leaderboard/${++leaderId}`, person);
+    }
+    else{
+        leaderboard_data.push(person);
+        leaderboard_data.sort(sortLeaderBoardCompare);
+
+        await setData(`leaderboard`, leaderboard_data);
+    }
 }

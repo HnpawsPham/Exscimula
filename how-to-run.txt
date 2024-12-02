@@ -1,0 +1,6 @@
+1. Tải thư viện: nhập lệnh
+     npm i -g nodemon
+2. gõ đường dẫn thư mục vào cmd
+3. gõ cd js
+4. gõ nodemon app.js
+5. lên browser bất kì gõ localhost:3000/index
