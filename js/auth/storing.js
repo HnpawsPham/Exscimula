@@ -120,24 +120,28 @@ export function shortenNum(num) {
 
 export async function unZip(file) {
     const data = await unzipit.unzip(file);
-    let res = {};
-    let fnames = [];
-    let urls = [];
+    
+    let codeFiles = {};
+    let assets = {};
+    let indexFile;
     let found = false;
 
-    for (let [filename, entry] of Object.entries(data.entries)) {
-        if (!entry.directory) {
+    for (let [name, entry] of Object.entries(data.entries)) {
+        if (entry.directory) continue;
+
+        if(/\.(html|css|js|txt)$/.test(name)){
+            codeFiles[name] = await entry.text();
+
+            if(name.split('/').pop() == "index.html"){
+                found = true;
+                indexFile = codeFiles[name];
+            }
+        }
+        else{
             const buffer = await entry.arrayBuffer();
             const blob = new Blob([buffer]);
             const url = URL.createObjectURL(blob);
-            urls.push(url);
-
-            if(filename.split('/').pop() == "index.html"){
-                found = true;
-                res["index"] = url;
-            }
-
-            fnames.push(filename);
+            assets[name] = url;
         }
     }
 
@@ -145,13 +149,11 @@ export async function unZip(file) {
         visibleNoti("Index.html not found! Please try again.", 5000);
         return null;
     }
-
-    console.log(res.index)
-
-    res["url"] = urls;
-    res["fname"] = fnames;
-
-    return res;
+    return {
+        code: codeFiles,
+        assets: assets,
+        index: indexFile
+    };
 }
 
 export function getDate() {

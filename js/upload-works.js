@@ -118,12 +118,18 @@ function inputSrc() {
         try {
             srcCode = file;
             filePreview.replaceChildren();
+
+            // Load files name in zip 
             const data = await unZip(file);
 
-            for (let elm of data.fname) {
-                let p = document.createElement("p");
-                p.innerHTML = elm;
-                filePreview.appendChild(p);
+            for(let [name, val] of Object.entries(data)){
+                if(name == "index") continue
+                    
+                for(let key of Object.keys(data[name])){
+                    let p = document.createElement("p");
+                    p.innerHTML = key;
+                    filePreview.appendChild(p);
+                }
             }
         }
         catch (err) {
@@ -142,6 +148,7 @@ async function uploadSim(curUser, id, point) {
             visibleNoti("Please upload your code (.zip) first!", 3000);
             return;
         } 
+        console.log(srcCode)
 
         try {
             const work = {
@@ -160,7 +167,7 @@ async function uploadSim(curUser, id, point) {
                 },
                 subject: subject,
                 tags: tags,
-                zip: srcCode
+                zip: srcCode, //CUU TOI VOI!!!!
             }
             
             await updateData_list(`users/${curUser.uid}/works`, id);

@@ -288,34 +288,32 @@ questionFileAttach.addEventListener("change", async () => {
 // PLAY SIM
 const playSimBtn = document.querySelector("#top>.screen>svg");
 const zipFile = curSim.zip;
+console.log(zipFile) // NEED STORAGE HERE
 
 playSimBtn.addEventListener("click", async function () {
     const srcCode = await unZip(zipFile);
     const indexFile = srcCode.index;
 
-    if (fileSystem['index.html']) {
-        const blob = new Blob([fileSystem['index.html']], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        simulationFrame.src = url;
+    // Create url for index.html
+    const blob = new Blob([indexFile], {type: "text/html"});
+    const url = URL.createObjectURL(blob);
 
-        simulationFrame.onload = () => {
-            const doc = simulationFrame.contentDocument;
+    // Create new tab
+    const tab = window.open();
+    tab.document.open();
+    tab.document.write(`<html><head><title>${"name here"}</title></head><body></body></html>`);
+    tab.document.close();
 
-            Object.entries(fileSystem).forEach(([path, content]) => {
-                if (path.endsWith('.css')) {
-                    const style = doc.createElement('style');
-                    style.textContent = content;
-                    doc.head.appendChild(style);
-                } else if (path.endsWith('.js')) {
-                    const script = doc.createElement('script');
-                    script.textContent = content;
-                    doc.body.appendChild(script);
-                }
-            });
-        };
-    } 
-    else {
-        alert('No index.html found in the ZIP file.');
+    // Add content to new tab
+    tab.document.body.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100vh;"></iframe>`;
+
+    tab.onload = () => {
+        const doc = tab.document;
+
+        // Add files (html,css,...) 
+        console.log(srcCode.code);
+
+        
     }
 })
 

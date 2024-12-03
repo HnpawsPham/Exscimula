@@ -4,3 +4,42 @@
 3. gõ cd js
 4. gõ nodemon app.js
 5. lên browser bất kì gõ localhost:3000/index
+
+if (fileSystem['index.html']) {
+  // Tạo một Blob từ nội dung của index.html
+  const blob = new Blob([fileSystem['index.html']], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+
+  // Mở một tab mới
+  const newTab = window.open();
+  newTab.document.open();
+  newTab.document.write('<html><head><title>Simulation</title></head><body></body></html>');
+  newTab.document.close();
+
+  // Nạp nội dung vào tab mới
+  newTab.document.body.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100vh;"></iframe>`;
+
+  // Khi iframe đã load xong
+  newTab.onload = () => {
+    const doc = newTab.document;
+
+    // Nạp các asset (CSS, JS, ảnh)
+    Object.entries(fileSystem).forEach(([fileName, content]) => {
+      if (fileName.endsWith('.css')) {
+        const style = doc.createElement('style');
+        style.textContent = content;
+        doc.head.appendChild(style);
+      } else if (fileName.endsWith('.js')) {
+        const script = doc.createElement('script');
+        script.textContent = content;
+        doc.body.appendChild(script);
+      } else if (/\.(png|jpe?g|gif|svg)$/.test(fileName)) {
+        const assetBlob = new Blob([content], { type: `image/${fileName.split('.').pop()}` });
+        const assetUrl = URL.createObjectURL(assetBlob);
+        doc.querySelectorAll(`img[src$="${fileName}"]`).forEach((img) => (img.src = assetUrl));
+      }
+    });
+  };
+} else {
+  alert('No index.html found in the ZIP file.');
+}

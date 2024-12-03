@@ -39,7 +39,6 @@ body {
 }
 
 #first .bg-img{
-    z-index: -1;
     position: absolute;
     filter: brightness(90%);
     top: 0;
