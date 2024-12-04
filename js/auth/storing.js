@@ -40,7 +40,7 @@ export const ranksList = {
     },
 }
 
-export function getUserRank(point){
+export function getUserRank(point) {
     let max;
     let imgSrc = "/assets/ranks/bronze.png";
 
@@ -120,7 +120,7 @@ export function shortenNum(num) {
 
 export async function unZip(file) {
     const data = await unzipit.unzip(file);
-    
+
     let codeFiles = {};
     let assets = {};
     let indexFile;
@@ -129,15 +129,15 @@ export async function unZip(file) {
     for (let [name, entry] of Object.entries(data.entries)) {
         if (entry.directory) continue;
 
-        if(/\.(html|css|js|txt)$/.test(name)){
+        if (/\.(html|css|js|txt)$/.test(name)) {
             codeFiles[name] = await entry.text();
 
-            if(name.split('/').pop() == "index.html"){
+            if (name.split('/').pop() == "index.html") {
                 found = true;
                 indexFile = codeFiles[name];
             }
         }
-        else{
+        else {
             const buffer = await entry.arrayBuffer();
             const blob = new Blob([buffer]);
             const url = URL.createObjectURL(blob);
@@ -145,7 +145,7 @@ export async function unZip(file) {
         }
     }
 
-    if(!found){
+    if (!found) {
         visibleNoti("Index.html not found! Please try again.", 5000);
         return null;
     }
@@ -186,27 +186,69 @@ export async function loadPreviewImg(files, container, arr) {
     return arr;
 }
 
-function sortLeaderBoardCompare(a, b){
+export function binarySearch(x, arr, compare){
+    let l = 0;
+    let r = arr.length - 1;
+
+    while(l <= r){
+        let mid = Math.floor(l + (r - l)/2);
+
+        if(arr[mid] === x) return mid;
+        if(compare(a[mid], x)) r = mid - 1;
+        else l = mid + 1;
+    }
+    return -1;
+}
+
+// LEADERBOARD HANDLING METHODS
+function sortLeaderBoardCompare(a, b) {
     return a.point > b.point;
 }
 
-export async function setToLeaderBoard(user){
+export async function setToLeaderBoard(user) {
     const leaderboard_data = await getData(`leaderboard/`) || [];
     let leaderId = leaderboard_data.length;
 
     let person = {
-        name: user.name, 
+        name: user.name,
         point: user.activities.point,
         avt: user.avt,
     }
 
-    if(leaderId == 0){
+    if (leaderId == 0) {
         await setData(`leaderboard/${++leaderId}`, person);
     }
-    else{
+    else {
         leaderboard_data.push(person);
         leaderboard_data.sort(sortLeaderBoardCompare);
+        leaderId = leaderboard_data.indexOf(person);
 
         await setData(`leaderboard`, leaderboard_data);
+    }
+    await setData(`users/${user.uid}/activities/top/`, leaderId);
+}
+
+// .ZIP HANDLING METHODS FROM SERVER
+export async function getZip(id) {
+    const res = await fetch(`/get-zip?id=${id}`, {
+        method: "GET"
+    });
+
+    if (res.ok) {
+        const blob = await res.blob();
+        return new File([blob], `${id}.zip`, { type: blob.type });
+    }
+    else throw new Error("Get zip failed.");
+}
+
+export async function postZip(data){
+    const res = await fetch("/upload", {
+        method: "POST",
+        body: data,
+    });
+
+    if(!res.ok){
+        visibleNoti("File uploaded failed. Please try again.", 4000);
+        throw new Error("Posted zip failed.");
     }
 }

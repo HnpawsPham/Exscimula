@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getImgBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip } from "./auth/storing.js";
+import { getImgBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip, getZip } from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -22,9 +22,11 @@ const curSim = await getData(`works/${simId}`);
 const screen = document.querySelector("#top>.screen>img");
 const imgPreviewContainer = document.querySelector("#top>.img-query");
 
+// Biggest preview image
 let previewImgs = curSim.preview || [defaultImg];
 screen.src = previewImgs[0];
 
+// Load preview images queue
 for (let pic of previewImgs) {
     let img = document.createElement("img");
     img.src = pic;
@@ -203,6 +205,7 @@ async function sendRate() {
     visibleNoti("Rated successfully", 2000);
 }
 
+// Submit rate data
 rateSendBtn.addEventListener("click", () => sendRate());
 rateInput.addEventListener("keypress", function (e) {
     if (e.key == "Enter") sendRate();
@@ -274,10 +277,10 @@ async function sendQuestion() {
     visibleNoti("Asked successfully.", 2000);
 }
 
+// Submit question
 questionInput.addEventListener("keypress", (e) => {
     if (e.key == "Enter") sendQuestion();
 })
-
 questionSendBtn.addEventListener("click", () => sendQuestion());
 
 // Question: Attach files
@@ -287,33 +290,49 @@ questionFileAttach.addEventListener("change", async () => {
 
 // PLAY SIM
 const playSimBtn = document.querySelector("#top>.screen>svg");
-const zipFile = curSim.zip;
-console.log(zipFile) // NEED STORAGE HERE
+const zipFile = await getZip(simId);
 
+// Navigate to sim page when click play button
 playSimBtn.addEventListener("click", async function () {
     const srcCode = await unZip(zipFile);
-    const indexFile = srcCode.index;
-
-    // Create url for index.html
-    const blob = new Blob([indexFile], {type: "text/html"});
-    const url = URL.createObjectURL(blob);
 
     // Create new tab
     const tab = window.open();
     tab.document.open();
-    tab.document.write(`<html><head><title>${"name here"}</title></head><body></body></html>`);
+    tab.document.write(srcCode.index);
     tab.document.close();
-
-    // Add content to new tab
-    tab.document.body.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100vh;"></iframe>`;
 
     tab.onload = () => {
         const doc = tab.document;
+    
+        // Add js and css 
+        // SOLVE ADDTIONAL JS AND CSS FILE HERE!!!!
+        for (let [name, val] of Object.entries(srcCode.code)) {
+            console.log(name)
+            if (name.endsWith(".css")) {
+                const style = doc.createElement("style");
+                style.type = "text/css";
+                style.textContent = val;
+                doc.head.appendChild(style);
+            }
+            else if (name.endsWith(".js")) {
+                const script = doc.createElement("script");
+                script.type = "text/javascript";
+                script.textContent = `
+                        document.addEventListener('DOMContentLoaded', function() {
+                            ${val}
+                        });
+                    `;
+                doc.body.appendChild(script);
+            }
+        }
 
-        // Add files (html,css,...) 
-        console.log(srcCode.code);
-
-        
+        // Add assets
+        for (let [name, val] of Object.entries(srcCode.assets)) {
+            const blob = new Blob([val], { type: `image/${name.split('/').pop()}` });
+            const url = URL.createObjectURL(blob);
+            doc.querySelectorAll(`img[src$="${name}"]`).forEach(img => img.src = url);
+        }
     }
 })
 

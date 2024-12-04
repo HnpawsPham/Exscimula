@@ -52,7 +52,6 @@ function loadSim(work){
     div.appendChild(img);
 
     let date = document.createElement("i");
-    console.log(work.date)
     date.innerHTML = "&ensp; " + moment(work.date, "MMDDYYYY").fromNow();
     date.classList.add("date");
     div.appendChild(date);

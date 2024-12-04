@@ -1,6 +1,6 @@
 import { getData, setData, updateData_list } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { forkOff, getDate, loadPreviewImg, unZip } from "./auth/storing.js";
+import { forkOff, getDate, loadPreviewImg, postZip, unZip } from "./auth/storing.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const tagInp = document.querySelector("#form>.tag-inp>input");
@@ -122,7 +122,7 @@ function inputSrc() {
             // Load files name in zip 
             const data = await unZip(file);
 
-            for(let [name, val] of Object.entries(data)){
+            for(let name of Object.keys(data)){
                 if(name == "index") continue
                     
                 for(let key of Object.keys(data[name])){
@@ -145,12 +145,12 @@ async function uploadSim(curUser, id, point) {
         e.preventDefault();
 
         if(!srcCode){
-            visibleNoti("Please upload your code (.zip) first!", 3000);
+            visibleNoti("Make sure to upload the .zip file!", 3000);
             return;
         } 
-        console.log(srcCode)
 
         try {
+            // Sync work info
             const work = {
                 name: simNameInp.value,
                 date: getDate(),
@@ -167,12 +167,22 @@ async function uploadSim(curUser, id, point) {
                 },
                 subject: subject,
                 tags: tags,
-                zip: srcCode, //CUU TOI VOI!!!!
             }
-            
-            await updateData_list(`users/${curUser.uid}/works`, id);
+
+            // Upload work source code
+            let formData = new FormData();
+            formData.append("id", id);
+            formData.append("file", srcCode);
+
+            const UID = curUser.uid;
+
+            await postZip(formData);
+            await updateData_list(`users/${UID}/works`, id);
             await setData(`works/${id}`, work);
-            await setData(`users/${curUser.uid}/activities/point`, ++point);
+            await setData(`users/${UID}/activities/point`, ++point);
+
+            if(curUser.activities.top)
+            await setData(`leaderboard/${curUser.activities.top}/point`, point);
 
             visibleNoti("Uploaded successfully!", 2000);
         }

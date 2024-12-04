@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { visibleNoti } from "./notification.js";
 import { app, getData } from "./firebase.js";
-import { getUserRank } from "./auth/storing.js";
+import { getUserRank, setToLeaderBoard } from "./auth/storing.js";
 
 const auth = getAuth(app);
 
@@ -20,7 +20,7 @@ auth.onAuthStateChanged(async (user) => {
     login_btn.classList.add("hidden");
 
     const data = await getData(`users/${user.uid}`);
-
+    
     if(!data){
         visibleNoti("There was an error occur. Please try again.", 2000);
         return;
