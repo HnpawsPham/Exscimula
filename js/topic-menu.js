@@ -2,34 +2,12 @@ import { getData, setData } from "./firebase.js";
 import { loadStarRange, searchQuery } from "./auth/storing.js";
 
 const container = document.getElementById("main");
+const searchBar = document.querySelector("#search>input");
+const searchBtn = document.querySelector("#search>svg");
 
-const data = await getData(`works/`) || [];
 const subject = searchQuery("subject");
-
-let workId = data.length;
-
-// TEST
-// let work = {
-//     id: ++workId,
-//     name: "tuyet voi ong mat troi",
-//     img: "/assets/codecat.jpg",
-//     preview: [],
-//     rate: [],
-//     question: [],
-//     star: {
-//         value: 4.5,
-//         rate_times: 1000,
-//     },
-//     author: {
-//         name: "HnpawsPham", 
-//         uid: "rU32BMEXHabxrY63BzOoRRH34f73", 
-//     },
-//     tags: ["hoa hoc", "sim"],
-//     description: "This is description.",
-//     subject: "chemis"
-// }
-
-// setData(`works/${workId}` ,work);
+const data = (await getData(`works/`) || [])
+    .filter(work => work !== undefined && work.subject === subject);
 
 // CHECK IF THERE IS ANY SIMUALATIONS
 function emptyHandle(){
@@ -48,7 +26,7 @@ function loadSim(work){
     let img = document.createElement("img");
 
     if(preview.length == 0) img.src = "/assets/default.jpg";
-    else img.src = work.preview[0];
+    else img.src = preview[0];
     div.appendChild(img);
 
     let date = document.createElement("i");
@@ -104,15 +82,129 @@ function loadSim(work){
     })
 }
 
-function searchSim(data){
-    console.log("cung cung");
+// ADDITIONAL FUNCTIONS FOR SORTING AND SEARCHING
+const sortedByPoint = [...data].sort(searchSimCompare);
+const sortedByStar = [...data].sort(sortSimByStarCompare);
+const sortedByDate = [...data].sort(sortSimByDateCompare);
+const sortedByPopularity = [...data].sort();
 
-    // LOAD SUGGESTIONS
+function searchSimGetPoint(a){
+    let sugg_words = a.split(' ');
+    let inp_words = searchBar.value.split(' ');
+    let point = 0;
 
+    for(let word of inp_words){
+        for(let word1 of sugg_words){
+            if (word == word1) point++;
+        }
+    }
+    return point;
 }
 
-function sortSim(data){
-    
+function searchSimCompare(a, b){
+    return searchSimGetPoint(a.name) > searchSimGetPoint(b.name);
+}
+
+// Sort increasing: 1 star - 5 stars
+function sortSimByStarCompare(a, b){
+    let val_a = (a.star.value / a.star.rate_times).toFixed(1) || 0;
+    let val_b = (b.star.value / b.star.rate_times).toFixed(1) || 0;
+    return val_a < val_b;
+}
+
+// Sort increasing: oldest - newest (date)
+function sortSimByDateCompare(a, b){
+    let d1 = new Date(a.date);
+    let d2 = new Date(b.date);
+    return d1 < d2;
+}
+
+// Binary search: find the nearest index satisfied chosen rate value
+function sortSimByStarBNS(x){
+    let l = 0, r = sortedByStar.length - 1;
+    let res = null;
+
+    while(l <= r){
+        let mid = Math.floor(l + (r - l) / 2);
+        let val = (sortedByStar[mid].star.value / sortedByStar[mid].star.rate_times).toFixed(1) || 0;
+
+        if(val >= x){ // fix cho nay
+            res = mid;
+            r = mid - 1;
+        }
+        else l = mid + 1;
+    }
+
+    return res;
+}
+
+// console.log(sortedByStar)
+console.log(sortedByDate)
+
+const sortByDateBar = document.querySelectorAll("#sort-by-date>span");
+for(let opt of sortByDateBar){
+    opt.addEventListener("click", function(){
+        const chosen = document.querySelector("#sort-by-date>.chosen");
+        chosen.classList.remove("chosen");
+
+        opt.classList.add("chosen");
+        const type = opt.innerHTML;
+        container.replaceChildren();
+
+        // Load sims
+        if(type == "Newest") {
+            for(let work of sortedByDate) loadSim(work);
+        }
+        else if(type == "Oldest"){
+            sortedByDate.reverse();
+            for(let work of sortedByDate) loadSim(work);
+        }
+        else{
+            for(let work of sortedByPopularity) loadSim(work);
+        }
+    });
+}
+
+const sortByStarBar = document.querySelectorAll("#sort-by-star>span");
+for(let opt of sortByStarBar){
+    opt.addEventListener("click", function(){
+        const chosen = document.querySelector("#sort-by-star>.chosen");
+        chosen.classList.remove("chosen");
+
+        opt.classList.add("chosen");
+        container.replaceChildren();
+        let x = parseInt(opt.innerHTML) // rate limit (such as 3.0 > 3.9 star)
+
+        // Load all sims
+        if(!x) {
+            for(let work of sortedByStar) loadSim(work);
+            return;
+        }
+
+        // Get values range
+        let st = sortSimByStarBNS(x);
+        let en = sortSimByStarBNS(x + 1);
+
+        if(!st || !en || st > en){
+            emptyHandle();
+            return;
+        }
+
+        let val = (sortedByStar[en].star.value / sortedByStar[en].star.rate_times).toFixed(1);
+        // if(val >= x + 1) en--;
+        console.log(x, st, en);
+
+        // Load sims
+        for(let i = st; i <= en; i++){
+            loadSim(sortedByStar[i]);
+        }
+    })
+}
+
+// SEARCH AND SORT HANDLE
+function searchSim(data){
+    // LOAD SUGGESTIONS
+
 }
 
 // MAIN HANDLE
@@ -129,9 +221,6 @@ for(let workID in data){
 if(!exist) emptyHandle();
 
 // Search sims
-const searchBar = document.querySelector("#search>input");
-const searchBtn = document.querySelector("#search>svg");
-
 searchBar.addEventListener("keypress", () => {
     searchSim(data);
 });
