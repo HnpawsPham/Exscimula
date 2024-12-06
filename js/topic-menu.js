@@ -77,17 +77,13 @@ function loadSim(work){
     div.appendChild(info);
     container.appendChild(div);
 
-    container.addEventListener("click", function(){
+    div.addEventListener("click", function(){
         window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(subject)}`;
     })
 }
 
 // ADDITIONAL FUNCTIONS FOR SORTING AND SEARCHING
-const sortedByPoint = [...data].sort(searchSimCompare);
-const sortedByStar = [...data].sort(sortSimByStarCompare);
-const sortedByDate = [...data].sort(sortSimByDateCompare);
-const sortedByPopularity = [...data].sort();
-
+// SEARCH
 function searchSimGetPoint(a){
     let sugg_words = a.split(' ');
     let inp_words = searchBar.value.split(' ');
@@ -95,38 +91,57 @@ function searchSimGetPoint(a){
 
     for(let word of inp_words){
         for(let word1 of sugg_words){
-            if (word == word1) point++;
+            if (word1.includes(word)) point++;
         }
     }
     return point;
 }
 
+// Compare 2 suggestions by valueing the point
 function searchSimCompare(a, b){
-    return searchSimGetPoint(a.name) > searchSimGetPoint(b.name);
+    return searchSimGetPoint(b.name) - searchSimGetPoint(a.name);
 }
 
+// SORT
 // Sort increasing: 1 star - 5 stars
 function sortSimByStarCompare(a, b){
     let val_a = (a.star.value / a.star.rate_times).toFixed(1) || 0;
     let val_b = (b.star.value / b.star.rate_times).toFixed(1) || 0;
-    return val_a < val_b;
+    return val_a - val_b;
 }
 
 // Sort increasing: oldest - newest (date)
 function sortSimByDateCompare(a, b){
     let d1 = new Date(a.date);
     let d2 = new Date(b.date);
-    return d1 < d2;
+    return d2 - d1;
 }
 
-// Binary search: find the nearest index satisfied chosen rate value
+// Sort decreasing: rate + question 
+function sortSimByPopularityCompare(a, b){
+    const val_a = (Object.keys(a.rates ?? {}).length ?? 0) + (Object.keys(a.questions ?? {}).length ?? 0);
+    const val_b = (Object.keys(b.rates ?? {}).length ?? 0) + (Object.keys(b.questions ?? {}).length ?? 0);
+
+    return val_b - val_a;
+}
+
+function getStarVal(index){
+    return (sortedByStar[index].star.value / sortedByStar[index].star.rate_times).toFixed(1) || 0;
+}
+
+// Sorted arrays
+const sortedByStar = [...data].sort(sortSimByStarCompare);
+const sortedByDate = [...data].sort(sortSimByDateCompare);
+const sortedByPopularity = [...data].sort(sortSimByPopularityCompare);
+
+// Binary searching
 function sortSimByStarBNS(x){
     let l = 0, r = sortedByStar.length - 1;
     let res = null;
 
     while(l <= r){
         let mid = Math.floor(l + (r - l) / 2);
-        let val = (sortedByStar[mid].star.value / sortedByStar[mid].star.rate_times).toFixed(1) || 0;
+        let val = getStarVal(mid);
 
         if(val >= x){ // fix cho nay
             res = mid;
@@ -134,14 +149,13 @@ function sortSimByStarBNS(x){
         }
         else l = mid + 1;
     }
-
     return res;
 }
 
-// console.log(sortedByStar)
-console.log(sortedByDate)
 
 const sortByDateBar = document.querySelectorAll("#sort-by-date>span");
+let reversed = false; // check if the array is already reverse (oldest and newest handle)
+
 for(let opt of sortByDateBar){
     opt.addEventListener("click", function(){
         const chosen = document.querySelector("#sort-by-date>.chosen");
@@ -153,10 +167,15 @@ for(let opt of sortByDateBar){
 
         // Load sims
         if(type == "Newest") {
+            if(reversed){
+                sortedByDate.reverse();
+                reversed = false;
+            }
             for(let work of sortedByDate) loadSim(work);
         }
         else if(type == "Oldest"){
             sortedByDate.reverse();
+            reversed = true;
             for(let work of sortedByDate) loadSim(work);
         }
         else{
@@ -183,14 +202,15 @@ for(let opt of sortByStarBar){
 
         // Get values range
         let st = sortSimByStarBNS(x);
-        let en = sortSimByStarBNS(x + 1);
+        let en = sortSimByStarBNS(x + 0.9);
 
-        if(!st || !en || st > en){
+        if(!st || !en){
             emptyHandle();
             return;
         }
 
-        let val = (sortedByStar[en].star.value / sortedByStar[en].star.rate_times).toFixed(1);
+        let val = getStarVal(en);
+        console.log("val: ", val);
         // if(val >= x + 1) en--;
         console.log(x, st, en);
 
@@ -201,28 +221,24 @@ for(let opt of sortByStarBar){
     })
 }
 
-// SEARCH AND SORT HANDLE
-function searchSim(data){
-    // LOAD SUGGESTIONS
+// SEARCH HANDLE
+function searchSim(){
+    container.replaceChildren();
+    const sortedByPoint = [...data].sort(searchSimCompare);
 
-}
-
-// MAIN HANDLE
-let exist = false;
-for(let workID in data){
-    let work = data[workID];
-
-    if(work.subject == subject){
-        exist = true;
-        loadSim(work);
+    if(sortedByPoint.length == 0 || sortedByPoint[0] == 0) {
+        emptyHandle();
+        return;
+    }
+    for(let i = 0; i < 5; i++){
+        let work = sortedByPoint[i];
+        if(work) loadSim(work);
     }
 }
-
-if(!exist) emptyHandle();
+searchBar.addEventListener("change", searchSim());
 
 // Search sims
 searchBar.addEventListener("keypress", () => {
     searchSim(data);
 });
-
 searchBtn.addEventListener("click", () => searchSim(data));

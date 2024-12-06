@@ -179,6 +179,7 @@ body{
 
 #discuss h1{
     margin: 30px 0;
+    text-align: center;
 }
 
 #discuss div{
@@ -239,4 +240,31 @@ body{
 
 #discuss div .star-range b{
     margin-top: 8px;
+}
+
+#suggestion h1{
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#suggestion div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#suggestion div .card{
+    cursor: pointer;
+    flex: 0 0 calc(30% - 20px); 
+    margin: 0 0 2% 10px;
+    min-height: 20vh;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+#suggestion div:last-child{
+    margin-right: 10px;
 }

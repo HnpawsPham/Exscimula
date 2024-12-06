@@ -18,11 +18,10 @@ auth.onAuthStateChanged(async (user) => {
 const simId = searchQuery("id");
 const curSim = await getData(`works/${simId}`);
 
-// Load sim: Load main preview and queue
+// Load chosen preview image
 const screen = document.querySelector("#top>.screen>img");
 const imgPreviewContainer = document.querySelector("#top>.img-query");
 
-// Biggest preview image
 let previewImgs = curSim.preview || [defaultImg];
 screen.src = previewImgs[0];
 
@@ -45,8 +44,6 @@ imgPreviewContainer.firstChild.classList.add("preview-chosen");
 
 // Load sim: Load rated stars
 const simStarRange = document.querySelector("#top>.star-range");
-
-
 const rateVal = curSim.star.value / curSim.star.rate_times;
 loadStarRange(rateVal, simStarRange);
 
@@ -54,6 +51,12 @@ if (curSim.star.rate_times > 0) {
     let rateTimes = document.createElement("b");
     rateTimes.innerHTML = `&ensp; ${rateVal.toFixed(1)} / ${shortenNum(curSim.star.rate_times)} rated`;
     simStarRange.appendChild(rateTimes);
+}
+
+function emptyHandle(container){
+    let p = document.createElement("p");
+    p.innerHTML = "There is nothing.";
+    container.appendChild(p);
 }
 
 // DISPLAY DISCUSS (RATES AND QUESTION) DATA
@@ -67,9 +70,8 @@ async function loadDiscuss() {
     const discussData = curSim[optionChosen];
 
     if (!discussData || Object.keys(discussData).length == 0) {
-        let p = document.createElement("p");
-        p.innerHTML = "There is nothing.";
-        discussContainer.appendChild(p);
+        emptyHandle(discussContainer);
+        return;
     }
 
     for (let i in discussData) {
@@ -117,10 +119,47 @@ async function loadDiscuss() {
     }
 }
 
+// DISPLAY SUGGESTIONS (BEST SUIT SIMS)
+function loadSugg(data){
+    suggesContainer.replaceChildren();
+
+    let h1 = document.createElement("h1");
+    h1.innerHTML = "You might like!";
+    suggesContainer.appendChild(h1);
+
+    if(!data || Object.keys(data).length == 0) {
+        emptyHandle(suggesContainer);
+        return;
+    }
+
+    let div = document.createElement("div");
+    div.classList.add("custom-scrollbar")
+    
+    for(let i = 0; i < 10; i++){
+        let work = data[i];
+        if(!work) continue;
+
+        let card = document.createElement("div");
+        card.classList.add("card");
+
+        let name = document.createElement("p");
+        name.innerHTML = work.name;
+        card.appendChild(name);
+
+        card.addEventListener("click", () => {
+            window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(curSim.subject)}`;
+        })
+
+        div.appendChild(card);        
+    }
+    suggesContainer.appendChild(div);
+}
+
 // CHANGE RATE OR ASK QUESTION
 const optionBtns = document.querySelectorAll(".option-btn>button");
 const containers = document.querySelectorAll(".container");
 const discussContainer = document.querySelector("#discuss");
+const suggesContainer = document.querySelector("#suggestion");
 
 let optionChosen = "rates";
 loadDiscuss();
@@ -214,7 +253,6 @@ rateInput.addEventListener("keypress", function (e) {
 // Rate: Input images
 rateFileAttach.addEventListener("change", async () => {
     rateImgs = await createPreviewImg(rateImgContainer, rateImgs, rateFileAttach);
-    console.log(rateImgs)
 })
 
 // Rate: Stars display
@@ -288,6 +326,25 @@ questionFileAttach.addEventListener("change", async () => {
     questionImgs = await createPreviewImg(questionImgContainer, questionImgs, questionFileAttach);
 })
 
+// SUGGESTIONS HANDLE
+function getSuggestionPoint(x){
+    let point = 0;
+    if(x.subject == curSim.subject) point += 2;
+    if(x.author.uid == curSim.author.uid) point += 2;
+
+    for(let tag of curSim.tags){
+        for(let tag1 of x.tags) point += (tag1 == tag);
+    }
+    return point;
+}
+function compare(a, b){
+    return getSuggestionPoint(b) - getSuggestionPoint(a);
+}
+
+const works = await getData(`works/`);
+const sortedByPoint = [...works].sort(compare);
+loadSugg(sortedByPoint);
+
 // PLAY SIM
 const playSimBtn = document.querySelector("#top>.screen>svg");
 const zipFile = await getZip(simId);
@@ -312,17 +369,13 @@ playSimBtn.addEventListener("click", async function () {
             if (name.endsWith(".css")) {
                 const style = doc.createElement("style");
                 style.type = "text/css";
-                style.textContent = val;
+                style.textContent = new TextDecoder().decode(val);
                 doc.head.appendChild(style);
             }
             else if (name.endsWith(".js")) {
                 const script = doc.createElement("script");
                 script.type = "text/javascript";
-                script.textContent = `
-                        document.addEventListener('DOMContentLoaded', function() {
-                            ${val}
-                        });
-                    `;
+                script.textContent = new TextDecoder().decode(val);
                 doc.body.appendChild(script);
             }
         }

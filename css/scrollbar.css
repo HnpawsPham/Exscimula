@@ -5,7 +5,8 @@ body, .custom-scrollbar {
 }
 
 body::-webkit-scrollbar {
-  width: var(--sb-size)
+  width: var(--sb-size);
+  height: var(--sb-size);
 }
 
 body::-webkit-scrollbar-track {
@@ -27,6 +28,7 @@ body::-webkit-scrollbar-thumb {
 
 .custom-scrollbar::-webkit-scrollbar {
   width: var(--sb-size);
+  height: var(--sb-size);
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
