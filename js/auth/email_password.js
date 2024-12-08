@@ -63,6 +63,7 @@ formSignUp.addEventListener("submit", function(e) {
                 saved: [],
                 works: [],
                 rate: [],
+                challenge_mode: 0,
             }
         }   
         setData(`users/${uid}`, info);

@@ -102,6 +102,13 @@ body{
     align-items: center;
 }
 
+#top .row{
+    width: 90vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #top .screen{
     cursor: pointer;
     width: 90%;
@@ -267,4 +274,21 @@ body{
 }
 #suggestion div:last-child{
     margin-right: 10px;
+}
+
+#report{
+    min-width: 20%;
+    padding: 10px 20px;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: blanchedalmond;
+    background-color: brown;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#report:hover{
+    filter: brightness(70%);
 }

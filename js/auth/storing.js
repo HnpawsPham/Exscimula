@@ -5,6 +5,8 @@ import { visibleNoti } from '../notification.js';
 export const defaultImg = "/assets/default.jpg";
 export const defaultAvt = "/assets/default.jpg";
 
+export const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 export const ranksList = {
     bronze: {
         min: 0,
@@ -62,7 +64,7 @@ export function forkOff() {
     window.location.href = "/index";
 }
 
-export async function getImgBase64(file) {
+export async function getBase64(file) {
     const reader = new FileReader();
     return new Promise(r => {
         reader.onload = e => {
@@ -129,18 +131,25 @@ export async function unZip(file) {
     for (let [name, entry] of Object.entries(data.entries)) {
         if (entry.directory) continue;
 
-        if (/\.(html|css|js|txt)$/.test(name)) {
-            codeFiles[name] = await entry.text();
+        if (name.split('/').pop() == "index.html") {
+            found = true;
+            indexFile = await entry.text();
+            continue;
+        }
 
-            if (name.split('/').pop() == "index.html") {
-                found = true;
-                indexFile = codeFiles[name];
-            }
+        let extension = name.split('.').pop();
+        const buffer = await entry.arrayBuffer();
+
+        if (/\.(css|js)$/.test(name)) {
+            const blob = new Blob([buffer], { type: `text/${extension}` });
+            const url = await getBase64(blob);
+
+            codeFiles[name] = url;
         }
         else {
-            const buffer = await entry.arrayBuffer();
-            const blob = new Blob([buffer]);
-            const url = URL.createObjectURL(blob);
+            const blob = new Blob([buffer], { type: `image/${extension}` });
+            const url = await getBase64(blob);
+
             assets[name] = url;
         }
     }
@@ -166,7 +175,7 @@ export async function loadPreviewImg(files, container, arr) {
     arr = arr.splice(0, arr.length);
 
     for (let file of files) {
-        let base64 = await getImgBase64(file);
+        let base64 = await getBase64(file);
 
         let div = document.createElement("div");
 
@@ -186,15 +195,15 @@ export async function loadPreviewImg(files, container, arr) {
     return arr;
 }
 
-export function binarySearch(x, arr, compare){
+export function binarySearch(x, arr, compare) {
     let l = 0;
     let r = arr.length - 1;
 
-    while(l <= r){
-        let mid = Math.floor(l + (r - l)/2);
+    while (l <= r) {
+        let mid = Math.floor(l + (r - l) / 2);
 
-        if(arr[mid] === x) return mid;
-        if(compare(a[mid], x)) r = mid - 1;
+        if (arr[mid] === x) return mid;
+        if (compare(a[mid], x)) r = mid - 1;
         else l = mid + 1;
     }
     return -1;
@@ -241,13 +250,13 @@ export async function getZip(id) {
     else throw new Error("Get zip failed.");
 }
 
-export async function postZip(data){
+export async function postZip(data) {
     const res = await fetch("/upload", {
         method: "POST",
         body: data,
     });
 
-    if(!res.ok){
+    if (!res.ok) {
         visibleNoti("File uploaded failed. Please try again.", 4000);
         throw new Error("Posted zip failed.");
     }

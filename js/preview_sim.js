@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getImgBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip, getZip } from "./auth/storing.js";
+import { getBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip, getZip, sleep } from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -43,7 +43,7 @@ for (let pic of previewImgs) {
 imgPreviewContainer.firstChild.classList.add("preview-chosen");
 
 // Load sim: Load rated stars
-const simStarRange = document.querySelector("#top>.star-range");
+const simStarRange = document.querySelector("#top>.row>.star-range");
 const rateVal = curSim.star.value / curSim.star.rate_times;
 loadStarRange(rateVal, simStarRange);
 
@@ -53,7 +53,7 @@ if (curSim.star.rate_times > 0) {
     simStarRange.appendChild(rateTimes);
 }
 
-function emptyHandle(container){
+function emptyHandle(container) {
     let p = document.createElement("p");
     p.innerHTML = "There is nothing.";
     container.appendChild(p);
@@ -120,24 +120,24 @@ async function loadDiscuss() {
 }
 
 // DISPLAY SUGGESTIONS (BEST SUIT SIMS)
-function loadSugg(data){
+function loadSugg(data) {
     suggesContainer.replaceChildren();
 
     let h1 = document.createElement("h1");
     h1.innerHTML = "You might like!";
     suggesContainer.appendChild(h1);
 
-    if(!data || Object.keys(data).length == 0) {
+    if (!data || Object.keys(data).length == 0) {
         emptyHandle(suggesContainer);
         return;
     }
 
     let div = document.createElement("div");
     div.classList.add("custom-scrollbar")
-    
-    for(let i = 0; i < 10; i++){
+
+    for (let i = 0; i < 10; i++) {
         let work = data[i];
-        if(!work) continue;
+        if (!work) continue;
 
         let card = document.createElement("div");
         card.classList.add("card");
@@ -150,7 +150,7 @@ function loadSugg(data){
             window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(curSim.subject)}`;
         })
 
-        div.appendChild(card);        
+        div.appendChild(card);
     }
     suggesContainer.appendChild(div);
 }
@@ -193,6 +193,12 @@ async function createPreviewImg(container, arr, inp) {
     }
     return await loadPreviewImg(files, container, arr);
 }
+
+// REPORT ERROR HANDLE
+const reportBtn = document.getElementById("report");
+reportBtn.addEventListener("click", function(){
+    visibleNoti("Thanks for letting us know. We'll check it soon.", 4000);
+})
 
 // RATE HANDLE
 const rateInput = document.querySelector("#rates>.prompt>input");
@@ -327,17 +333,17 @@ questionFileAttach.addEventListener("change", async () => {
 })
 
 // SUGGESTIONS HANDLE
-function getSuggestionPoint(x){
+function getSuggestionPoint(x) {
     let point = 0;
-    if(x.subject == curSim.subject) point += 2;
-    if(x.author.uid == curSim.author.uid) point += 2;
+    if (x.subject == curSim.subject) point += 2;
+    if (x.author.uid == curSim.author.uid) point += 2;
 
-    for(let tag of curSim.tags){
-        for(let tag1 of x.tags) point += (tag1 == tag);
+    for (let tag of curSim.tags) {
+        for (let tag1 of x.tags) point += (tag1 == tag);
     }
     return point;
 }
-function compare(a, b){
+function compare(a, b) {
     return getSuggestionPoint(b) - getSuggestionPoint(a);
 }
 
@@ -359,32 +365,33 @@ playSimBtn.addEventListener("click", async function () {
     tab.document.write(srcCode.index);
     tab.document.close();
 
-    tab.onload = () => {
+    tab.onload = async () => {
         const doc = tab.document;
-    
+
         // Add js and css 
-        // SOLVE ADDTIONAL JS AND CSS FILE HERE!!!!
         for (let [name, val] of Object.entries(srcCode.code)) {
-            console.log(name)
+            name = name.split('/').pop();
+
             if (name.endsWith(".css")) {
-                const style = doc.createElement("style");
-                style.type = "text/css";
-                style.textContent = new TextDecoder().decode(val);
-                doc.head.appendChild(style);
+                const link = doc.createElement("link");
+                link.rel = "stylesheet";
+                link.href = val;
+                doc.head.appendChild(link);
             }
             else if (name.endsWith(".js")) {
                 const script = doc.createElement("script");
-                script.type = "text/javascript";
-                script.textContent = new TextDecoder().decode(val);
-                doc.body.appendChild(script);
+                script.src = val;
+                doc.head.appendChild(script);
             }
         }
 
-        // Add assets
+        // Add image assets
+        await sleep(500);
+
         for (let [name, val] of Object.entries(srcCode.assets)) {
-            const blob = new Blob([val], { type: `image/${name.split('/').pop()}` });
-            const url = URL.createObjectURL(blob);
-            doc.querySelectorAll(`img[src$="${name}"]`).forEach(img => img.src = url);
+            doc.querySelectorAll("img").forEach(img => {
+                if(img.src.split("/").pop() == name.split('/').pop()) img.src = val;
+            })
         }
     }
 })

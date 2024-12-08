@@ -11,6 +11,7 @@ app.use((req, res, next) => {
 });
 
 // Define some stuff
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -74,7 +75,7 @@ app.get("/offline-download", (req, res) => {
 app.get("/topics", (req, res) => {
     const subject = req.query.subject;
     const tag = req.query.tag || null;
-    res.render("topic-menu", {subject, tag});
+    res.render("topics_menu", {subject, tag});
 })
 
 app.get("/profile", (req, res) => {
@@ -82,17 +83,21 @@ app.get("/profile", (req, res) => {
 })
 
 app.get("/upload-works", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/upload-works.html"));
+    res.sendFile(path.join(__dirname, "../pages/upload_sim.html"));
 })
 
 app.get("/tags", (req, res) => {
-    res.render("search-by-tags");
+    res.render("search_by_tags");
 })
 
 app.get("/preview", (req, res) => {
     const id = req.query.id;
     const subject = req.query.subject;
-    res.render("work-preview", {id, subject});
+    res.render("preview_sim", {id, subject});
+})
+
+app.get("/policy", (req, res) => {
+    res.render("policy");
 })
 
 // POST ZIP FILES

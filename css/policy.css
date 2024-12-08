@@ -1,0 +1,32 @@
+body{
+    background-color: rgb(232, 232, 232);
+}
+#main{
+    background-color: white;
+    width: 50vw;
+    height: 100vh;
+    overflow-y: auto;
+    margin: 0 25vw;
+}
+#back-home{
+    color: black;
+    opacity: 0.8;
+}
+h1{
+    text-align: center;
+    padding: 20px 0;
+}
+ul{
+    padding: 0 30px;
+    margin-bottom: 20px;
+    list-style-type: none;
+}
+li{
+    opacity: 0.8;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+li::before{
+    content: "- ";
+    font-size: 1.2em;
+}

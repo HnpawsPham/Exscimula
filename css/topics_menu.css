@@ -51,6 +51,11 @@ body{
     bottom: 10px;
     right: 20px;
 }
+.card svg{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
 .info{
     width: 67%;
     display: flex;

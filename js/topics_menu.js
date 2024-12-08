@@ -1,5 +1,6 @@
-import { getData, setData } from "./firebase.js";
-import { loadStarRange, searchQuery } from "./auth/storing.js";
+import { getAuth} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getData, updateData_list, app } from "./firebase.js";
+import { defaultImg, loadStarRange, searchQuery } from "./auth/storing.js";
 
 const container = document.getElementById("main");
 const searchBar = document.querySelector("#search>input");
@@ -8,6 +9,14 @@ const searchBtn = document.querySelector("#search>svg");
 const subject = searchQuery("subject");
 const data = (await getData(`works/`) || [])
     .filter(work => work !== undefined && work.subject === subject);
+
+// CHECK IF USER IS LOGGED IN (TO LOAD SAVED SIMS)
+let curUser = null;
+const auth = getAuth(app);
+auth.onAuthStateChanged(async (user) => {
+    if (user) curUser = await getData(`users/${user.uid}`);
+})
+let loggedIn = (curUser != null)
 
 // CHECK IF THERE IS ANY SIMUALATIONS
 function emptyHandle(){
@@ -18,16 +27,27 @@ function emptyHandle(){
     container.appendChild(p);
 }
 
-function loadSim(work){
-    let preview = work.preview || [];
+async function loadSim(work){
     let div = document.createElement("div");
     div.classList.add("card");
 
     let img = document.createElement("img");
-
-    if(preview.length == 0) img.src = "/assets/default.jpg";
-    else img.src = preview[0];
+    img.src = work.preview?.[0] || defaultImg;
     div.appendChild(img);
+
+    if(curUser){
+        let saveBtn = document.createElement("div");
+        saveBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24" width="18" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#73c0ff" d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"/></svg>`;
+        saveBtn = saveBtn.firstElementChild
+        div.appendChild(saveBtn);
+
+        if(curUser.activities.saved[work.id]) 
+            saveBtn.style.filter("brightness(0%)"); 
+        
+        saveBtn.addEventListener("click", async () => {
+            await updateData_list(`users${curUser.uid}/activities/saved`, work.id);
+        });
+    }
 
     let date = document.createElement("i");
     date.innerHTML = "&ensp; " + moment(work.date, "MMDDYYYY").fromNow();
@@ -77,10 +97,11 @@ function loadSim(work){
     div.appendChild(info);
     container.appendChild(div);
 
-    div.addEventListener("click", function(){
+    [info, img].forEach(elm => elm.addEventListener("click", function(){
         window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(subject)}`;
-    })
+    }))
 }
+
 
 // ADDITIONAL FUNCTIONS FOR SORTING AND SEARCHING
 // SEARCH

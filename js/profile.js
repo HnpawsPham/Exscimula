@@ -1,6 +1,6 @@
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { app, delData, getData, setData } from "./firebase.js";
-import { forkOff, getImgBase64, ranksList, defaultAvt, getUserRank, setToLeaderBoard } from "./auth/storing.js";
+import { forkOff, getBase64, ranksList, defaultAvt, getUserRank, setToLeaderBoard, defaultImg } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
 const auth = getAuth(app);
@@ -32,20 +32,37 @@ function setCurrentRank(data) {
 
 function loadSimCard(work){
     let div = document.createElement("div");
-    
-    let name = document.createElement("p");
-    name.innerHTML = work.name;
-    div.appendChild(name);
+    div.classList.add("card");
 
-    let subject = document.createElement("b");
-    subject.innerHTML = work.subject;
-    div.appendChild(subject);
+    let img = document.createElement("img");
+    img.src = work.preview?.[0] || defaultImg;
+    div.appendChild(img)
+
+    let info = document.createElement("div");
+
+    let name = document.createElement("h3");
+    name.style.fontWeight = "bold";
+    name.innerHTML = work.name.toUpperCase();
+    info.appendChild(name);
+
+    let subject = document.createElement("p");
+    subject.innerHTML = `Subject: ${work.subject}`;
+    info.appendChild(subject);
+
+    let date = document.createElement("i");
+    date.innerHTML = `Release: ${moment(work.date, "MMDDYYYY").fromNow()}`;
+    info.appendChild(date);
+    div.appendChild(info);
+
+    div.addEventListener("click", () => {
+        window.location.href = `/preview?id=${work.id}&subject=${work.subject}`;
+    })
     return div;
 }
 
 async function loadWorks(data) {
     const workIds = data.works || [];
-    const container = document.getElementById("user-works");
+    const container = document.querySelector("#user-works>.inside");
 
     if (workIds.length == 0) {
         let p = document.createElement("p");
@@ -63,7 +80,7 @@ async function loadWorks(data) {
 
 async function loadSaved(data) {
     const saveIds = data.activities.saved || [];
-    const container = document.getElementById("saved");
+    const container = document.querySelector("#saved>.inside");
 
     if (saveIds.length == 0) {
         let p = document.createElement("p");
@@ -112,7 +129,7 @@ function changeAvt(data, UID) {
     // INPUT AVT
     const input = document.querySelector("#avt>div>input");
     input.addEventListener("change", async function(){
-        let base64 = await getImgBase64(input.files[0]);
+        let base64 = await getBase64(input.files[0]);
         avtImg.src = base64;
 
         data["avt"] = base64;

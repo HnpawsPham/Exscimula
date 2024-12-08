@@ -6,7 +6,7 @@
     <title>Exscimula</title>
     <link rel="stylesheet" href="../css/colors&fonts.css">
     <link rel="stylesheet" href="../css/scrollbar.css">
-    <link rel="stylesheet" href="../css/work-preview.css">
+    <link rel="stylesheet" href="../css/preview_sim.css">
 </head>
 <body>
     <div id="noti" class="hidden"></div>
@@ -19,7 +19,10 @@
         </div>
 
         <div class="img-query custom-scrollbar"></div>
-        <div class="star-range"></div>
+        <div class="row">
+            <div class="star-range"></div>
+            <button id="report">Report error <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FDF3D0"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z"/></svg></button>
+        </div>
     </div>
 
     <div id="bottom">
@@ -72,8 +75,7 @@
 
         <div id="suggestion" class="container"></div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-    <script type="module" src="../js/work-preview.js"></script>
+    <script type="module" src="../js/preview_sim.js"></script>
 </body>
 </html>

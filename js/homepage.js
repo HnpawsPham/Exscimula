@@ -10,7 +10,6 @@ const login_btn = document.getElementById("login-btn");
 const manage_btn = document.getElementById("manage-btn");
 
 auth.onAuthStateChanged(async (user) => {
-    console.log(user);
     if (!user) {
         account.classList.add("hidden");
         login_btn.classList.remove("hidden");
@@ -90,6 +89,7 @@ function loadLeaderCard(user, index){
 
     let rank_img = document.createElement("img");
     rank_img.src = person_rank.img;
+    div.appendChild(rank_img)
 
     leaderboard.appendChild(div);
 }
