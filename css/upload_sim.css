@@ -192,3 +192,14 @@ body{
 #form .file-preview p{
     margin-left: 20px;
 }
+
+#form select{
+    padding: 10px 20px;
+    border: 2px solid brown;
+    border-radius: 20px;
+    color: brown;
+}
+
+#form select option{
+    font-size: 1en;
+}

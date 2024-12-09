@@ -163,3 +163,7 @@ body{
 #back-home{
     filter: drop-shadow(0 0 5px black);
 }
+
+.clicked{
+    filter: sepia(100%) brightness(90%);
+}

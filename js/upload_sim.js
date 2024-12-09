@@ -12,10 +12,11 @@ const previewImgInput = document.querySelector(".preview-img-inp");
 const previewImgContainer = document.querySelector("#form>.img-preview");
 const fileInput = document.querySelector(".zip-inp");
 const filePreview = document.querySelector("#form>.file-preview");
+const subjectSelector = document.querySelector("#form>select");
+
 let tags = [];
 let previewImgs = [];
 let srcCode = null;
-let subject = "chemis";
 
 // GET USER INFO
 const auth = getAuth();
@@ -165,7 +166,7 @@ async function uploadSim(curUser, id, point) {
                     rate_times: 0,
                     value: 0,
                 },
-                subject: subject,
+                subject: subjectSelector.value,
                 tags: tags,
             }
 
