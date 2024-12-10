@@ -3,16 +3,30 @@ body{
     color: white;
 }
 
-#table, #comments{
-    margin: 10vh auto;
+table{
+    margin: 20px auto 10vh auto ;
     width: 80vw;
 }
-
 table th,td{
     text-align: center;
     padding: 10px 0;
-    border-radius: 10px;
     border: 2px solid rgb(255, 255, 255);
+}
+table tr th:first-child{
+    border-radius: 10px 0 0 0;
+}
+table tr th:last-child{
+    border-radius: 0 10px 0 0;
+}
+table tr:last-child td:first-child{
+    border-radius: 0 0 0 10px;
+}
+table tr:last-child td:last-child{
+    border-radius: 0 0 10px 0;
+}
+table td:last-child{
+    display: flex;
+    justify-content: space-evenly;
 }
 table td div{
     display: flex;
@@ -24,6 +38,15 @@ table u:hover{
 }
 table input{
     text-align: center;
+}
+table td button{
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1em;
+    background-color: brown;
+    color: white;
 }
 h1{
     width: 100vw;

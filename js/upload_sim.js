@@ -1,6 +1,6 @@
 import { getData, setData, updateData_list } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { forkOff, getDate, loadPreviewImg, postZip, unZip } from "./auth/storing.js";
+import { forkOff, getDate, loadPreviewImg, postZip, unZip, setToLeaderBoard } from "./auth/storing.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const tagInp = document.querySelector("#form>.tag-inp>input");
@@ -18,6 +18,9 @@ let tags = [];
 let previewImgs = [];
 let srcCode = null;
 
+const works = await getData(`works/`) || [];
+let workId = works.length;
+
 // GET USER INFO
 const auth = getAuth();
 auth.onAuthStateChanged(async (user) => {
@@ -31,15 +34,10 @@ auth.onAuthStateChanged(async (user) => {
     const curUser = await getData(`users/${UID}`) || null;
     if (!curUser) forkOff();
 
-    // Get ids and user point
-    let workId = 0;
-    if (curUser.works) workId = Object.keys(curUser.works).length;
-    let userPoint = curUser.activities.point;
-
     inputTag();
     inputPreviewImg();
     inputSrc();
-    uploadSim(curUser, workId, userPoint);
+    uploadSim(curUser);
 })
 
 // CHOOSING OPTIONS HANDLE
@@ -141,7 +139,7 @@ function inputSrc() {
 }
 
 // UPLOAD SIM HANDLE
-async function uploadSim(curUser, id, point) {
+async function uploadSim(curUser) {
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
@@ -152,11 +150,12 @@ async function uploadSim(curUser, id, point) {
 
         try {
             // Sync work info
+            workId++;
             const work = {
                 name: simNameInp.value,
                 date: getDate(),
                 description: descInp.value,
-                id: ++id,
+                id: workId,
                 author: {
                     name: curUser.name,
                     uid: curUser.uid,
@@ -172,16 +171,19 @@ async function uploadSim(curUser, id, point) {
 
             // Upload work source code
             let formData = new FormData();
-            formData.append("id", id);
+            formData.append("id", workId);
             formData.append("file", srcCode);
 
             const UID = curUser.uid;
-
+            let point = ++curUser.activities.point;
+            // Upload work to db
             await postZip(formData);
-            await updateData_list(`users/${UID}/works`, id);
-            await setData(`works/${id}`, work);
-            await setData(`users/${UID}/activities/point`, ++point);
-
+            await updateData_list(`users/${UID}/works`, workId);
+            await setData(`works/${workId}`, work);
+            
+            // Update user info to db
+            await setData(`users/${UID}/activities/point`, point);
+            await setToLeaderBoard(curUser);
             if(curUser.activities.top)
             await setData(`leaderboard/${curUser.activities.top}/point`, point);
 

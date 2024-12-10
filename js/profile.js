@@ -79,7 +79,7 @@ async function loadWorks(data) {
 }
 
 async function loadSaved(data) {
-    const saveIds = data.activities.saved || [];
+    const saveIds = data.activities?.saved || [];
     const container = document.querySelector("#saved>.inside");
 
     if (saveIds.length == 0) {

@@ -128,7 +128,7 @@ async function loadSim(work) {
     container.appendChild(div);
 
     [info, img].forEach(elm => elm.addEventListener("click", function () {
-        window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(subject)}`;
+        window.location.href = `/preview?id=${work.id}&subject=${work.subject}`;
     }))
 }
 

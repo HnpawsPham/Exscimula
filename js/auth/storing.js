@@ -124,7 +124,8 @@ export async function unZip(file) {
     const data = await unzipit.unzip(file);
 
     let codeFiles = {};
-    let assets = {};
+    let images = {};
+    let sounds = {};
     let indexFile;
     let found = false;
 
@@ -146,11 +147,16 @@ export async function unZip(file) {
 
             codeFiles[name] = url;
         }
-        else {
+        else if(/\.(jpg|jpeg|png|gif|bmp|webp)$/.test(extension)){
             const blob = new Blob([buffer], { type: `image/${extension}` });
             const url = await getBase64(blob);
 
-            assets[name] = url;
+            images[name] = url;
+        }
+        else if (/\.(mp3|wav|ogg)$/.test(extension)) {
+            const blob = new Blob([buffer], { type: `audio/${extension}` });
+            const url = await getBase64(blob);
+            sounds[name] = url;
         }
     }
 
@@ -160,7 +166,8 @@ export async function unZip(file) {
     }
     return {
         code: codeFiles,
-        assets: assets,
+        images: images,
+        sounds: sounds,
         index: indexFile
     };
 }
@@ -211,7 +218,9 @@ export function binarySearch(x, arr, compare) {
 
 // LEADERBOARD HANDLING METHODS
 function sortLeaderBoardCompare(a, b) {
-    return a.point > b.point;
+    const pointA = a?.point ?? 0;
+    const pointB = b?.point ?? 0;
+    return pointB - pointA;
 }
 
 export async function setToLeaderBoard(user) {
@@ -222,19 +231,23 @@ export async function setToLeaderBoard(user) {
         name: user.name,
         point: user.activities.point,
         avt: user.avt,
+        uid: user.uid,
     }
 
+    if(leaderboard_data.findIndex((elm) => elm && elm.uid == person.uid) != -1) return;
+
     if (leaderId == 0) {
-        await setData(`leaderboard/${++leaderId}`, person);
+        await setData(`leaderboard/${leaderId}`, person);
     }
     else {
         leaderboard_data.push(person);
-        leaderboard_data.sort(sortLeaderBoardCompare);
-        leaderId = leaderboard_data.indexOf(person);
+        leaderboard_data.sort(sortLeaderBoardCompare).splice(5);
+        leaderId = leaderboard_data.findIndex(elm => elm.uid == person.uid);
 
         await setData(`leaderboard`, leaderboard_data);
     }
-    await setData(`users/${user.uid}/activities/top/`, leaderId);
+
+    if(leaderId != -1) await setData(`users/${user.uid}/activities/top/`, leaderId);
 }
 
 // .ZIP HANDLING METHODS FROM SERVER

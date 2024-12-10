@@ -385,12 +385,18 @@ playSimBtn.addEventListener("click", async function () {
             }
         }
 
-        // Add image assets
+        // Add assets
         await sleep(500);
 
-        for (let [name, val] of Object.entries(srcCode.assets)) {
+        for (let [name, val] of Object.entries(srcCode.images)) {
             doc.querySelectorAll("img").forEach(img => {
                 if(img.src.split("/").pop() == name.split('/').pop()) img.src = val;
+            })
+        }
+
+        for(let [name, val] of Object.entries(srcCode.sounds)) {
+            doc.querySelectorAll("audio").forEach(sound => {
+                if(sound.src.split('/').pop() == name.split('/').pop()) sound.src = val;
             })
         }
     }

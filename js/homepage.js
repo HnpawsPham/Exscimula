@@ -68,7 +68,7 @@ function loadLeaderCard(user, index){
     div.classList.add("card");
 
     let top = document.createElement("h2");
-    top.innerHTML = "Top " + index;
+    top.innerHTML = `Top ${parseInt(index) + 1}`;
     div.appendChild(top);
     
     let avt = document.createElement("img");
