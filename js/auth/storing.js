@@ -1,4 +1,5 @@
 import * as unzipit from 'https://unpkg.com/unzipit@1.4.0/dist/unzipit.module.js';
+import moment from 'https://cdn.skypack.dev/moment';
 import { getData, setData } from '../firebase.js';
 import { visibleNoti } from '../notification.js';
 
@@ -173,8 +174,8 @@ export async function unZip(file) {
 }
 
 export function getDate() {
-    let date = new Date();
-    return date.toLocaleDateString();
+    let date = moment();
+    return date.format('DDMMYYYY');
 }
 
 export async function loadPreviewImg(files, container, arr) {

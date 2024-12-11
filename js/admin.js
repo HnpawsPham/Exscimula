@@ -1,12 +1,14 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import moment from 'https://cdn.skypack.dev/moment';
 import { delData, getData, setData } from "./firebase.js";
-import { forkOff } from "./auth/storing.js"
+import { forkOff, getDate } from "./auth/storing.js"
 import { visibleNoti } from "./notification.js";
 
 const adminName = document.getElementById("admin-name");
 const userTable = document.getElementById("user-table");
 const commentTable = document.getElementById("comment-table");
-const workTable = document.getElementById("work-table")
+const workTable = document.getElementById("work-table");
+const popup = document.getElementById("popup");
 
 const auth = getAuth();
 
@@ -26,20 +28,69 @@ auth.onAuthStateChanged(async (res) => {
     loadWorks();
 })
 
+async function sendEmail(user, info) {
+    try {
+        const res = await fetch("http://localhost:3000/send-block-email", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: user.email,
+                name: user.name,
+                message: info.reason,
+                time: info.time.text,
+            })
+        });
+
+        const data = await res.json();
+        if (!res.ok) console.error("sent failed");
+        return data;
+    }
+    catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
 // Custom option blocking an user
 async function blockHandle(btn, user, blocked) {
     if (!blocked) {
-        try {
-            // HIEN POPUP R THEM GIA HAN BLOCK, LI DO BLOCK, GUI EMAIL
-            btn.innerHTML = "Unblock this user";
-        }
-        catch (err) {
-            visibleNoti("Blocked unsuccessfully. Please try again.", 4000);
-            throw new Error(err);
+        popup.classList.remove("hidden");
+
+        popup.onsubmit = async function (e) {
+            e.preventDefault();
+            // Collect block info
+            let today = moment();
+            let date_extension = document.querySelector("#popup>select").value;
+            let date_split = date_extension.split(' ');
+            console.log(date_split);
+
+            let block = {
+                reason: document.querySelector("#popup>select").value,
+                time: {
+                    text: date_extension,
+                    until: today.clone().add(parseInt(date_split.shift()), date_split.pop()).format("DD/MM/YYYY"),
+                }
+            }
+            console.log(block);
+
+            try {
+                const data = await sendEmail(user, block);
+
+                if (data){ 
+                    await setData(`users/${user.uid}/activities/is_blocked/`, block);
+                    visibleNoti("Blocked successfully", 3000);
+                    btn.innerHTML = "Unblock this user";
+                }
+            }
+            catch (err) {
+                visibleNoti("Blocked unsuccessfully. Please try again.", 4000);
+                throw new Error(err);
+            }
         }
         return;
     }
-    
+
+    popup.classList.add("hidden");
     try {
         await delData(`users/${user.uid}/activities/is_blocked`);
         visibleNoti("Unblocked successfully");

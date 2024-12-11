@@ -52,3 +52,30 @@ h1{
     width: 100vw;
     text-align: center;
 }
+
+#popup{
+    position: fixed;
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 40vh;
+    width: 50vw;
+    margin: 30vh 25vw;
+    filter: drop-shadow(0 0 20px black);
+}
+
+#popup select, input{
+    text-align: center;
+    width: 80%;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: white;
+}
+
+#popup input[type="submit"]{
+    cursor: pointer;
+}

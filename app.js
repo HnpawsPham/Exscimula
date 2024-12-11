@@ -3,6 +3,11 @@ const app = express();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
+require('dotenv').config();
+const emailjs = require('emailjs-com');
+const cors = require("cors");
+const XMLHttpRequest = require('xhr2'); 
+global.XMLHttpRequest = XMLHttpRequest;
 
 // SETUP
 app.use((req, res, next) => {
@@ -11,6 +16,7 @@ app.use((req, res, next) => {
 });
 
 // Define some stuff
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
@@ -45,15 +51,15 @@ const upload = multer({
 });
 
 // PREPARE PATHS
-app.set('views', path.join(__dirname, '../pages'));
-app.use("/css", express.static(path.join(__dirname, "../css")));
-app.use("/assets", express.static(path.join(__dirname, "../assets")));
-app.use("/fonts", express.static(path.join(__dirname, "../fonts")));
-app.use("/js", express.static(path.join(__dirname, "../js")));
+app.set('views', path.join(__dirname, './pages'));
+app.use("/css", express.static(path.join(__dirname, "./css")));
+app.use("/assets", express.static(path.join(__dirname, "./assets")));
+app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
+app.use("/js", express.static(path.join(__dirname, "./js")));
 
 // NAVIGATOR
 app.get("/index", (req, res) => {
-    res.sendFile(path.join(__dirname, "../index.html"));
+    res.sendFile(path.join(__dirname, "index.html"));
 })
 
 app.get("/login", (req, res) => {
@@ -65,7 +71,7 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/admin", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/admin.html"));
+    res.sendFile(path.join(__dirname, "./pages/admin.html"));
 })
 
 app.get("/offline-download", (req, res) => {
@@ -79,11 +85,11 @@ app.get("/topics", (req, res) => {
 })
 
 app.get("/profile", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/profile.html"));
+    res.sendFile(path.join(__dirname, "./pages/profile.html"));
 })
 
 app.get("/upload-works", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/upload_sim.html"));
+    res.sendFile(path.join(__dirname, "./pages/upload_sim.html"));
 })
 
 app.get("/tags", (req, res) => {
@@ -120,6 +126,32 @@ app.get("/get-zip", (req, res) => {
         }
     })
 });
+
+// SEND EMAILS TO USERS
+const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
+
+// BUG QUA DCM
+emailjs.init(EMAILJS_PUBLIC_KEY);
+app.post("/send-block-email", (req, res) => {
+    let params = {
+        to_email: req.body.email,
+        to_name: req.body.name,
+        from_message: req.body.message,
+        block_time: req.body.time,
+    }
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+    .then((res) => {
+        console.log("Email is sent successfully");
+        res.send("Sent successfully");
+    })
+    .catch ((err) => {
+        console.log(err);
+        res.status(500).send("Sent failed");
+    });
+})
 
 // HOST ON LOCAL PORT
 const port = process.env.PORT || 3000;

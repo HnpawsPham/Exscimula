@@ -1,10 +1,14 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
+    "emailjs-com": "^3.2.0",
     "express": "^4.21.1",
     "joi": "^17.13.3",
     "js-cookie": "^3.0.5",
     "multer": "^1.4.5-lts.1",
-    "unzipit": "^1.4.3"
+    "unzipit": "^1.4.3",
+    "xhr2": "^0.2.1"
   }
 }

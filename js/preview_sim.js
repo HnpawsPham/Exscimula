@@ -1,4 +1,5 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import moment from 'https://cdn.skypack.dev/moment';
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
 import { getBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip, getZip, sleep } from "./auth/storing.js";
