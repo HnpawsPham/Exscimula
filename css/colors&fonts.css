@@ -117,12 +117,11 @@ html{
     background-color: white;
     border-radius: 20px;
     min-width: 30vw;
-    height: 10vh;
     top: 10%;
     left: 50%;
     transform: translate(-50%, -80%);
     width: max-content;
-    padding: 0 20px;
+    padding: 2vh 20px;
 }
 
 #back-home{
@@ -223,4 +222,14 @@ a{
 
 .gg-translate{
     position: fixed;
+}
+
+@media only screen and (max-width: 800px){
+    body{
+        font-size: 10px;
+    }
+    
+    #noti{
+        width: 80vw;
+    }
 }

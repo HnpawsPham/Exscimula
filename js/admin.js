@@ -65,7 +65,7 @@ async function blockHandle(btn, user, blocked) {
             console.log(date_split);
 
             let block = {
-                reason: document.querySelector("#popup>select").value,
+                reason: document.querySelector("#popup>input").value,
                 time: {
                     text: date_extension,
                     until: today.clone().add(parseInt(date_split.shift()), date_split.pop()).format("DD/MM/YYYY"),

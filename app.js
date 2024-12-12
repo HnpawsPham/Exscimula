@@ -131,6 +131,7 @@ app.get("/get-zip", (req, res) => {
 const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
 const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
+console.log(EMAILJS_PUBLIC_KEY)
 
 // BUG QUA DCM
 emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -143,9 +144,9 @@ app.post("/send-block-email", (req, res) => {
     }
 
     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
-    .then((res) => {
+    .then((result) => {
         console.log("Email is sent successfully");
-        res.send("Sent successfully");
+        res.send(result);
     })
     .catch ((err) => {
         console.log(err);
