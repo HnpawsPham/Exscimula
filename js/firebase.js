@@ -1,17 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getDatabase, ref, set, get, child, remove, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { getDatabase, ref, set, get, child, remove } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCR1_KRvwc4CAX8_shJRfjEzqpjpbNadTE",
-  authDomain: "exscimula.firebaseapp.com",
-  databaseURL: "https://exscimula-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "exscimula",
-  storageBucket: "exscimula.firebasestorage.app",
-  messagingSenderId: "509213416938",
-  appId: "1:509213416938:web:422dbbc09b962618562693",
-  measurementId: "G-5KX0B7RE6K"
-};
+async function getFirebaseConfig(){
+  try{
+    const res = await fetch("/firebase-config");
+    const config = await res.json();
+    return config;
+  }
+  catch(err){
+    console.log(err);
+  }
+}
 
+const firebaseConfig = await getFirebaseConfig();
 export const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 

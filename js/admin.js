@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import moment from 'https://cdn.skypack.dev/moment';
 import { delData, getData, setData } from "./firebase.js";
-import { forkOff, getDate } from "./auth/storing.js"
+import { deleteZip, forkOff, getDate } from "./auth/storing.js"
 import { visibleNoti } from "./notification.js";
 
 const adminName = document.getElementById("admin-name");
@@ -9,6 +9,7 @@ const userTable = document.getElementById("user-table");
 const commentTable = document.getElementById("comment-table");
 const workTable = document.getElementById("work-table");
 const popup = document.getElementById("popup");
+const popupCloseBtn = document.querySelector("#popup>b");
 
 const auth = getAuth();
 
@@ -26,6 +27,10 @@ auth.onAuthStateChanged(async (res) => {
     loadUsers(data);
     loadComments();
     loadWorks();
+})
+
+popupCloseBtn.addEventListener("click", function(){
+    popup.classList.add("hidden");
 })
 
 async function sendEmail(user, info) {
@@ -52,7 +57,8 @@ async function sendEmail(user, info) {
 }
 
 // Custom option blocking an user
-async function blockHandle(btn, user, blocked) {
+async function blockHandle(btn, user) {
+    let blocked = await getData(`users/${user.uid}/activities/is_blocked`);
     if (!blocked) {
         popup.classList.remove("hidden");
 
@@ -62,7 +68,6 @@ async function blockHandle(btn, user, blocked) {
             let today = moment();
             let date_extension = document.querySelector("#popup>select").value;
             let date_split = date_extension.split(' ');
-            console.log(date_split);
 
             let block = {
                 reason: document.querySelector("#popup>input").value,
@@ -71,14 +76,14 @@ async function blockHandle(btn, user, blocked) {
                     until: today.clone().add(parseInt(date_split.shift()), date_split.pop()).format("DD/MM/YYYY"),
                 }
             }
-            console.log(block);
 
             try {
                 const data = await sendEmail(user, block);
 
                 if (data){ 
+                    popup.classList.add("hidden");
                     await setData(`users/${user.uid}/activities/is_blocked/`, block);
-                    visibleNoti("Blocked successfully", 3000);
+                    await visibleNoti("Blocked successfully", 3000);
                     btn.innerHTML = "Unblock this user";
                 }
             }
@@ -87,18 +92,53 @@ async function blockHandle(btn, user, blocked) {
                 throw new Error(err);
             }
         }
-        return;
     }
+    else{
+        try {
+            await delData(`users/${user.uid}/activities/is_blocked`);
+            await visibleNoti("Unblocked successfully", 2000);
+            btn.innerHTML = "Block this user";
+        }
+        catch (err) {
+            await visibleNoti("Unblocked unsuccessfully. Please try again.", 4000);
+            throw new Error(err);
+        }
+    }
+}
 
-    popup.classList.add("hidden");
-    try {
-        await delData(`users/${user.uid}/activities/is_blocked`);
-        visibleNoti("Unblocked successfully");
-        btn.innerHTML = "Block this user";
+async function deleteUserHanlde(row, id) {
+    try{
+        await delData(`users/${id}`);
+        await visibleNoti("User deleted successfully.", 3000);
+        userTable.removeChild(row);
     }
-    catch (err) {
-        visibleNoti("Unblocked unsuccessfully. Please try again.", 4000);
-        throw new Error(err);
+    catch (err){
+        await visibleNoti("User deleted unsuccessfully.", 3000);
+        console.log(err);
+    }
+}
+
+async function deleteCommentHandle(row, type, id, index) {
+    try{
+        await delData(`works/${id}/${type}s/${index}`);
+        await visibleNoti("Comment deleted successfully.", 3000);
+        commentTable.removeChild(row);
+    }
+    catch(err){
+        visibleNoti("Comment deleted unsuccessfully.", 3000);
+        console.log(err);
+    }
+}
+
+async function deleteWorkHandle(row, id) {
+    try{
+        await delData(`works/${id}`);
+        if(deleteZip(id)) await visibleNoti("Work deleted successfully", 3000);
+        workTable.removeChild(row);
+    }
+    catch(err){
+        await visibleNoti("Work deleted unsuccessfully", 3000);
+        console.log(err);
     }
 }
 
@@ -131,9 +171,9 @@ function loadUsers(data) {
         let td = document.createElement("td");
         let delBtn = document.createElement("button");
         delBtn.innerHTML = "Delete user";
+        delBtn.onclick = async () => await deleteUserHanlde(tr, user.uid);
         td.appendChild(delBtn);
-
-        let isBlocked = user.is_blocked ?? false;
+        let isBlocked = user.activities.is_blocked ?? false;
         let blockBtn = document.createElement("button");
 
         if (!isBlocked) blockBtn.innerHTML = "Block this user";
@@ -149,7 +189,7 @@ function loadUsers(data) {
 }
 
 // Load <td></td> info of a comment
-function loadCommentTD(comment, cnt) {
+async function loadCommentTD(id, comment, cnt, type) {
     let tr = document.createElement("tr");
     cnt++;
 
@@ -173,10 +213,20 @@ function loadCommentTD(comment, cnt) {
 
     let delCommentBtn = document.createElement("button");
     delCommentBtn.innerHTML = "Delete comment";
+    delCommentBtn.onclick = async () => await deleteCommentHandle(tr, type, id, cnt);
     td.appendChild(delCommentBtn);
 
     let blockBtn = document.createElement("button");
     blockBtn.innerHTML = "Block this user";
+
+    let user = await getData(`users/${comment.from}`);
+
+    let isBlocked = user.activities.is_blocked ?? false;
+
+    if (!isBlocked) blockBtn.innerHTML = "Block this user";
+    else blockBtn.innerHTML = "Unblock this user";
+ 
+    blockBtn.onclick = async () => await blockHandle(blockBtn, user);
     td.appendChild(blockBtn);
     tr.appendChild(td);
 
@@ -190,10 +240,10 @@ function loadComments() {
         let cnt = 0;
 
         for (let ques of Object.values(questions))
-            loadCommentTD(ques, cnt);
+            loadCommentTD(work.id, ques, cnt, "question");
 
         for (let rate of Object.values(rates))
-            loadCommentTD(rate, cnt);
+            loadCommentTD(work.id, rate, cnt, "rate");
     }
 }
 
@@ -224,6 +274,7 @@ function loadWorks() {
         let td = document.createElement("td");
         let delBtn = document.createElement("button");
         delBtn.innerHTML = "Delete";
+        delBtn.onclick = async () => await deleteWorkHandle(tr, work.id);
         td.appendChild(delBtn);
         tr.appendChild(td);
 

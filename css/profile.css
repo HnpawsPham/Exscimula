@@ -78,6 +78,7 @@ body{
 }
 
 #info{
+    width: 65%;
     margin-left: 10px;
 }
 #nickname{

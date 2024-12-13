@@ -275,3 +275,13 @@ export async function postZip(data) {
         throw new Error("Posted zip failed.");
     }
 }
+
+export async function deleteZip(id){
+    const res = await fetch(`/remove?name=${id}.zip`, {
+        method: "DELETE",
+    })
+
+    if(!res.ok) throw new Error(res.status, res.statusText);
+    console.log("remove work from storage successfully");
+    return  true;
+}

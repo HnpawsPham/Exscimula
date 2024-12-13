@@ -122,6 +122,7 @@ html{
     transform: translate(-50%, -80%);
     width: max-content;
     padding: 2vh 20px;
+    color: black;
 }
 
 #back-home{

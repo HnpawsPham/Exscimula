@@ -3,11 +3,10 @@ const app = express();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
-require('dotenv').config();
-const emailjs = require('emailjs-com');
+require("dotenv").config();
+const emailjs = require("emailjs-com");
 const cors = require("cors");
-const XMLHttpRequest = require('xhr2'); 
-global.XMLHttpRequest = XMLHttpRequest;
+const XMLHttpRequest = require("xhr2"); 
 
 // SETUP
 app.use((req, res, next) => {
@@ -16,6 +15,7 @@ app.use((req, res, next) => {
 });
 
 // Define some stuff
+global.XMLHttpRequest = XMLHttpRequest;
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); 
@@ -23,7 +23,7 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 // Create storage folder
-const storage_dir = path.join(__dirname, "../uploads");
+const storage_dir = path.join(__dirname, "./uploads");
 if(!fs.existsSync(storage_dir)) fs.mkdirSync(storage_dir);
 
 // SET UPLOADING STRUCTURE
@@ -113,6 +113,24 @@ app.post('/upload', upload.single("file"), (req, res) => {
     res.send("File uploaded successfully.");
 })
 
+// DELETE ZIP FILES
+app.delete("/remove", (req, res) => {
+    try{
+        const name = req.query.name;
+        if(!name) return res.status(400).send("Can't read file name");
+
+        const fpath = path.join("uploads", name);
+        if(!fs.existsSync(fpath)) return res.status(404).send("File not found.");
+        
+        fs.unlinkSync(fpath);
+        res.send("File deleted successfully.");
+    }
+    catch (err){
+        console.log(err);
+        res.status(500).send("Couldn't remove file");
+    }
+})
+
 // GET ZIP FILES
 app.get("/get-zip", (req, res) => {
     const id = req.query.id;
@@ -128,13 +146,7 @@ app.get("/get-zip", (req, res) => {
 });
 
 // SEND EMAILS TO USERS
-const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
-const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
-const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
-console.log(EMAILJS_PUBLIC_KEY)
-
-// BUG QUA DCM
-emailjs.init(EMAILJS_PUBLIC_KEY);
+emailjs.init(process.env.EMAILJS_PUBLIC_KEY);
 app.post("/send-block-email", (req, res) => {
     let params = {
         to_email: req.body.email,
@@ -143,7 +155,7 @@ app.post("/send-block-email", (req, res) => {
         block_time: req.body.time,
     }
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+    emailjs.send(process.env.EMAILJS_SERVICE_ID, process.env.EMAILJS_TEMPLATE_ID, params)
     .then((result) => {
         console.log("Email is sent successfully");
         res.send(result);
@@ -159,3 +171,16 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Running on port ${port}`);
 })
+
+// FIREBASE CONFIG
+app.get("/firebase-config", (req, res) => {
+    res.json({
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        databaseURL: process.env.FIREBASE_DATABASE_URL,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+    });
+});
