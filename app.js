@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
@@ -9,13 +8,15 @@ const cors = require("cors");
 const XMLHttpRequest = require("xhr2"); 
 
 // SETUP
+const app = express();
+global.XMLHttpRequest = XMLHttpRequest;
+
 app.use((req, res, next) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
     next();
 });
 
 // Define some stuff
-global.XMLHttpRequest = XMLHttpRequest;
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); 
@@ -81,7 +82,35 @@ app.get("/offline-download", (req, res) => {
 app.get("/topics", (req, res) => {
     const subject = req.query.subject;
     const tag = req.query.tag || null;
-    res.render("topics_menu", {subject, tag});
+
+    const fpath = path.join(__dirname, "topics", subject.toLowerCase());
+    if(!fs.existsSync(fpath)) return res.status(404).send("subject not found");
+
+    const admin_sims = [];
+    function getSim(dir){
+        const files = fs.readdirSync(dir);
+
+        for(let file of files){
+            const fpath = path.join(dir, file);
+            const stat = fs.statSync(fpath);
+
+            if(stat.isDirectory()) getSim(fpath); // if not a sim folder
+            else if(file == "main.html"){
+                const info_path = path.join(dir, "info.json");
+                let info = null;
+
+                if(fs.existsSync(info_path)) info = fs.readFileSync(info_path, "utf-8");
+
+                admin_sims.push({
+                    path: fpath,
+                    info: info
+                });
+            }
+        }
+    }
+    getSim(fpath);
+
+    res.render("topics_menu", {subject, tag, admin_sims});
 })
 
 app.get("/profile", (req, res) => {

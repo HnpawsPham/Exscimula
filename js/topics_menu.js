@@ -9,8 +9,8 @@ const searchBar = document.querySelector("#search>input");
 const searchBtn = document.querySelector("#search>svg");
 
 const subject = searchQuery("subject");
-const data = (await getData(`works/`) || [])
-    .filter(work => work !== undefined && work.subject === subject);
+const data = Object.values(await getData(`works/`) || {})
+    .filter((work) => work !== undefined && work.subject === subject);
 
 // CHECK IF USER IS LOGGED IN (TO LOAD SAVED SIMS)
 const auth = getAuth();
