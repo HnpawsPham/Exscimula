@@ -1,0 +1,16 @@
+{
+    "name": "Bodies of matter",
+    "id": "au_che2",
+    "date": "25/1/2024",
+    "description": "Add chemicals and observe the reaction.",
+    "author": {
+        "name": "HnpawsPham",
+        "uid": "au"
+    },
+    "subject": "Chemistry",
+    "tags": ["chemistry", "chemicals", "solid", "liquid", "vapor"],
+    "star": {
+        "rate_times": 0,
+        "value": 0
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Reaction of sodium with water",
+    "id": "au_che5",
+    "date": "25/1/2024",
+    "description": "The degree of reaction of sodium with water depends on the amount of substance.",
+    "author": {
+        "name": "HnpawsPham",
+        "uid": "au"
+    },
+    "subject": "Chemistry",
+    "tags": ["chemistry", "sodium", "water", "explosion", "fire"],
+    "star": {
+        "rate_times": 0,
+        "value": 0
+    }
+}

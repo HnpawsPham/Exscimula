@@ -5,6 +5,7 @@ const multer = require("multer");
 require("dotenv").config();
 const emailjs = require("emailjs-com");
 const cors = require("cors");
+const moment = require("moment");
 const XMLHttpRequest = require("xhr2"); 
 
 // SETUP
@@ -94,23 +95,28 @@ app.get("/topics", (req, res) => {
             const fpath = path.join(dir, file);
             const stat = fs.statSync(fpath);
 
-            if(stat.isDirectory()) getSim(fpath); // if not a sim folder
-            else if(file == "main.html"){
+            if(stat.isDirectory()) getSim(fpath); // if is sim folder, find its children (code files)
+            else if(file == "main.html"){         // get main html file and sim info
                 const info_path = path.join(dir, "info.json");
                 let info = null;
 
                 if(fs.existsSync(info_path)) info = fs.readFileSync(info_path, "utf-8");
+                
 
-                admin_sims.push({
-                    path: fpath,
-                    info: info
-                });
+                if(info){
+                    admin_sims.push({
+                        path: fpath,
+                        info: JSON.parse(info)
+                    });
+
+                    console.log(JSON.parse(info))
+                }
             }
         }
     }
     getSim(fpath);
 
-    res.render("topics_menu", {subject, tag, admin_sims});
+    res.render("topics_menu", {subject, tag, moment, admin_sims});
 })
 
 app.get("/profile", (req, res) => {

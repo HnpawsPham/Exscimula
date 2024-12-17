@@ -1,0 +1,16 @@
+{
+    "name": "Shallow method",
+    "id": "au_che7",
+    "date": "25/1/2024",
+    "description": "The degree of reaction of sodium with water depends on the amount of substance.",
+    "author": {
+        "name": "HnpawsPham",
+        "uid": "au"
+    },
+    "subject": "Chemistry",
+    "tags": ["chemistry", "heat", "salt", "water", "separation"],
+    "star": {
+        "rate_times": 0,
+        "value": 0
+    }
+}

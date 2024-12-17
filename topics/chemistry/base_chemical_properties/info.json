@@ -1,0 +1,19 @@
+{
+    "name": "Chemical properties of base",
+    "id": "au_che1",
+    "date": "25/1/2024",
+    "description": "Add chemicals and observe the reaction.",
+    "author": {
+        "name": "HnpawsPham",
+        "uid": "au"
+    },
+    "subject": "Chemistry",
+    "tags": ["chemistry", "chemicals", "HCl", "Phenolphtalein"],
+    "star": {
+        "rate_times": 0,
+        "value": 0
+    },
+    "preview": [
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Flonestarneurology.net%2Fblog%2Fhow-to-improve-blood-circulation%2F&psig=AOvVaw2O-7VYGHd0zuEpExCK6rLk&ust=1734540101001000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIjV-KWfr4oDFQAAAAAdAAAAABAE"
+    ]
+}

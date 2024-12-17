@@ -4,7 +4,7 @@ import { delData, getData, updateData_list } from "./firebase.js";
 import { defaultImg, loadStarRange, searchQuery } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
-const container = document.getElementById("main");
+const container = document.querySelectorAll(".main")[1];
 const searchBar = document.querySelector("#search>input");
 const searchBtn = document.querySelector("#search>svg");
 

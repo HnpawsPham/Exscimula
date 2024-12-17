@@ -9,7 +9,7 @@ body{
     --blur: rgba(255, 255, 255, 0.264);
 }
 
-#main{
+.main{
     width: 100vw;
     display: flex;
     justify-content: center;

@@ -1,0 +1,16 @@
+{
+    "name": "Filter method",
+    "id": "au_che4",
+    "date": "25/1/2024",
+    "description": "Add chemicals and observe the reaction.",
+    "author": {
+        "name": "HnpawsPham",
+        "uid": "au"
+    },
+    "subject": "Chemistry",
+    "tags": ["chemistry", "liquid", "separation"],
+    "star": {
+        "rate_times": 0,
+        "value": 0
+    }
+}
