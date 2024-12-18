@@ -1,4 +1,19 @@
 {
-    "name": "Blood Circulation",
-    "id": "au1"
+    "name": "Blood circulation",
+    "id": "au_bio1",
+    "date": "25/1/2024",
+    "description": "Add chemicals and observe the reaction.",
+    "author": {
+        "name": "HnpawsPham",
+        "uid": "au"
+    },
+    "subject": "Biology",
+    "tags": ["biology", "blood", "heart", "observe method"],
+    "star": {
+        "rate_times": 0,
+        "value": 0
+    },
+    "preview": [
+        "https://www.thoughtco.com/thmb/6MsMmUK27akFhb8i89kj95J5iko=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-545286316-433dd345105e4c6ebe4cdd8d2317fdaa.jpg"
+    ]
 }

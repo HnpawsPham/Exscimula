@@ -44,7 +44,7 @@
 
     <div class="main">
         <% admin_sims.forEach(function(sim) { %>
-            <div class="card">
+            <div class="card" onclick="window.location.href=`/preview?id=<%= sim.info.id %>&subject=<%=sim.info.subject%>`">
                 <!-- Preview Image -->
                 <img src="<%= sim.info.preview ? sim.info.preview[0] : '/assets/default.jpg' %>"
                     alt="<%= sim.info.name %>">

@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 // Define some stuff
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static("topics"));
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -58,6 +58,7 @@ app.use("/css", express.static(path.join(__dirname, "./css")));
 app.use("/assets", express.static(path.join(__dirname, "./assets")));
 app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
 app.use("/js", express.static(path.join(__dirname, "./js")));
+app.use("/topics", express.static(path.join(__dirname, "./topics")));
 
 // NAVIGATOR
 app.get("/index", (req, res) => {
@@ -80,6 +81,9 @@ app.get("/offline-download", (req, res) => {
     res.render("download");
 })
 
+const base_dir = path.join(__dirname, "topics");
+
+// LOAD ALL SIM IN TOPICS DIRECTORY 
 app.get("/topics", (req, res) => {
     const subject = req.query.subject;
     const tag = req.query.tag || null;
@@ -101,15 +105,12 @@ app.get("/topics", (req, res) => {
                 let info = null;
 
                 if(fs.existsSync(info_path)) info = fs.readFileSync(info_path, "utf-8");
-                
 
                 if(info){
                     admin_sims.push({
-                        path: fpath,
+                        path: path.relative(base_dir, fpath).replace(/\\/g, '/'),
                         info: JSON.parse(info)
                     });
-
-                    console.log(JSON.parse(info))
                 }
             }
         }
@@ -118,6 +119,25 @@ app.get("/topics", (req, res) => {
 
     res.render("topics_menu", {subject, tag, moment, admin_sims});
 })
+
+app.get("/sim", (req, res) => {
+    const relativePath = decodeURIComponent(req.query.path);  // Giải mã đường dẫn
+    const fullPath = path.join(base_dir, relativePath);
+
+    console.log("Full path:", fullPath);  // In ra để kiểm tra đường dẫn đầy đủ
+
+    // Kiểm tra an toàn
+    if (!fullPath.startsWith(base_dir)) {
+        return res.status(403).send("Access denied");
+    }
+
+    if (!fs.existsSync(fullPath)) {
+        return res.status(404).send("Simulation not found");
+    }
+
+    res.sendFile(fullPath);
+});
+
 
 app.get("/profile", (req, res) => {
     res.sendFile(path.join(__dirname, "./pages/profile.html"));

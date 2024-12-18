@@ -1,14 +1,14 @@
 {
-    "name": "Chemical properties of base",
-    "id": "au_che1",
+    "name": "Tree trunks transport water",
+    "id": "au_bio5",
     "date": "25/1/2024",
     "description": "Add chemicals and observe the reaction.",
     "author": {
         "name": "HnpawsPham",
         "uid": "au"
     },
-    "subject": "Chemistry",
-    "tags": ["chemistry", "chemicals", "HCl", "Phenolphtalein"],
+    "subject": "Biology",
+    "tags": ["biology", "plant", "observe method"],
     "star": {
         "rate_times": 0,
         "value": 0

@@ -1,14 +1,14 @@
 {
-    "name": "Chemical properties of base",
-    "id": "au_che1",
+    "name": "Cellular respiration",
+    "id": "au_bio2",
     "date": "25/1/2024",
     "description": "Add chemicals and observe the reaction.",
     "author": {
         "name": "HnpawsPham",
         "uid": "au"
     },
-    "subject": "Chemistry",
-    "tags": ["chemistry", "chemicals", "HCl", "Phenolphtalein"],
+    "subject": "Biology",
+    "tags": ["biology", "respiration", "observe method"],
     "star": {
         "rate_times": 0,
         "value": 0

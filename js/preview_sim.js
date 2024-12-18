@@ -23,6 +23,17 @@ const curSim = await getData(`works/${simId}`);
 const screen = document.querySelector("#top>.screen>img");
 const imgPreviewContainer = document.querySelector("#top>.img-query");
 
+if (!curSim) {
+    const sim = {
+        id: simId,
+        preview: previewImgs,
+        star: {
+            rate_times: 0,
+            value: 0,
+        },
+    }
+}
+
 let previewImgs = curSim.preview || [defaultImg];
 screen.src = previewImgs[0];
 
@@ -197,7 +208,7 @@ async function createPreviewImg(container, arr, inp) {
 
 // REPORT ERROR HANDLE
 const reportBtn = document.getElementById("report");
-reportBtn.addEventListener("click", function(){
+reportBtn.addEventListener("click", function () {
     visibleNoti("Thanks for letting us know. We'll check it soon.", 4000);
 })
 
@@ -391,13 +402,13 @@ playSimBtn.addEventListener("click", async function () {
 
         for (let [name, val] of Object.entries(srcCode.images)) {
             doc.querySelectorAll("img").forEach(img => {
-                if(img.src.split("/").pop() == name.split('/').pop()) img.src = val;
+                if (img.src.split("/").pop() == name.split('/').pop()) img.src = val;
             })
         }
 
-        for(let [name, val] of Object.entries(srcCode.sounds)) {
+        for (let [name, val] of Object.entries(srcCode.sounds)) {
             doc.querySelectorAll("audio").forEach(sound => {
-                if(sound.src.split('/').pop() == name.split('/').pop()) sound.src = val;
+                if (sound.src.split('/').pop() == name.split('/').pop()) sound.src = val;
             })
         }
     }
