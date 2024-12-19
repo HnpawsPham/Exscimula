@@ -19,7 +19,6 @@ app.use((req, res, next) => {
 
 // Define some stuff
 app.use(cors());
-app.use(express.static("topics"));
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -58,7 +57,7 @@ app.use("/css", express.static(path.join(__dirname, "./css")));
 app.use("/assets", express.static(path.join(__dirname, "./assets")));
 app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
 app.use("/js", express.static(path.join(__dirname, "./js")));
-app.use("/topics", express.static(path.join(__dirname, "./topics")));
+app.use(express.static(path.join(__dirname, "./topics")));
 
 // NAVIGATOR
 app.get("/index", (req, res) => {
@@ -120,22 +119,15 @@ app.get("/topics", (req, res) => {
     res.render("topics_menu", {subject, tag, moment, admin_sims});
 })
 
-app.get("/sim", (req, res) => {
-    const relativePath = decodeURIComponent(req.query.path);  // Giải mã đường dẫn
-    const fullPath = path.join(base_dir, relativePath);
+app.get("/public/:subject/:name", (req, res) => {
+    const full_path = path.join(__dirname, "topics", req.params.subject, req.params.name, "main.html");
 
-    console.log("Full path:", fullPath);  // In ra để kiểm tra đường dẫn đầy đủ
-
-    // Kiểm tra an toàn
-    if (!fullPath.startsWith(base_dir)) {
-        return res.status(403).send("Access denied");
-    }
-
-    if (!fs.existsSync(fullPath)) {
+    // Check if path exists
+    if (!fs.existsSync(full_path)) {
         return res.status(404).send("Simulation not found");
     }
 
-    res.sendFile(fullPath);
+    res.sendFile(full_path);
 });
 
 
