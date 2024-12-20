@@ -129,7 +129,7 @@ async function loadSim(work) {
     container.appendChild(div);
 
     [info, img].forEach(elm => elm.addEventListener("click", function () {
-        window.location.href = `/preview?id=${work.id}&subject=${work.subject}`;
+        window.location.href = `/preview?id=${work.id}&subject=${work.subject}&name=${work.name}`;
     }))
 }
 
@@ -252,11 +252,10 @@ for (let opt of sortByStarBar) {
             return;
         }
 
-        // Get values range
+        // Get first index of the range and load 'till the end
         let st = sortSimByStarBNS(x);
-        let en = sortSimByStarBNS(x + 0.9);
 
-        if (!st || !en) {
+        if (!st) {
             emptyHandle();
             return;
         }
@@ -266,7 +265,8 @@ for (let opt of sortByStarBar) {
         // if(val >= x + 1) en--;
         console.log(x, st, en);
 
-        // Load sims
+        // Load sims 
+        // CHECK CHO DEN KHI NAO SORTEDBYSTAR[I] K CON TRONG PHAM VI DUOC CHON NUA!!!
         for (let i = st; i <= en; i++) {
             loadSim(sortedByStar[i]);
         }

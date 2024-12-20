@@ -57,7 +57,7 @@ app.use("/css", express.static(path.join(__dirname, "./css")));
 app.use("/assets", express.static(path.join(__dirname, "./assets")));
 app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
 app.use("/js", express.static(path.join(__dirname, "./js")));
-app.use(express.static(path.join(__dirname, "./topics")));
+app.use("/public", express.static(path.join(__dirname, "topics")));
 
 // NAVIGATOR
 app.get("/index", (req, res) => {
@@ -107,6 +107,7 @@ app.get("/topics", (req, res) => {
 
                 if(info){
                     admin_sims.push({
+                        folder_name: path.basename(dir),
                         path: path.relative(base_dir, fpath).replace(/\\/g, '/'),
                         info: JSON.parse(info)
                     });
@@ -127,7 +128,7 @@ app.get("/public/:subject/:name", (req, res) => {
         return res.status(404).send("Simulation not found");
     }
 
-    res.sendFile(full_path);
+    res.redirect(`/public/${req.params.subject}/${req.params.name}/main.html`);
 });
 
 
@@ -144,9 +145,8 @@ app.get("/tags", (req, res) => {
 })
 
 app.get("/preview", (req, res) => {
-    const id = req.query.id;
-    const subject = req.query.subject;
-    res.render("preview_sim", {id, subject});
+    const {id, subject, name} = req.query;
+    res.render("preview_sim", {id, subject, name});
 })
 
 app.get("/policy", (req, res) => {

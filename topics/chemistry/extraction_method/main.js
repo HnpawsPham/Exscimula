@@ -16,7 +16,8 @@ const inside = document.getElementById("inside")
 const outside = document.getElementById("outside")
 const chietOil = document.getElementById("chietOil")
 const chietWater = document.getElementById("chietWater")
-const nuocDaTach = document.getElementById("nuocDcTach")
+const nuocDaTach = document.getElementById("nuocDcTach");
+const tb = document.getElementById("alert");
 
 // hàm đợi
 function sleep(ms) {
@@ -64,16 +65,15 @@ let invisibleLine = false  //ẩn cái dòng chảy của hỗn hợp=)
 let daChiet = false  //check hỗn hợp đã được tách ra thành nước ở lọ và dầu ở máy chiết chưa
 let canChiet = false //khi nhấn nút thì cho phép chiết(k có biến này khi bấm nút dầu với nước từ hư vô đột nhiên xuất hiện=))
 
-$("#alert").hide();
-
-// hàm thông báo
-const thong_bao = function (millisec) {
-    $("#alert").show()
+// custom alert
+function notification(content, milisec) {
+    tb.style.display = "flex"
+    tb.innerHTML = content
     setTimeout(function () {
-        $('#alert').hide()
-    }, millisec)
-}
+        tb.style.display = "none"
+    }, milisec)
 
+}
 // hiệu ứng bling
 function bling(obj) {
     obj.style.animation = "bling 3s ease"
@@ -106,7 +106,7 @@ function moveObj(obj, move, pourliquid) {
     // nhắc người dùng mở khoá máy chiết khi click vào máy chiết mà khoá chưa mở (để người ta k bị rắc rối với việc k di chuyển được máy chiết)
     try{
         if (obj == chiet && (machine.getBoundingClientRect().top + 200) < mY && mY < (machine.getBoundingClientRect().bottom - 100) && unlock == false) {
-            $("#alert").text("Bạn muốn sử dụng máy chiết? Nhớ mở khoá thanh điều chỉnh để nâng hạ theo ý muốn nha")
+            notification("Bạn muốn sử dụng máy chiết? Nhớ mở khoá thanh điều chỉnh để nâng hạ theo ý muốn nha", 7000);
             thong_bao(3000)
             bling(khoa)
         }
@@ -155,15 +155,15 @@ function moveObj(obj, move, pourliquid) {
                 })
             }
             else if (obj == coc && daChiet == false && mixtureIsPoured == false && (oilIsPoured == false || waterIsPoured == false)) {
-                $("#alert").text("Đổ cả hai chất lỏng vào cốc trước nha!")
+                notification("Đổ cả hai chất lỏng vào cốc trước nha!", 4000);
                 thong_bao(2000)
             }
             else if (obj == coc && mixtureIsPoured == false && daChiet == false && (startX < mX && mX < endX && startY > mY && mY > endY) && oilIsPoured == false && waterIsPoured == false) {
-                $("#alert").text("Cần có chất lỏng để đổ!")
+                notification("Cần có chất lỏng để đổ!", 2000);
                 thong_bao(2000)
             }
             else if (obj == coc && daChiet == false & mixtureIsPoured == false && !(startX < mX && mX < endX && startY > mY && mY > endY)) {
-                $("#alert").text("Chỉ được đổ vào máy chiết")
+                notification("Chỉ được đổ vào máy chiết", 2000);
                 thong_bao(2000)
                 bling(chiet)
             }
@@ -215,7 +215,7 @@ function moveObj(obj, move, pourliquid) {
                 }
                 // k dể vào miệng cốc thì k cho đổ
                 else if (!(fromX < mX && mX < toX && fromY << mY && mY < toY) && (oilIsPoured == false || waterIsPoured == false)) {
-                    $("#alert").text("Lọ này chỉ có thể được đổ vào cốc")
+                    notification("Lọ này chỉ có thể được đổ vào cốc", 4000);
                     move=true
                     dblclickTimes -= 2
                     thong_bao(2000)
@@ -276,7 +276,7 @@ function moveObj(obj, move, pourliquid) {
                 }
                 // còn k thì nhắc
                 // else {
-                //     $("#alert").text("Nâng máy chiết cao lên để đặt lọ vào")
+                //     notification("Nâng máy chiết cao lên để đặt lọ vào")
                 //     thong_bao(3000)
                 //     bling(khoa)
                 // }
@@ -370,7 +370,7 @@ lo.addEventListener("click", function () {
     else { moveLo = true }
     // sau khi xong hết thì thông báo kq
     if (daChiet) {
-        $("#alert").text("Ta thu được nước đã tách ra khỏi dầu")
+        notification("Ta thu được nước đã tách ra khỏi dầu", 4000);
         thong_bao(5000)
         visibleConclusion()
     }
@@ -396,7 +396,7 @@ nut.addEventListener("click", function () {
     }
     // khoá lại mới bấm nút đc
     else if (unlock && canChiet) {
-        $("#alert").text("Khoá thanh điều chỉnh trước khi sử dụng máy chiết!")
+        notification("Khoá thanh điều chỉnh trước khi sử dụng máy chiết!", 6000);
         thong_bao(2000)
         bling(khoa)
     }
@@ -405,12 +405,12 @@ nut.addEventListener("click", function () {
         chietOil.style.animation = "none"
         chietOil.style.borderRadius = "0px 0px 100px 100px"
         chietWater.style.animation = "none"
-        $("#alert").text("Không thể chiết được nữa!")
+        notification("Không thể chiết được nữa!", 3000);
         thong_bao(2000)
     }
     // k đổ chất vào máy thì thông báo
     else if (mixtureIsPoured == false) {
-        $("#alert").text("Máy chiết chưa thể sử dụng, cần có chất lỏng!")
+        notification("Máy chiết chưa thể sử dụng, cần có chất lỏng!", 6000);
         thong_bao(2000)
     }
 })

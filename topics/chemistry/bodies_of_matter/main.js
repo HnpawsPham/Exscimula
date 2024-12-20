@@ -23,6 +23,14 @@ let bucketInFridge = false
 let microscopeVisiblingSteamElms = false
 let sec = 5
 
+const kettleOpenSrc = "./assets/open.png";
+const kettleCloseSrc = "./assets/close.png";
+const fridgeOpenSrc = "./assets/fridge_open.png";
+const waterIceSrc = "./assets/ice_elms.png";
+const waterLiquidSrc = "./assets/liquid.png";
+const fridgeCloseSrc = "./assets/fridge.png";
+const icePatternSrc = "./assets/ice_pattern.jpg";
+
 let waterType = "none"
 let boilTried = false
 tb.style.display = "none"
@@ -101,11 +109,11 @@ kettle.addEventListener("click", function () {
 })
 kettle.addEventListener("dblclick", function () {
     if (!kettleOpen) {
-        kettle.src = "./assets/open.png"
+        kettle.src = kettleOpenSrc;
         kettleOpen = true
     }
     else {
-        kettle.src = "./assets/close.png"
+        kettle.src = kettleCloseSrc;
         kettleOpen = false
     }
 })
@@ -151,7 +159,7 @@ function getWater(obj) {
 fridge.addEventListener("click", function () {
     if (!fridgeOpen) {
         bucket.style.pointerEvents = "auto"
-        fridge.src = "./assets/fridgeopen.png"
+        fridge.src = fridgeOpenSrc;
         fridgeOpen = true
         fridge.style.margin = "140px 0 0 810px"
 
@@ -160,7 +168,7 @@ fridge.addEventListener("click", function () {
         }
     }
     else {
-        fridge.src = "./assets/fridge.png"
+        fridge.src = fridgeCloseSrc;
         fridgeOpen = false
         fridge.style.margin = "100px 0 0 700px"
 
@@ -312,12 +320,12 @@ function returnWaterType(type) {
     if (type == "liquid") {
         liquid.style.backgroundColor = "aquamarine"
         liquid.style.backgroundImage = "none"
-        elmsInside.src = "./assets/liquid.png"
+        elmsInside.src = waterLiquidSrc;
     }
     else if (type == "ice") {
         liquid.style.backgroundColor = "none"
-        liquid.style.backgroundImage = "url(./assets/ice-pattern.jpg)"
-        elmsInside.src = "./assets/ice-elms.png"
+        liquid.style.backgroundImage = `url(${icePatternSrc})`
+        elmsInside.src = waterIceSrc;
     }
 }
 

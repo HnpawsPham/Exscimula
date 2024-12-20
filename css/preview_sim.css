@@ -102,6 +102,11 @@ body{
     align-items: center;
 }
 
+#sim-name{
+    color: var(--cwhite);
+    text-align: center;
+}
+
 #top .row{
     width: 90vw;
     display: flex;

@@ -5,24 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phương pháp chiết</title>
-    <link rel="stylesheet" href="../../colors&fonts.css">
-    <link rel="stylesheet" href="./style/ppChiet.css">
-    <link rel="shortcut icon" href="./assets/extraction.png">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
-    </script>
-    <!-- Including Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
-    </script>
+    <link rel="stylesheet" href="../../layout.css">
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
 <body contextmenu="return false;">
     </div>
 
     <!-- thông báo -->
-    <div id="alert" class="alert alert-success"></div>
+    <div id="alert"></div>
 
     <div id="main">
         <!-- mấy obj có thể di chuyển -->
@@ -37,17 +29,17 @@
             </div>
 
                 <div class="canRotate" id="nuoc">
-                    <img class="ong-nghiem" src="./assets/ongnghiem.png" alt="">
-                    <img class="liquid" src="./assets/nuoc.png" alt="">
-                    <img id="pourwater" src="./assets/pourwater.png" alt="">
+                    <img class="ong-nghiem" src="./assets/tube.png" alt="">
+                    <img class="liquid" src="./assets/water.png" alt="">
+                    <img id="pourwater" src="./assets/pour_water.png" alt="">
                 </div>
                 <div class="canRotate" id="dau">
-                    <img class="ong-nghiem" src="./assets/ongnghiem.png" alt="">
-                    <img class="liquid" src="./assets/dau.png" alt="">
-                    <img id="pourdau" src="./assets/pouroil.png" alt="">
+                    <img class="ong-nghiem" src="./assets/tube.png" alt="">
+                    <img class="liquid" src="./assets/oil.png" alt="">
+                    <img id="pourdau" src="./assets/pour_oil.png" alt="">
                 </div>
                 <div id="coc" class="canRotate">
-                    <img id="cup" src="./assets/coc.png" alt="">
+                    <img id="cup" src="./assets/glass.png" alt="">
                     <div id="inside"></div>
                     <div id="outside"></div>
                     <div id="oil"></div>
@@ -57,21 +49,21 @@
             <!-- mấy obj đứng yên -->
             <div id="stable">
                 <div id="machine">
-                    <img id="de" src="./assets/dechiet.png" alt="">
-                    <img id="chiet" src="./assets/chiet.png" alt="">
-                    <img id="nut" src="./assets/nut.png" alt="">
-                    <img id="khoa" src="./assets/khoa.png" alt="">
+                    <img id="de" src="./assets/stand.png" alt="">
+                    <img id="chiet" src="./assets/machine.png" alt="">
+                    <img id="nut" src="./assets/button.png" alt="">
+                    <img id="khoa" src="./assets/lock.png" alt="">
                     <div id="chietOil"></div>
                     <div id="chietWater"></div>
                 </div>
             </div>
             <div id="bottle">
-                <img id="lo" src="./assets/lo.png" alt="">
+                <img id="lo" src="./assets/triangle_jar.png" alt="">
                 <div id="nuocDcTach"></div>
             </div>
         </div>
         <!--MAIN SCRIPT-  -->
-        <script src="./js/ppChiet.js"></script>
+        <script src="./main.js"></script>
 </body>
 
 </html>

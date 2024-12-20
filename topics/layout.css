@@ -1,0 +1,110 @@
+html{
+    font-size: 20px;
+}
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-attachment: fixed;
+}
+.hidden{
+    visibility: hidden;
+}
+/* icons */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+::selection{
+    opacity: 0;
+}
+#text{
+    font-size: 1em;
+    max-height: 30vh;
+    overflow-y: scroll;
+    z-index: 10;
+    padding: 20px 20px;
+    top: 30px;
+    visibility: hidden;
+    left: 250px;
+    font-family: spline;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color:azure;
+    background-color:#a31318;
+    width: 50vw;
+    margin: auto;
+    min-height: 10vh;
+    border-radius: 0px 10px 10px 10px;
+    overflow-y: auto;
+}
+#conclu{ 
+    font-size: 1em;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0;
+    font-family: spline;
+    font-weight: bold;
+    text-decoration: none;
+    position: fixed;
+    margin: 10px 0 0 120px;
+    display: flex;
+    align-items: center;
+}
+#alert{
+    font-size: 1em;
+    border: none;
+    z-index: 10;
+    position: fixed;
+    margin: 10px 10vw;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width:80vw;
+    height: 10vh;
+    background-color: rgb(31, 31, 31);
+    border-radius: 10px;
+    color: white;
+    font-family: spline;
+}
+#help{
+    font-size: 1em;
+    z-index: 10;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: spline;
+    position: fixed;
+    margin: 10px  0  0 10px;
+}
+/* flashing effect to attract attention */
+@keyframes bling{  
+    0%{
+        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    20%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    40%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    60%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    80%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    100%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+}
+
+.gg-translate{
+    position: fixed;
+}

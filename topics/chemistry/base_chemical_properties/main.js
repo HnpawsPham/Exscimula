@@ -29,6 +29,8 @@ let white = " rgba(245, 245, 245, 0.515)"
 let pink = " rgba(255, 125, 173, 0.656)"
 liquid.style.backgroundColor = white
 
+const hclDropperSrc = "./assets/hcl_dropper.png";
+
 // hàm đợi
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -107,6 +109,7 @@ lab.addEventListener("click", function () {
     moveLab = moveCtrl(moveLab)
     moveObj(lab, moveLab)
 })
+
 dropper.addEventListener("click", function () {
     moveDropper = moveCtrl(moveDropper)
     moveObj(dropper, moveDropper)
@@ -134,7 +137,7 @@ dropper.addEventListener("dblclick", function () {
         if (dropper.getBoundingClientRect().top > phenolBottle.getBoundingClientRect().top - 100 && dropper.getBoundingClientRect().bottom < phenolBottle.getBoundingClientRect().top + 100) {
             if(phenolCap.getBoundingClientRect().left < phenolBottle.getBoundingClientRect().left || phenolCap.getBoundingClientRect().right > phenolBottle.getBoundingClientRect().right){
                 notification("Đã lấy dung dịch Phenolphtalein (C₂₀H₁₄O₄)")
-                dropper.querySelector("img").src="././assets/hclDropper.png"
+                dropper.querySelector("img").src = hclDropperSrc
                 tookPhenol = true
                 tookHCl = false
             }
@@ -148,7 +151,7 @@ dropper.addEventListener("dblclick", function () {
         if (dropper.getBoundingClientRect().top >= hclBottle.getBoundingClientRect().top - 100 && dropper.getBoundingClientRect().bottom < hclBottle.getBoundingClientRect().top + 100) {
             if(hclCap.getBoundingClientRect().left < hclBottle.getBoundingClientRect().left || hclCap.getBoundingClientRect().right > hclBottle.getBoundingClientRect().right){
                 notification("Đã lấy dung dịch HCl")
-                dropper.querySelector("img").src="././assets/hclDropper.png"
+                dropper.querySelector("img").src = hclDropperSrc
                 tookHCl = true
                 tookPhenol = false
             }
@@ -160,7 +163,12 @@ dropper.addEventListener("dblclick", function () {
     // nhỏ dung dịch vào ống nghiệm
     else if (dropper.getBoundingClientRect().left >= lab.getBoundingClientRect().left && dropper.getBoundingClientRect().right < lab.getBoundingClientRect().left + 150) {
         if (dropper.getBoundingClientRect().top > lab.getBoundingClientRect().top - 100 && dropper.getBoundingClientRect().bottom < lab.getBoundingClientRect().top + 100) {
-       
+            
+            if(!tookHCl && !tookPhenol){
+                notification("Chưa lấy dung dịch!");
+                return;
+            }
+
             dropper.querySelector("img").src="././assets/dropper.png"
             drop.style.opacity="1"
             root.style.setProperty("--dropBottom", (lab.getBoundingClientRect().bottom  - dropper.getBoundingClientRect().bottom + 100) + "px")

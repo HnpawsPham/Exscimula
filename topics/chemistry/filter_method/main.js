@@ -21,13 +21,15 @@ let pheuIsPlaced = false      //check xem đã đặt phễu vào cổ lọ chư
 let giaylocIsPlaced = false       //check xem đã đặt giấy lọc vào phễu chưa
 let daTach = false        //xem xem đã tách xong hỗn hợp chưa
 let moveCoc     //cho cốc di chuyển
-$("#alert").hide();
+
 
 // hàm thông báo
-const thong_bao = function (millisec) {
+const notification = function (content, millisec) {
     tb.style.display = "flex"
+    tb.innerHTML = content;
+    
     setTimeout(function () {
-        tb.style.display = "none"
+        tb.style.display = "none";
     }, millisec)
 }
 
@@ -89,8 +91,7 @@ function moveObj(obj, move) {
                     }
                 }
                 else {
-                    $("#alert").text("Đặt phễu vào cổ lọ")
-                    thong_bao(3000)
+                    notification("Đặt phễu vào cổ lọ", 3000);
                     pheuIsPlaced = false
                 }
             }
@@ -98,8 +99,7 @@ function moveObj(obj, move) {
             else if (obj == loc && pheuIsPlaced == false && daTach == false) {
                 if (loc.getBoundingClientRect().bottom > lo.getBoundingClientRect().top) {
                     if ((obj.getBoundingClientRect().left > lo.getBoundingClientRect().left + 40) && (obj.getBoundingClientRect().left < lo.getBoundingClientRect().right - 130)) {
-                        $("#alert").text("Đặt phễu vào trước!")
-                        thong_bao(3000)
+                        notification("Đặt phễu vào trước!", 3000);
                     }
                 }
             }
@@ -118,18 +118,15 @@ function moveObj(obj, move) {
                 }
                 // nếu để chưa ngay thì nhắc
                 else if (pheuIsPlaced && daTach == false && !(loc.getBoundingClientRect().top >= pheu.getBoundingClientRect().top - 5 && loc.getBoundingClientRect().top <= pheu.getBoundingClientRect().top + 10)) {
-                    $("#alert").text("Đặt giấy lọc vào trong phễu")
-                    thong_bao(3000)
+                    notification("Đặt giấy lọc vào trong phễu", 3000);
                 }
                 else if (pheuIsPlaced && daTach && !(loc.getBoundingClientRect().top >= pheu.getBoundingClientRect().top - 5 && loc.getBoundingClientRect().top <= pheu.getBoundingClientRect().top + 10)) {
-                    $("#alert").text("Lưu huỳnh (sulfur) bị giữ lại trong giấy lọc")
-                    thong_bao(3000)
+                    notification("Lưu huỳnh (sulfur) bị giữ lại trong giấy lọc", 5000);
                     bling(sulfur)
                 }
             }
             else if (obj == lo && daTach) {
-                $("#alert").text("Ta thu được nước đã tách ra khỏi hỗn hợp")
-                thong_bao(3000)
+                notification("Ta thu được nước đã tách ra khỏi hỗn hợp", 5000);
             }
         })
 
@@ -190,8 +187,7 @@ function moveObj(obj, move) {
                     }
                     // chưa thì nhắc
                     else {
-                        $("#alert").text("Cần có giấy lọc để lọc!")
-                        thong_bao(3000)
+                        notification("Cần có giấy lọc để lọc!", 3000);
                     }
                 }
             }
@@ -203,8 +199,7 @@ function moveObj(obj, move) {
                 liquid.style.height = "90px"
                 liquid.style.left = "10px"
 
-                $("#alert").text("Cẩn thận đừng đổ lung tung!")
-                thong_bao(3000)
+                notification("Cẩn thận đừng đổ lung tung!", 3000);
             }
         }
 

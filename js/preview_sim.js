@@ -17,6 +17,7 @@ auth.onAuthStateChanged(async (user) => {
 
 // LOAD SIM
 const simId = searchQuery("id");
+const subject = searchQuery("subject");
 let curSim = await getData(`works/${simId}`);
 let sim_from_au = simId.includes("au");
 
@@ -26,14 +27,17 @@ const imgPreviewContainer = document.querySelector("#top>.img-query");
 
 // Upload sims from src code if it doesnt exist (for rating and asking questions)
 if (!curSim && sim_from_au) {
+    let name = searchQuery("folder_name");
+
     let previewsParam = searchQuery("previews"); // search from the url if it exists
-    previewsParam = Array.isArray(previewsParam) ? previewsParam : [previewsParam];
+    previewsParam = Array.isArray(previewsParam)  ? previewsParam : previewsParam ? [previewsParam] : null;
 
     let tagsParam = searchQuery("tags");
     tagsParam = Array.isArray(tagsParam) ? tagsParam : [tagsParam];
 
     const sim = {
         id: simId,
+        name: name,
         author: {
             uid: "au",
             name: "admin"
@@ -382,39 +386,40 @@ loadSugg(sortedByPoint);
 // PLAY SIM
 const playSimBtn = document.querySelector("#top>.screen>svg");
 
-if(sim_from_au){
-    const res = await fetch(`public/${subject.toLowerCase()}/${"name"}`, {
-        method: "GET",
-    })
+if (sim_from_au) {
+    playSimBtn.onclick = async function () {
+        const url = `/public/${subject.toLowerCase()}/${curSim.name}`;
+        const res = await fetch(url, { method: "GET" });
 
-    if(!res.ok) {
-        visibleNoti("There was an error occur. Please try again.", 4000);
-        throw new Error("can't fetch sim id");
-    }
-    else{
-        console.log("fetched successfully");
+        if (!res.ok) {
+            visibleNoti("There was an error. Please try again.", 4000);
+            throw new Error("Can't fetch sim page");
+        } else {
+            console.log("Fetched successfully");
+            window.open(url, "_blank");
+        }
     }
 }
-else{
+else {
     const zipFile = await getZip(simId);
 
     // Navigate to sim page when click play button
     playSimBtn.addEventListener("click", async function () {
         const srcCode = await unZip(zipFile);
-    
+
         // Create new tab
         const tab = window.open();
         tab.document.open();
         tab.document.write(srcCode.index);
         tab.document.close();
-    
+
         tab.onload = async () => {
             const doc = tab.document;
-    
+
             // Add js and css 
             for (let [name, val] of Object.entries(srcCode.code)) {
                 name = name.split('/').pop();
-    
+
                 if (name.endsWith(".css")) {
                     const link = doc.createElement("link");
                     link.rel = "stylesheet";
@@ -427,22 +432,22 @@ else{
                     doc.head.appendChild(script);
                 }
             }
-    
+
             // Add assets
             await sleep(500);
-    
+
             for (let [name, val] of Object.entries(srcCode.images)) {
                 doc.querySelectorAll("img").forEach(img => {
                     if (img.src.split("/").pop() == name.split('/').pop()) img.src = val;
                 })
             }
-    
+
             for (let [name, val] of Object.entries(srcCode.sounds)) {
                 doc.querySelectorAll("audio").forEach(sound => {
                     if (sound.src.split('/').pop() == name.split('/').pop()) sound.src = val;
                 })
             }
         }
-    })    
+    })
 }
 

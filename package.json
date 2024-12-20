@@ -11,5 +11,8 @@
     "multer": "^1.4.5-lts.1",
     "unzipit": "^1.4.3",
     "xhr2": "^0.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
