@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
         cb(null, storage_dir);
     },
     filename: (req, file, cb) => {
-        const name = req.body.id;
+        const name = parseInt(req.body.id);
         console.log(req.body.id);
 
         if(!name) return cb(new Error("ID not found."), null);

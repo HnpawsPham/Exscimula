@@ -182,6 +182,7 @@ function getStarVal(index) {
 }
 
 // Sorted arrays
+// THEM CAC THI NGHIEM LOAD TU SRC CODE NUA!!
 const sortedByStar = [...data].sort(sortSimByStarCompare);
 const sortedByDate = [...data].sort(sortSimByDateCompare);
 const sortedByPopularity = [...data].sort(sortSimByPopularityCompare);

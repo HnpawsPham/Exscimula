@@ -21,6 +21,12 @@ const blood = document.getElementsByClassName("blood")
 const bigLoop = document.getElementById("vong-tuan-hoan-lon")
 const smallLoop = document.getElementById("vong-tuan-hoan-nho")
 
+const smallCirculationSrc = "./assets/small_circulation";
+const greatCirculationSrc = "./assets/great_circulation.png";
+const noClueCirculationSrc = "./assets/no_clue.png";
+const heartSrc = "./assets/heart.png";
+const heartBeatSrc = "./assets/heart_beat.png";
+
 // hiện phần thông tin
 let isOn = false
     document.getElementById("conclu").addEventListener("click", function () {
@@ -59,7 +65,7 @@ for (let option of show) {
 }
 document.addEventListener("keypress", async function (e) {
     if (e.key == " ") {
-        heart.src = "./assets/heartbeat.png"
+        heart.src = heartBeatSrc;
         sound.play()
 
         let horizontalUpLeft = document.createElement("div")
@@ -103,7 +109,7 @@ document.addEventListener("keypress", async function (e) {
             remove()
 
         await sleep(200)
-        heart.src = "./assets/heart.png"
+        heart.src = heartSrc;
     }
 })
 
@@ -126,7 +132,7 @@ function remove(){
 function showEach(){
     showBigLoop.addEventListener("click", function () {
         if (showBigLoop.checked) {
-            map.src = "./assets/vong-tuan-hoa-lon.png"
+            map.src = greatCirculationSrc
             map.style.width = "530px"
             map.style.marginTop = "20px"
             smallLoop.style.opacity = "0"
@@ -151,7 +157,7 @@ function showEach(){
             part3.style.opacity="0"
             part4.style.opacity="1"
 
-            map.src = "./assets/vong-tuan-hoan-nho.png"
+            map.src = smallCirculationSrc;
             map.style.marginTop = "110px"
             map.style.width = "570px"
             bigLoop.style.opacity = "0"
@@ -166,7 +172,7 @@ function showEach(){
 
     showBoth.addEventListener("click", function () {
         if (showBoth.checked) {
-            map.src = "./assets/noClue.png"
+            map.src = noClueCirculationSrc;
             map.style.marginTop = "20px"
             map.style.width = "570px"
             bigLoop.style.opacity = "1"

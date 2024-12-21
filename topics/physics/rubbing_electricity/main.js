@@ -57,10 +57,10 @@ let previousPos = [0, 0]
 
 
 let sounds = [
-    "./assets/rub_sounds/rub1.mp3",
-    "./assets/rub_sounds/rub2.mp3",
-    "./assets/rub_sounds/rub3.mp3",
-    "./assets/rub_sounds/rub4.mp3"
+    "./assets/rub1.mp3",
+    "./assets/rub2.mp3",
+    "./assets/rub3.mp3",
+    "./assets/rub4.mp3"
 ]
 
 // hàm đợi

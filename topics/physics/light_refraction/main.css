@@ -46,7 +46,7 @@ a{
 } */
 .reference{
     background-size: cover;
-    background-image: url(../assets/pencil.png);
+    background-image: url(./assets/pencil.png);
     position: absolute;
     top: 0;
     left: 0;
@@ -97,7 +97,7 @@ a{
     border-radius:  0 0 30px 30px;
 }
 #den{
-    background-image: url(../assets/laser.png);
+    background-image: url(./assets/laser.png);
     background-size: cover;
     position: absolute;
     z-index: 3;
@@ -138,7 +138,7 @@ a{
     background-color: rgb(186, 186, 255);
 }
 #flashlight{
-    background-image: url(../assets/flashlight.png);
+    background-image: url(./assets/flashlight.png);
     z-index: 5;
     position: absolute;
     top: 10px;

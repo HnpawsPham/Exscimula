@@ -18,8 +18,8 @@ let tags = [];
 let previewImgs = [];
 let srcCode = null;
 
-const works = await getData(`works/`) || [];
-let workId = works.length;
+const works = await getData(`works/`) || {};
+let workId = Object.values(works).length;
 
 // GET USER INFO
 const auth = getAuth();

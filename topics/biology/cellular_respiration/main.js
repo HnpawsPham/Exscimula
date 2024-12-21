@@ -1,8 +1,8 @@
 // trạng thái của cái thùng đựng đậu xanh
 const beanBox_interval = [
-    "./assets/beanBox/0.png",
-    "./assets/beanBox/1.png",
-    "./assets/beanBox/2.png"
+    "./assets/bean_box_sprites/0.png",
+    "./assets/bean_box_sprites/1.png",
+    "./assets/bean_box_sprites/2.png"
 ]
 
 const help = document.getElementById("help")
@@ -15,7 +15,18 @@ const binh = document.querySelectorAll(".binh")
 const noi = document.getElementById("noi")
 const nap = document.getElementById("nap")
 const bep = document.getElementById("bep")
-const conclusion = document.getElementById("conclusion")
+const conclusion = document.getElementById("conclusion");
+const tb = document.getElementById("alert");
+
+const scooperSrc = "./assets/scooper.png";
+const scooperBeanSrc = "./assets/scooper_bean.png";
+const scooperCookedBeanSrc = "./assets/scooper_cooked_bean.png";
+const jarSrc = "./assets/jar.png";
+const jarBeanSrc = "./assets/jar_bean.png";
+const jarCookedBeanSrc = "./assets/jar_cooked_bean.png";
+const potSrc = "./assets/pot.png";
+const potBeanSrc = "./assets/pot_bean.png";
+const potCookedBeanSrc = "./assets/pot_cooked_bean.png";
 
 let moveXuc = false   //cho phép đồ xúc di chuyển
 let moveNap = false       //cho phép nắp nồi di chuyển
@@ -54,15 +65,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// thông báo
-const tb = document.getElementById("alert")
-tb.style.display = "none"
-
-const thong_bao = function (milisec) {
-    tb.style.display = "flex"
+// custom alert
+function notification(content, milisec) {
+    tb.style.display = "flex";
+    tb.innerHTML = content;
     setTimeout(function () {
-        tb.style.display = "none"
+        tb.style.display = "none";
     }, milisec)
+
 }
 
 // hiệu ứng bling
@@ -92,8 +102,7 @@ function moveObj(obj, move) {
             beanBox.src = beanBox_interval[i]
         }
         else {
-            $("#alert").text("Đừng lãng phí ~_~")
-            thong_bao(3000)
+            notification("Đừng lãng phí ~_~", 2000);
             i = 0
         }
 
@@ -188,8 +197,7 @@ bong.addEventListener("click", function () {
     // nếu lấy quá 10 cục bông gòn thì thông báo
     catch (err) {
         index--
-        $("#alert").text("Hết bông gòn!")
-        thong_bao(3000)
+        notification("Hết bông gòn!", 2000);
     }
 })
 for (let a = 0; a < gon.length; a++) {
@@ -210,7 +218,7 @@ function shovel() {
         if (xuc.getBoundingClientRect().bottom < beanBox.getBoundingClientRect().bottom && xuc.getBoundingClientRect().top > beanBox.getBoundingClientRect().top - 100) {
             // nếu múc đậu r
             if (!isShovelled && !xucCookedBean) {
-                xuc.src = "./assets/daxucdau.png"
+                xuc.src = scooperBeanSrc;
                 if (i < beanBox_interval.length) {
                     i++
                 }
@@ -222,7 +230,7 @@ function shovel() {
             }
             // nếu chưa múc đậu
             if (isShovelled && !xucCookedBean) {
-                xuc.src = "./assets/doxuc.png"
+                xuc.src = scooperSrc;
                 if (i > 0) {
                     i--
                 }
@@ -244,22 +252,22 @@ function pourBeans() {
         if (xuc.getBoundingClientRect().right > binh[0].getBoundingClientRect().left + 40 && xuc.getBoundingClientRect().left < binh[0].getBoundingClientRect().right) {
             // đồ xúc đã có đậu đổ đậu sống vào bình
             if (!placedBong[0] && !haveBeans[0] && isShovelled && !xucCookedBean && !binhcodauchin[0]) {
-                xuc.src = "./assets/doxuc.png"
-                binh[0].src = "./assets/binh_chua_dau.png"
+                xuc.src = scooperSrc
+                binh[0].src = jarBeanSrc;
                 haveBeans[0] = true
                 isShovelled = false
             }
             // đồ xúc chưa có đậu lấy đậu ra khỏi bình
             else if (haveBeans[0] && !isShovelled && !placedBong[0] && !xucCookedBean && !binhcodauchin[0]) {
-                xuc.src = "./assets/daxucdau.png"
-                binh[0].src = "./assets/binh.png"
+                xuc.src = scooperBeanSrc;
+                binh[0].src = jarSrc
                 haveBeans[0] = false
                 isShovelled = true
             }
             // đồ xúc chứa đậu chín bỏ vào bình
             else if (!haveBeans[0] && isShovelled && !placedBong[0] && xucCookedBean && !binhcodauchin[0]) {
-                xuc.src = "./assets/doxuc.png"
-                binh[0].src = "./assets/binhdauchin.png"
+                xuc.src = scooperSrc;
+                binh[0].src = jarCookedBeanSrc;
                 haveBeans[0] = true
                 isShovelled = false
                 xucCookedBean = false
@@ -268,8 +276,8 @@ function pourBeans() {
             }
             // lấy đậu chín ra khỏi bình
             else if (haveBeans[0] && !isShovelled && !placedBong[0] && !xucCookedBean && binhcodauchin[0]) {
-                xuc.src = "./assets/xucdauchin.png"
-                binh[0].src = "./assets/binh.png"
+                xuc.src = scooperCookedBeanSrc;
+                binh[0].src = jarSrc;
                 haveBeans[0] = false
                 isShovelled = true
                 xucCookedBean = true
@@ -283,22 +291,22 @@ function pourBeans() {
         if (xuc.getBoundingClientRect().right > binh[1].getBoundingClientRect().left + 40 && xuc.getBoundingClientRect().left < binh[1].getBoundingClientRect().right) {
             // đồ xúc đã có đậu đổ đậu sống vào bình
             if (!haveBeans[1] && isShovelled && !placedBong[1] && !xucCookedBean && !binhcodauchin[1]) {
-                xuc.src = "./assets/doxuc.png"
-                binh[1].src = "./assets/binh_chua_dau.png"
+                xuc.src = scooperSrc;
+                binh[1].src = jarBeanSrc;
                 haveBeans[1] = true
                 isShovelled = false
             }
             // đồ xúc chưa có đậu lấy đậu sống ra khỏi bình
             else if (haveBeans[1] && !isShovelled && !placedBong[1] && !xucCookedBean && !binhcodauchin[1]) {
-                xuc.src = "./assets/daxucdau.png"
-                binh[1].src = "./assets/binh.png"
+                xuc.src = scooperBeanSrc;
+                binh[1].src = jarSrc;
                 haveBeans[1] = false
                 isShovelled = true
             }
             // đồ xúc chứa đậu chín bỏ vào bình
             else if (!haveBeans[1] && isShovelled && !placedBong[1] && xucCookedBean && !binhcodauchin[1]) {
-                xuc.src = "./assets/doxuc.png"
-                binh[1].src = "./assets/binhdauchin.png"
+                xuc.src = scooperSrc;
+                binh[1].src = jarCookedBeanSrc;
                 haveBeans[1] = true
                 isShovelled = false
                 xucCookedBean = false
@@ -307,8 +315,8 @@ function pourBeans() {
             }
             // lấy đậu chín ra khỏi bình
             else if (haveBeans[1] && !isShovelled && !placedBong[1] && !xucCookedBean && binhcodauchin[1]) {
-                xuc.src = "./assets/xucdauchin.png"
-                binh[1].src = "./assets/binh.png"
+                xuc.src = scooperCookedBeanSrc;
+                binh[1].src = jarSrc;
                 haveBeans[1] = false
                 isShovelled = true
                 xucCookedBean = true
@@ -342,23 +350,23 @@ function putBeanstoPot() {
             if (xuc.getBoundingClientRect().top < noi.getBoundingClientRect().top && xuc.getBoundingClientRect().bottom < noi.getBoundingClientRect().bottom + 50) {
                 // lấy đồ xúc bỏ đậu sống vào nồi
                 if (!isCovered() && isShovelled && !beansInPot && !potCookedBean && !xucCookedBean) {
-                    noi.src = "./assets/raw.png"
+                    noi.src = potBeanSrc;
                     isShovelled = false
-                    xuc.src = "./assets/doxuc.png"
+                    xuc.src = scooperSrc;
                     beansInPot = true
                 }
                 // lấy đậu sống bằng đồ xúc ra khỏi nồi đậu sống
                 else if (!isCovered() && beansInPot && !isShovelled && !potCookedBean && !xucCookedBean) {
-                    noi.src = "./assets/noi.png"
+                    noi.src = potSrc;
                     isShovelled = true
-                    xuc.src = "./assets/daxucdau.png"
+                    xuc.src = scooperBeanSrc;
                     beansInPot = false
                 }
                 // lấy đậu chín bằng đồ xúc ra khỏi nồi đậu chín
                 else if (!isCovered() && beansInPot && !isShovelled && potCookedBean && !xucCookedBean) {
-                    noi.src = "./assets/noi.png"
+                    noi.src = potSrc;
                     isShovelled = true
-                    xuc.src = "./assets/xucdauchin.png"
+                    xuc.src = scooperCookedBeanSrc;
                     beansInPot = false
                     potCookedBean = false
                     xucCookedBean = true
@@ -367,9 +375,9 @@ function putBeanstoPot() {
                 }
                 // bỏ đậu chín vào nồi bằng đồ xúc chứa đậu chín
                 else if (!isCovered() && !beansInPot && isShovelled && xucCookedBean && !potCookedBean) {
-                    noi.src = "./assets/cooked.png"
+                    noi.src = potCookedBeanSrc;
                     isShovelled = false
-                    xuc.src = "./assets/doxuc.png"
+                    xuc.src = scooperSrc;
                     beansInPot = true
                     potCookedBean = true
                     xucCookedBean = false
@@ -405,15 +413,13 @@ async function cookBeans() {
                                 t = time + 1
                             }
                         })
-                        $("#alert").text("Vui lòng chờ " + t + " giây (Thời gian thực: khoảng 10-15 phút)")
+                        notification("Vui lòng chờ " + t + " giây (Thời gian thực: khoảng 10-15 phút)", 5000);
                         time--
-                        thong_bao(5000)
                         await sleep(1000)
                     }
                     time = 0
-                    noi.src = "./assets/cooked.png"
-                    $("#alert").text("Đậu đã được nấu chín!")
-                    thong_bao(4000)
+                    noi.src = potCookedBeanSrc;
+                    notification("Đậu đã được nấu chín!", 3000);
                     isCook = true
                     potCookedBean = true
                 }
@@ -428,9 +434,9 @@ function pot_to_jar(jar, index) {
             if (noi.getBoundingClientRect().left > jar.getBoundingClientRect().left - 100 && noi.getBoundingClientRect().right < jar.getBoundingClientRect().right + 200) {
                 // đổ đậu chín vào bình
                 if (potCookedBean && beansInPot && isCook && !binhcodauchin[index] && !haveBeans[index]) {
-                    jar.src = "./assets/binhdauchin.png"
+                    jar.src = jarCookedBeanSrc;
                     beansInPot = false
-                    noi.src = "./assets/noi.png"
+                    noi.src = potSrc;
                     potCookedBean = false
                     cookedBean[index] = true
                     binhcodauchin[index] = true

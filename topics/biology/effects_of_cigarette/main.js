@@ -31,13 +31,13 @@ function movecig() {
 // tạo hiệu ứng hút thuốc
 // khai báo
 const Csprites = [
-    './cigar/1.png',
-    './cigar/2.png',
-    './cigar/3.png',
-    './cigar/4.png',
-    './cigar/5.png',
-    './cigar/6.png',
-    './cigar/7.png'
+    './assets/cigar_sprites/1.png',
+    './assets/cigar_sprites/2.png',
+    './assets/cigar_sprites/3.png',
+    './assets/cigar_sprites/4.png',
+    './assets/cigar_sprites/5.png',
+    './assets/cigar_sprites/6.png',
+    './assets/cigar_sprites/7.png'
 ]
 let i = 0
 const lungs = document.getElementById('lungs')
@@ -61,7 +61,7 @@ function startanim() {
     }
     if (level <= -15) {
         if (confirm("Đi tiếp?")) {
-            window.location.href = "../thuoc_la/thuoclagame1.html";
+            window.location.href = "./game.html";
         } else {
         }
     }

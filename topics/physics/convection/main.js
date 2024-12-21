@@ -4,12 +4,14 @@ const nhietke = document.getElementById("nhietke")
 const thuoctim = document.getElementById("thuoctim")
 const den = document.getElementById("den")
 const kieng = document.getElementById("kieng")
-const batlua = document.getElementById("batlua")
+const lighter = document.getElementById("lighter")
 const bubble = document.getElementById("boil")
 const tap = document.getElementById("tap")
 const water = document.getElementById("water")
 const root = document.querySelector(":root")
-const flow = document.getElementById("flow")
+const flow = document.getElementById("flow");
+const conclu = document.getElementById("conclu");
+const tb = document.getElementById("alert");
 
 let moveCoc = false       //cho cốc di chuyển
 let moveDen = false
@@ -27,6 +29,11 @@ let t = 20 // biến tạm lưu nhiệt độ
 let nhietkeInCoc = false
 let thuoctimInCoc = false
 
+const lighterSrc = "./assets/lighter.png";
+const lighterFireOnSrc = "./assets/lighter_fire.png";
+const alcoholLampSrc = "./assets/alcohol_lamp.png";
+const alcoholLampFireOnSrc = "./assets/alcohol_lamp_fire.png";
+
 // hiện menu điều khiển
 help.addEventListener('click', function () {
     alert("Click: Bắt đầu di chuyển vật thể\nClick lần nữa: Ngừng di chuyển vật thể\n\n*Một vài hướng dẫn:\n -Nháy đúp chuột để kích hoạt bật lửa\n -Đưa bật lửa lại gần đèn cồn để đốt chát đèn cồn\n -Để cốc trên kiềng ba chân và đèn ở bên dưới kiềng để bắt đầu hiện tượng\n Để nhiệt kế vào để xem nhiệt độ của cốc")
@@ -34,9 +41,9 @@ help.addEventListener('click', function () {
 
 // hiện kết luận
 function visibleConclusion() {
-    document.getElementById("conclu").style.opacity = "1"
+    conclu.style.opacity = "1"
     let isOn = false
-    document.getElementById("conclu").addEventListener("click", function () {
+    conclu.addEventListener("click", function () {
         if (!isOn) {
             document.getElementById("text").style.visibility = "visible"
             isOn = true
@@ -57,9 +64,9 @@ function bling(obj) {
 }
 
 // custom alert
-function tb(ms) {
-    let tb = document.getElementById("alert")
-    tb.style.display = "flex"
+function notification(content, ms) {
+    tb.style.display = "flex";
+    tb.innerHTML = content;
     setTimeout(function () {
         tb.style.display = "none"
     }, ms)
@@ -144,27 +151,27 @@ kieng.addEventListener("click", function () {
 })
 
 // di chuyển bật lửa
-batlua.addEventListener("click", function () {
+lighter.addEventListener("click", function () {
     moveBatLua = moveCtrl(moveBatLua)
-    moveObj(batlua, moveBatLua)
+    moveObj(lighter, moveBatLua)
 })
 // kích hoạt bất lửa
-batlua.addEventListener("dblclick", function () {
+lighter.addEventListener("dblclick", function () {
     if (!turnedOn) {
-        batlua.src = "./assets/batluafire.png"
+        lighter.src = lighterFireOnSrc;
         turnedOn = true
     }
     else {
-        batlua.src = "./assets/batlua.png"
+        lighter.src = lighterSrc;
         turnedOn = false
     }
 })
 // đốt đền cồn
 den.addEventListener("mouseenter", function () {
-    if (batlua.getBoundingClientRect().left > den.getBoundingClientRect().left - 70 && batlua.getBoundingClientRect().right < den.getBoundingClientRect().right + 70) {
-        if (batlua.getBoundingClientRect().bottom <= den.getBoundingClientRect().bottom && batlua.getBoundingClientRect().top > den.getBoundingClientRect().top - 100) {
+    if (lighter.getBoundingClientRect().left > den.getBoundingClientRect().left - 70 && lighter.getBoundingClientRect().right < den.getBoundingClientRect().right + 70) {
+        if (lighter.getBoundingClientRect().bottom <= den.getBoundingClientRect().bottom && lighter.getBoundingClientRect().top > den.getBoundingClientRect().top - 100) {
             if (turnedOn) {
-                den.src = "./assets/dencon.png"
+                den.src = alcoholLampSrc;
                 isOnFire = true
             }
         }
@@ -216,13 +223,11 @@ async function boil() {
                             })
                         }
                         else {
-                            $("#alert").text("Chưa có nước!")
-                            tb(3000)
+                            notification("Chưa có nước!", 2000);
                         }
                     }
                     else {
-                        $("#alert").text("Cần có nhiệt!")
-                        tb(3000)
+                        notification("Cần có nhiệt!", 2000);
                     }
                 }
             }

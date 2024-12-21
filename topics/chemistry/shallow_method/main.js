@@ -19,6 +19,14 @@ let bucketIsReady=false //xô đã đặt vào đế
 let lightIsReady=false  //đèn đã đặt vào đế
 let soundPlayed = false
 
+const conclusionSound = "./assets/conclusion.mp3";
+const lighterFireOnSound = "./assets/fire_on.mp3";
+const boilSound = "./assets/boil.mp3";
+
+const oilLampFireSrc = "./assets/oil_lamp_fire.png";
+const lighterFireOnSrc = "./assets/lighter_fire.png";
+const lighterSrc = "./assets/lighter.png";
+
 
 // hiện menu điều khiển
 function showControll(){
@@ -33,7 +41,7 @@ function visibleConclusion(){
             // mouth.speak(speech)
             document.getElementById("text").style.visibility="visible"
             isOn=true;
-            sound.src = "./assets/voices/Sau khi cô cạn, ta thu được muối dạng rắn còn nước bốc hơi hết.Khi đun dung dịch muối, nước bốc hơi trong quá trình bay hơi, nhưng muối không thể bay hơi đượ.mp3";
+            sound.src = conclusionSound;
             sound.play();
         }
         else{
@@ -85,9 +93,9 @@ function moveObj(obj,move){
         den.addEventListener("mouseover",function(){
             if(turnBatLua && batluaClicked){
             isHotEnough=true
-            den.src="./assets/dendaufire.png"
+            den.src = oilLampFireSrc;
 
-            sound.src = "./assets/fireon.mp3";
+            sound.src = lighterFireOnSound;
             sound.play();
             }
         })
@@ -101,7 +109,7 @@ function moveObj(obj,move){
 
             await sleep(100)
             if(!soundPlayed){
-                sound.src = "./assets/boil.mp3";
+                sound.src = boilSound;
                 sound.play()
                 soundPlayed = true;
             }
@@ -146,13 +154,13 @@ batlua.addEventListener("click",function(){
      // hiệu ứng ra lửa cho bật lủa
     window.addEventListener("scroll",async function(){
         if(batluaClicked && turnBatLua==false){
-            batlua.src="./assets/batluafire.png"
+            batlua.src = lighterFireOnSrc;
             batlua.style.width="90px"
             await sleep(300)
             turnBatLua=true;
         }
         else{
-            batlua.src="./assets/batlua.png"
+            batlua.src = lighterSrc;
             batlua.style.width="70px"
             await sleep(300)
             turnBatLua=false

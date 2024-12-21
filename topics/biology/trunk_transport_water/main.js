@@ -24,20 +24,21 @@ let isDyed = [false, false]      //check xem hoa đã được nhuộm chưa
 let cocIsDyed = [false, false] // check nước đã nhuộm chưa
 let roseInCoc = [false, false]
 
+const flowerCutSrc = "./assets/flower_cut.png";
+
 // hiện controller menu
 help.addEventListener("click", function () {
     alert("Click: Di chuyển vật\nNháy đúp chuột: Tương tác với vật\n*Thao tác:\n -Click, di chuột, click gần vòi nước để lấy nước vào cốc\n -Chọn phẩm màu tuỳ thích bằng cách bấm vào ô chọn rồi chọn màu\n -Cắt cuống hoa bằng cách cầm dao và nháy đúp chuột vào thân hoa\n -Nhuộm nước bằng cách cầm ống nhỏ giọt rồi nháy đúp chuột ở phạm vi trong cốc cần nhỏ")
 })
-$("#alert").hide()
 
 const root = document.querySelector(":root")
 
 // custom alert
 function notification(content, milisec) {
     tb.style.display = "flex"
-    tb.innerHTML = content
+    tb.innerHTML = content;
     setTimeout(function () {
-        tb.style.display = "none"
+        tb.style.display = "none";
     }, milisec)
 
 }
@@ -229,7 +230,7 @@ function cutRose(i) {
         if (knife.getBoundingClientRect().left > roses[i].getBoundingClientRect().left && knife.getBoundingClientRect().right < roses[i].getBoundingClientRect().right + knife.getBoundingClientRect().width) {
             if (knife.getBoundingClientRect().top > roses[i].getBoundingClientRect().top + 100 && knife.getBoundingClientRect().bottom < roses[i].getBoundingClientRect().bottom) {
                 if (!isCut[i]) {
-                    roses[i].querySelector("img").src = "./assets/cut.png"
+                    roses[i].querySelector("img").src = flowerCutSrc;
                     isCut[i] = true;
                 }
             }

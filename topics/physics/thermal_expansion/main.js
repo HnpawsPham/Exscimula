@@ -38,6 +38,10 @@ let iceBucketHasIce = true
 let glassContainerHasIce = false
 let visibleIceBucket = false
 
+const kettleOpenSrc = "./assets/open.png";
+const kettleCloseSrc = "./assets/close.png";
+const iceBucketSrc = "./assets/bucket.png";
+
 // hàm đợi
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -152,11 +156,11 @@ kettle.addEventListener("dblclick", function () {
     steamMargin()
     pourWater()
     if (!kettleIsOpen) {
-        kettle.querySelector("img").src = "./assets/open.png"
+        kettle.querySelector("img").src = kettleOpenSrc;
         kettleIsOpen = true
     }
     else {
-        kettle.querySelector("img").src = "./assets/close.png"
+        kettle.querySelector("img").src = kettleCloseSrc;
         kettleIsOpen = false
     }
 })
@@ -179,7 +183,7 @@ function pourIce() {
     if (iceBucketHasIce) {
         if (iceBucket.getBoundingClientRect().left > glassContainer.getBoundingClientRect().left && iceBucket.getBoundingClientRect().right < glassContainer.getBoundingClientRect().right) {
             if (iceBucket.getBoundingClientRect().bottom < glassContainer.getBoundingClientRect().bottom && iceBucket.getBoundingClientRect().top > glassContainer.getBoundingClientRect().top - iceBucket.getBoundingClientRect().height * 2) {
-                iceBucket.src = "./assets/bucket.png"
+                iceBucket.src = iceBucketSrc
                 iceBucketHasIce = false
                 glassContainerSteam.style.opacity = "0"
 
