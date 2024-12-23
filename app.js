@@ -7,6 +7,8 @@ const emailjs = require("emailjs-com");
 const cors = require("cors");
 const moment = require("moment");
 const XMLHttpRequest = require("xhr2"); 
+const firebase_admin = require("firebase-admin");
+const firebase_service_account = require("./firebase_service_account.json");
 
 // SETUP
 const app = express();
@@ -59,6 +61,37 @@ app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
 app.use("/js", express.static(path.join(__dirname, "./js")));
 app.use("/public", express.static(path.join(__dirname, "topics")));
 
+// FIREBASE CONFIG
+app.get("/firebase-config", (req, res) => {
+    res.json({
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        databaseURL: process.env.FIREBASE_DATABASE_URL,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+    });
+});
+
+// FIREBASE REALTIME DATABASE 
+firebase_admin.initializeApp({
+    credential: firebase_admin.credential.cert(firebase_service_account),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+});
+
+const db = firebase_admin.database();
+
+async function setData(path, data){
+    try{
+        await db.ref(path).set(data);
+    }
+    catch(err) {
+        console.log(err);
+        throw new Error("set data failed");
+    }
+}
+
 // NAVIGATOR
 app.get("/index", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
@@ -82,15 +115,11 @@ app.get("/offline-download", (req, res) => {
 
 const base_dir = path.join(__dirname, "topics");
 
-// LOAD ALL SIM IN TOPICS DIRECTORY 
-app.get("/topics", (req, res) => {
-    const subject = req.query.subject;
-    const tag = req.query.tag || null;
-
+// UPDATE MY SIM WHENEVER I NEED (LOAD JSONS AND UPLOAD THEM ON FIREBASE DB)
+function updateAuSim(){
     const fpath = path.join(__dirname, "topics", subject.toLowerCase());
     if(!fs.existsSync(fpath)) return res.status(404).send("subject not found");
-
-    const admin_sims = [];
+ 
     function getSim(dir){
         const files = fs.readdirSync(dir);
 
@@ -106,18 +135,25 @@ app.get("/topics", (req, res) => {
                 if(fs.existsSync(info_path)) info = fs.readFileSync(info_path, "utf-8");
 
                 if(info){
-                    admin_sims.push({
-                        folder_name: path.basename(dir),
-                        path: path.relative(base_dir, fpath).replace(/\\/g, '/'),
-                        info: JSON.parse(info)
-                    });
+                    info = JSON.parse(info);
+                    info["folder_name"] = path.basename(dir);
+                    
+                    setData(`works/${info.id}/`, info);
                 }
             }
         }
     }
     getSim(fpath);
+}
 
-    res.render("topics_menu", {subject, tag, moment, admin_sims});
+// LOAD ALL SIM IN TOPICS DIRECTORY 
+app.get("/topics", (req, res) => {
+    const subject = req.query.subject;
+    const tag = req.query.tag || null;
+
+    // updateAuSim();
+
+    res.render("topics_menu", {subject, tag});
 })
 
 app.get("/public/:subject/:name", (req, res) => {
@@ -219,15 +255,3 @@ app.listen(port, () => {
     console.log(`Running on port ${port}`);
 })
 
-// FIREBASE CONFIG
-app.get("/firebase-config", (req, res) => {
-    res.json({
-        apiKey: process.env.FIREBASE_API_KEY,
-        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-        databaseURL: process.env.FIREBASE_DATABASE_URL,
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-        appId: process.env.FIREBASE_APP_ID,
-    });
-});

@@ -41,37 +41,7 @@
         </div>
     </div>
     <br><br>
-
-    <div class="main">
-        <% admin_sims.forEach(function(sim) { %>
-            <div class="card" onclick="window.location.href=`/preview?id=<%= sim.info.id %>&subject=<%=sim.info.subject%>&name=<%=sim.info.name%>&previews=<%=sim.info.preview%>&tags=<%sim.info.tags%>&folder_name=<%=sim.folder_name%>`">
-                <!-- Preview Image -->
-                <img src="<%= sim.info.preview ? sim.info.preview[0] : '/assets/default.jpg' %>"
-                    alt="<%= sim.info.name %>">
-
-                <!-- Date -->
-                <i class="date">
-                    <%= moment(sim.info.date, "DDMMYYYY" ).fromNow() %>
-                </i>
-
-                <!-- Info -->
-                <div class="info">
-                    <h1><%= sim.info.name %></h1>
-                    <p><%= sim.info.description %></p>
-                    <b><%= sim.info.author.name %></b>
-
-                    <!-- Tags -->
-                    <div class="tag">
-                        <% sim.info.tags.forEach(function(tag) { %>
-                            <span><%= tag %></span>
-                        <% }) %>
-                    </div>
-                </div>
-
-            </div>
-        <% }) %>
-    </div>
-
+    
     <div class="main">
         <br><br>
     </div>

@@ -4,7 +4,7 @@ import { delData, getData, updateData_list } from "./firebase.js";
 import { defaultImg, loadStarRange, searchQuery } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
-const container = document.querySelectorAll(".main")[1];
+const container = document.querySelector(".main");
 const searchBar = document.querySelector("#search>input");
 const searchBtn = document.querySelector("#search>svg");
 
@@ -129,7 +129,10 @@ async function loadSim(work) {
     container.appendChild(div);
 
     [info, img].forEach(elm => elm.addEventListener("click", function () {
-        window.location.href = `/preview?id=${work.id}&subject=${work.subject}&name=${work.name}`;
+        let destination = `/preview?id=${work.id}&subject=${work.subject}&name=${work.name}`;
+        if(work.id.includes("au")) destination += `&folder_name=${work.folder_name}`;
+
+        window.location.href = destination;
     }))
 }
 
@@ -192,15 +195,21 @@ function sortSimByStarBNS(x) {
     let l = 0, r = sortedByStar.length - 1;
     let res = null;
 
-    while (l <= r) {
+    while (l < r) {
         let mid = Math.floor(l + (r - l) / 2);
         let val = getStarVal(mid);
 
-        if (val >= x) { // fix cho nay
+        if(x > val) l = mid + 1;
+
+        else if(val >= x + 1) r = mid - 1;
+
+        else if (x <= val && val < x + 1) {
             res = mid;
             r = mid - 1;
         }
-        else l = mid + 1;
+
+        console.log(mid, val, l, r)
+        
     }
     return res;
 }
@@ -255,21 +264,17 @@ for (let opt of sortByStarBar) {
 
         // Get first index of the range and load 'till the end
         let st = sortSimByStarBNS(x);
+        console.log(st);
 
         if (!st) {
             emptyHandle();
             return;
         }
 
-        let val = getStarVal(en);
-        console.log("val: ", val);
-        // if(val >= x + 1) en--;
-        console.log(x, st, en);
-
         // Load sims 
-        // CHECK CHO DEN KHI NAO SORTEDBYSTAR[I] K CON TRONG PHAM VI DUOC CHON NUA!!!
-        for (let i = st; i <= en; i++) {
-            loadSim(sortedByStar[i]);
+        while(getStarVal(st) < x + 1){
+            loadSim(sortedByStar[st]);
+            st++;
         }
     })
 }

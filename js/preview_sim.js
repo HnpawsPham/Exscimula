@@ -25,35 +25,6 @@ let sim_from_au = simId.includes("au");
 const screen = document.querySelector("#top>.screen>img");
 const imgPreviewContainer = document.querySelector("#top>.img-query");
 
-// Upload sims from src code if it doesnt exist (for rating and asking questions)
-if (!curSim && sim_from_au) {
-    let name = searchQuery("folder_name");
-
-    let previewsParam = searchQuery("previews"); // search from the url if it exists
-    previewsParam = Array.isArray(previewsParam)  ? previewsParam : previewsParam ? [previewsParam] : null;
-
-    let tagsParam = searchQuery("tags");
-    tagsParam = Array.isArray(tagsParam) ? tagsParam : [tagsParam];
-
-    const sim = {
-        id: simId,
-        name: name,
-        author: {
-            uid: "au",
-            name: "admin"
-        },
-        star: {
-            rate_times: 0,
-            value: 0,
-        },
-        preview: previewsParam,
-        tags: tagsParam
-    }
-
-    await setData(`works/${simId}`, sim);
-    curSim = sim;
-}
-
 let previewImgs = curSim?.preview ?? [defaultImg];
 screen.src = previewImgs[0];
 
@@ -388,7 +359,7 @@ const playSimBtn = document.querySelector("#top>.screen>svg");
 
 if (sim_from_au) {
     playSimBtn.onclick = async function () {
-        const url = `/public/${subject.toLowerCase()}/${curSim.name}`;
+        const url = `/public/${subject.toLowerCase()}/${curSim.folder_name}`;
         const res = await fetch(url, { method: "GET" });
 
         if (!res.ok) {
