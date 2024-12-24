@@ -130,7 +130,7 @@ async function loadSim(work) {
 
     [info, img].forEach(elm => elm.addEventListener("click", function () {
         let destination = `/preview?id=${work.id}&subject=${work.subject}&name=${work.name}`;
-        if(work.id.includes("au")) destination += `&folder_name=${work.folder_name}`;
+        if(typeof(work.id) == Number) destination += `&folder_name=${work.folder_name}`;
 
         window.location.href = destination;
     }))
@@ -160,8 +160,12 @@ function searchSimCompare(a, b) {
 // SORT
 // Sort increasing: 1 star - 5 stars
 function sortSimByStarCompare(a, b) {
-    let val_a = (a.star.value / a.star.rate_times).toFixed(1) || 0;
-    let val_b = (b.star.value / b.star.rate_times).toFixed(1) || 0;
+    let val_a = 0;
+    let val_b = 0;
+
+    if(a.star.value && a.star.rate_times) val_a = parseFloat((a.star.value / a.star.rate_times).toFixed(1));
+    if(b.star.value && b.star.rate_times) val_b = parseFloat((b.star.value / b.star.rate_times).toFixed(1));
+ 
     return val_a - val_b;
 }
 
@@ -181,8 +185,10 @@ function sortSimByPopularityCompare(a, b) {
 }
 
 function getStarVal(index) {
-    return (sortedByStar[index].star.value / sortedByStar[index].star.rate_times).toFixed(1) || 0;
+    if(!sortedByStar[index].star.value && !sortedByStar[index].star.rate_times) return 0;
+    return parseFloat((sortedByStar[index].star.value / sortedByStar[index].star.rate_times).toFixed(1));
 }
+
 
 // Sorted arrays
 // THEM CAC THI NGHIEM LOAD TU SRC CODE NUA!!
@@ -195,7 +201,7 @@ function sortSimByStarBNS(x) {
     let l = 0, r = sortedByStar.length - 1;
     let res = null;
 
-    while (l < r) {
+    while (l <= r) {
         let mid = Math.floor(l + (r - l) / 2);
         let val = getStarVal(mid);
 
@@ -203,13 +209,10 @@ function sortSimByStarBNS(x) {
 
         else if(val >= x + 1) r = mid - 1;
 
-        else if (x <= val && val < x + 1) {
+        if (x <= val && val < x + 1) {
             res = mid;
             r = mid - 1;
-        }
-
-        console.log(mid, val, l, r)
-        
+        }   
     }
     return res;
 }
@@ -264,7 +267,6 @@ for (let opt of sortByStarBar) {
 
         // Get first index of the range and load 'till the end
         let st = sortSimByStarBNS(x);
-        console.log(st);
 
         if (!st) {
             emptyHandle();
@@ -272,7 +274,8 @@ for (let opt of sortByStarBar) {
         }
 
         // Load sims 
-        while(getStarVal(st) < x + 1){
+        let arr_limit = sortedByStar.length;
+        while(st < arr_limit && getStarVal(st) < x + 1){
             loadSim(sortedByStar[st]);
             st++;
         }
