@@ -56,22 +56,22 @@ body{
     top: 20px;
     right: 20px;
 }
-.info{
+.card .info{
     width: 67%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.info h1{
+.card .info h1{
     font-size: 2vw;
     margin-top: 3cqh;
 }
-.info p{
+.card .info p{
     opacity: 0.6;
     font-size: 15px;
 }
-.info a{
+.card .info a{
     width: 100%;
     height: 10%;
     font-size: 15px;
@@ -82,12 +82,12 @@ body{
     color: var(--cwhite);
     background-color: crimson;
 }
-.tag{
+.card .tag{
     margin-top: 2%;
     display: flex;
     align-content: center;
 }
-.tag span{
+.card .tag span{
     margin-left: 5px;
     padding: 10px 20px;
     border-radius: 10px;
@@ -96,12 +96,12 @@ body{
     background-color: crimson;
 }
 
-.rating{
+.card .rating{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.rating i{
+.card .rating i{
     margin-top: 10px;
     font-size: 15px;
     opacity: 0.6;
@@ -114,6 +114,7 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 #search input{
     border: none;
     border-radius: 30px;
@@ -131,7 +132,7 @@ body{
 .category{
     margin-left: calc(5vw / 2);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-color: brown;
     border-radius: 15px;
@@ -145,6 +146,9 @@ body{
     transition: all 0.2s;
     border-radius: 30px;
     line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .category span b{
     margin-left: 3px;
@@ -166,4 +170,54 @@ body{
 
 .clicked{
     filter: sepia(100%) brightness(90%);
+}
+
+@media only screen and (max-width: 800px){
+    #sort{
+        justify-content: center;
+        height: 20vh;
+    }
+
+    #sort .category{
+        width: 90%;
+    }
+
+    #sort .category span{
+        padding: 10px 12px;
+    }
+
+    #search{
+        position: static;
+    }
+
+    #search input{
+        padding: 8px 30px;
+    }
+    .card .tag, .card p{
+        display: none;
+    }
+
+    .card .info h1{
+        font-size: 1.2em;
+    }
+
+    .card svg{
+        transform: scale(0.7);
+    }
+
+    .card .info{
+        width: 55%;
+    }
+
+    .card img{
+        width: 40%;
+    }
+
+    .card .rating{
+        transform: scale(0.7);
+    }
+
+    .card .date{
+        font-size: 0.7em;
+    }
 }

@@ -103,6 +103,8 @@ body{
 }
 
 #sim-name{
+    margin-left: 5vw;
+    width: 90vw;
     color: var(--cwhite);
     text-align: center;
 }
@@ -296,4 +298,8 @@ body{
 }
 #report:hover{
     filter: brightness(70%);
+}
+
+@media only screen and (max-width: 800px){
+    
 }

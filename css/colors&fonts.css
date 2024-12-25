@@ -39,6 +39,7 @@ html{
     color: var(--yellow);
     content: '\2605'; /* Full star in UTF-8 */
     position: absolute;
+    top: 0;
     left: 0;
 }
 
@@ -46,6 +47,7 @@ html{
     color: var(--yellow);
     content: '\2605'; /* Full star in UTF-8 */
     position: absolute;
+    top: 0;
     left: 0;
     width: var(--percentage);
     overflow: hidden;
@@ -54,7 +56,6 @@ html{
 @-moz-document url-prefix() { /* Firefox Hack :( */
   .star {
     font-size: 50px;
-    line-height: 34px;
   }
 }
 @font-face {
