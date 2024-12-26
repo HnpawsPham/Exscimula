@@ -62,7 +62,7 @@ function loadSimCard(work){
 }
 
 async function loadWorks(data) {
-    const workIds = data.works || [];
+    const workIds = data.works || {};
     const container = document.querySelector("#user-works>.inside");
 
     if (workIds.length == 0) {
@@ -72,8 +72,9 @@ async function loadWorks(data) {
         container.appendChild(p);
         return;
     }
+    console.log(workIds)
 
-    for(let id of workIds){
+    for(let id of Object.values(workIds)){
         const work = await getData(`works/${id}`);
         container.appendChild(loadSimCard(work));
     }

@@ -92,6 +92,20 @@ async function setData(path, data){
     }
 }
 
+async function updateData_list(path, val){
+    try{
+        let snapshot = await db.ref(path).get();
+        let data = snapshot.exists() ? snapshot.val() : [];
+    
+        data.push(val);
+        setData(path, data);
+    }
+    catch(err) {
+        console.log(err);
+        throw new Error("set data failed");
+    }
+}
+
 // NAVIGATOR
 app.get("/index", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
@@ -116,11 +130,11 @@ app.get("/offline-download", (req, res) => {
 const base_dir = path.join(__dirname, "topics");
 
 // UPDATE MY SIM WHENEVER I NEED (LOAD JSONS AND UPLOAD THEM ON FIREBASE DB)
-function updateAuSim(){
+function updateAuSim(subject){
     const fpath = path.join(__dirname, "topics", subject.toLowerCase());
     if(!fs.existsSync(fpath)) return res.status(404).send("subject not found");
  
-    function getSim(dir){
+    async function getSim(dir){
         const files = fs.readdirSync(dir);
 
         for(let file of files){
@@ -137,7 +151,10 @@ function updateAuSim(){
                 if(info){
                     info = JSON.parse(info);
                     info["folder_name"] = path.basename(dir);
-                    
+
+                    for(let tag of info.tags){
+                        updateData_list(`tags/${tag[0].toUpperCase()}/`, tag);
+                    }
                     setData(`works/${info.id}/`, info);
                 }
             }
@@ -151,7 +168,7 @@ app.get("/topics", (req, res) => {
     const subject = req.query.subject;
     const tag = req.query.tag || null;
 
-    // updateAuSim();
+    // updateAuSim(subject);
 
     res.render("topics_menu", {subject, tag});
 })

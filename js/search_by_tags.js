@@ -1,40 +1,8 @@
 import { getData } from "./firebase.js";
 
-const data = await getData("tags/") || ['test'];
+const data = await getData("tags/") || [];
 
 const container = document.getElementById("main");
-
-let tags = {
-    A: {
-        all: [1, 2, 3, , 4],
-        ana: [4, 2, 7]
-    },
-    B: {
-        blast: [2, 6, 3],
-    },
-    C: {
-        all: [1, 2, 3, , 4],
-        ana: [4, 2, 7]
-    },
-    D: {
-        blast: [2, 6, 3],
-    },
-    E: {
-        all: [1, 2, 3, , 4],
-        ana: [4, 2, 7]
-    },
-    F: {
-        blast: [2, 6, 3],
-    },
-    G: {
-        all: [1, 2, 3, , 4],
-        ana: [4, 2, 7]
-    },
-    H: {
-        blast: [2, 6, 3],
-    },
-}
-
 
 // SUBJECT CHOOSING HANDLE
 let subject = "chemis";
@@ -59,19 +27,19 @@ function emptyHandle() {
     container.appendChild(p);
 }
 
-function loadTagAlphabet(alpha, name) {
+function loadTagAlphabet(alpha, tags) {
     let detail = document.createElement("details");
     let summary = document.createElement("summary");
-    summary.innerHTML = `${name.toUpperCase()} (${Object.keys(alpha).length})`;
+    summary.innerHTML = `${alpha}`;
     detail.appendChild(summary);
 
-    for (let tagName in alpha) {
+    for (let tag of tags) {
         let p = document.createElement("p");
-        p.innerHTML = tagName;
+        p.innerHTML = tag;
         detail.appendChild(p);
 
         p.addEventListener("click", function () {
-            window.location.href = `topics?subject=${subject}?tag=${tagName}`;
+            window.location.href = `topics?subject=${subject}?tag=${tag}`;
         })
     }
 
@@ -81,7 +49,7 @@ function loadTagAlphabet(alpha, name) {
 // MAIN HANDLE
 if (!data) emptyHandle();
 
-for (let alphaName in tags) {
-    let alpha = tags[alphaName];
-    loadTagAlphabet(alpha, alphaName);
+for (let alpha of Object.keys(data)) {
+    let tags = data[alpha];
+    loadTagAlphabet(alpha, tags);
 }

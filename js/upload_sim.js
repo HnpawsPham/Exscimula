@@ -187,6 +187,11 @@ async function uploadSim(curUser) {
             if(curUser.activities.top)
             await setData(`leaderboard/${curUser.activities.top}/point`, point);
 
+            // Update tag list
+            for(let tag of tags){
+                await updateData_list(`tags/${tag[0].toUpperCase()}`, tag)
+            }
+            
             visibleNoti("Uploaded successfully!", 2000);
         }
         catch (err) {

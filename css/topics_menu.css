@@ -199,6 +199,7 @@ body{
 
     .card .info h1{
         font-size: 1.2em;
+        text-align: center;
     }
 
     .card svg{

@@ -9,6 +9,8 @@ const searchBar = document.querySelector("#search>input");
 const searchBtn = document.querySelector("#search>svg");
 
 const subject = searchQuery("subject");
+const tag = searchQuery("tag");
+
 const data = Object.values(await getData(`works/`) || {})
     .filter((work) => work !== undefined && work.subject === subject);
 
