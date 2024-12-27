@@ -96,9 +96,10 @@ async function updateData_list(path, val){
     try{
         let snapshot = await db.ref(path).get();
         let data = snapshot.exists() ? snapshot.val() : [];
-    
+        
         data.push(val);
-        setData(path, data);
+        let newData = [...new Set(data)];
+        setData(path, newData);
     }
     catch(err) {
         console.log(err);
@@ -153,7 +154,7 @@ function updateAuSim(subject){
                     info["folder_name"] = path.basename(dir);
 
                     for(let tag of info.tags){
-                        updateData_list(`tags/${tag[0].toUpperCase()}/`, tag);
+                        updateData_list(`tags/${subject}/${tag[0].toUpperCase()}/`, tag);
                     }
                     setData(`works/${info.id}/`, info);
                 }
@@ -165,12 +166,9 @@ function updateAuSim(subject){
 
 // LOAD ALL SIM IN TOPICS DIRECTORY 
 app.get("/topics", (req, res) => {
-    const subject = req.query.subject;
-    const tag = req.query.tag || null;
-
     // updateAuSim(subject);
 
-    res.render("topics_menu", {subject, tag});
+    res.render("topics_menu");
 })
 
 app.get("/public/:subject/:name", (req, res) => {

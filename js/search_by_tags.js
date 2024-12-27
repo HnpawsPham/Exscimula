@@ -1,21 +1,19 @@
 import { getData } from "./firebase.js";
 
-const data = await getData("tags/") || [];
+let subject = "Chemistry";
+const data = await getData(`tags`) || [];
 
 const container = document.getElementById("main");
-
-// SUBJECT CHOOSING HANDLE
-let subject = "chemis";
-
 const optionBtns = document.querySelectorAll("#top>.option");
 
+// SUBJECT CHOOSING HANDLE
 for (let btn of optionBtns) {
     btn.addEventListener("click", () => {
         let chosenBtn = document.querySelector("#top>.option-chosen");
         chosenBtn.classList.remove("option-chosen");
-
         btn.classList.add("option-chosen");
-        subject = btn.name;
+        subject = btn.innerHTML;
+        loadTags();
     })
 }
 
@@ -39,7 +37,7 @@ function loadTagAlphabet(alpha, tags) {
         detail.appendChild(p);
 
         p.addEventListener("click", function () {
-            window.location.href = `topics?subject=${subject}?tag=${tag}`;
+            window.location.href = `/topics?subject=${subject}&tag=${tag}`;
         })
     }
 
@@ -49,7 +47,11 @@ function loadTagAlphabet(alpha, tags) {
 // MAIN HANDLE
 if (!data) emptyHandle();
 
-for (let alpha of Object.keys(data)) {
-    let tags = data[alpha];
-    loadTagAlphabet(alpha, tags);
+function loadTags(){
+    container.replaceChildren();
+    for (let alpha of Object.keys(data[subject])) {
+        let tags = data[subject][alpha];
+        loadTagAlphabet(alpha, tags);
+    }
 }
+loadTags();

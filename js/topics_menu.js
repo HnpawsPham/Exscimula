@@ -12,7 +12,7 @@ const subject = searchQuery("subject");
 const tag = searchQuery("tag");
 
 const data = Object.values(await getData(`works/`) || {})
-    .filter((work) => work !== undefined && work.subject === subject);
+            .filter((work) => work && work.subject == subject && (tag ? work.tags.includes(tag) : true));
 
 // CHECK IF USER IS LOGGED IN (TO LOAD SAVED SIMS)
 const auth = getAuth();

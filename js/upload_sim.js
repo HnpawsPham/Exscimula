@@ -189,7 +189,11 @@ async function uploadSim(curUser) {
 
             // Update tag list
             for(let tag of tags){
-                await updateData_list(`tags/${tag[0].toUpperCase()}`, tag)
+                let path = `tags/${work.subject}/${tag[0].toUpperCase()}`;
+                let found = await getData(path + `/${tag}`);
+
+                if(!found)
+                await updateData_list(path, tag)
             }
             
             visibleNoti("Uploaded successfully!", 2000);
