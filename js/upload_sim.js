@@ -178,7 +178,7 @@ async function uploadSim(curUser) {
             let point = ++curUser.activities.point;
             // Upload work to db
             await postZip(formData);
-            await updateData_list(`users/${UID}/works`, workId);
+            await setData(`users/${UID}/works/${workId}`, workId);
             await setData(`works/${workId}`, work);
             
             // Update user info to db

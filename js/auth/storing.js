@@ -1,10 +1,10 @@
 import * as unzipit from 'https://unpkg.com/unzipit@1.4.0/dist/unzipit.module.js';
-import moment from 'https://cdn.skypack.dev/moment';
+import momentTimezone from 'https://cdn.jsdelivr.net/npm/moment-timezone@0.5.46/+esm';
 import { getData, setData } from '../firebase.js';
 import { visibleNoti } from '../notification.js';
 
-export const defaultImg = "/assets/default.jpg";
-export const defaultAvt = "/assets/default.jpg";
+export const defaultImg = "../assets/no_image.jpg";
+export const defaultAvt = "../assets/default_avatar.png";
 
 export const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -131,8 +131,8 @@ export async function unZip(file) {
     let found = false;
 
     for (let [name, entry] of Object.entries(data.entries)) {
-        if (entry.directory) continue;
-
+        if (entry.isDirectory) continue;
+        
         if (name.split('/').pop() == "index.html") {
             found = true;
             indexFile = await entry.text();
@@ -148,13 +148,12 @@ export async function unZip(file) {
 
             codeFiles[name] = url;
         }
-        else if(/\.(jpg|jpeg|png|gif|bmp|webp)$/.test(extension)){
+        else if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/.test(name)) {
             const blob = new Blob([buffer], { type: `image/${extension}` });
             const url = await getBase64(blob);
-
             images[name] = url;
         }
-        else if (/\.(mp3|wav|ogg)$/.test(extension)) {
+        else if (/\.(mp3|wav|ogg)$/.test(name)) {
             const blob = new Blob([buffer], { type: `audio/${extension}` });
             const url = await getBase64(blob);
             sounds[name] = url;
@@ -174,8 +173,18 @@ export async function unZip(file) {
 }
 
 export function getDate() {
-    let date = moment();
-    return date.format('DDMMYYYY');
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let date = momentTimezone.tz(new Date(), timezone);
+    let format_date = date.format("DD/MM/YYYY HH:mm:ss");
+
+    if (format_date === "Invalid date") throw new Error("Cannot set date");
+    return format_date;
+}
+
+export function loadDate(date) {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const new_date = momentTimezone.tz(date, "DD/MM/YYYY HH:mm:ss", timezone);
+    return new_date.fromNow();
 }
 
 export async function loadPreviewImg(files, container, arr) {
@@ -224,6 +233,18 @@ function sortLeaderBoardCompare(a, b) {
     return pointB - pointA;
 }
 
+export async function reloadLeaderBoard() {
+    try {
+        const leaderboard_data = await getData(`leaderboard/`) || [];
+        leaderboard_data.sort(sortLeaderBoardCompare).splice(5);
+        await setData(`leaderboard`, leaderboard_data);
+    }
+    catch (err) {
+        console.log(err);
+        throw new Error("set leaderboard failed")
+    }
+}
+
 export async function setToLeaderBoard(user) {
     const leaderboard_data = await getData(`leaderboard/`) || [];
     let leaderId = leaderboard_data.length;
@@ -235,7 +256,7 @@ export async function setToLeaderBoard(user) {
         uid: user.uid,
     }
 
-    if(leaderboard_data.findIndex((elm) => elm && elm.uid == person.uid) != -1) return;
+    if (leaderboard_data.findIndex((elm) => elm && elm.uid == person.uid) != -1) return;
 
     if (leaderId == 0) {
         await setData(`leaderboard/${leaderId}`, person);
@@ -248,7 +269,7 @@ export async function setToLeaderBoard(user) {
         await setData(`leaderboard`, leaderboard_data);
     }
 
-    if(leaderId != -1) await setData(`users/${user.uid}/activities/top/`, leaderId);
+    if (leaderId != -1) await setData(`users/${user.uid}/activities/top/`, leaderId);
 }
 
 // .ZIP HANDLING METHODS FROM SERVER
@@ -276,12 +297,12 @@ export async function postZip(data) {
     }
 }
 
-export async function deleteZip(id){
+export async function deleteZip(id) {
     const res = await fetch(`/remove?name=${id}.zip`, {
         method: "DELETE",
     })
 
-    if(!res.ok) throw new Error(res.status, res.statusText);
+    if (!res.ok) throw new Error(res.status, res.statusText);
     console.log("remove work from storage successfully");
-    return  true;
+    return true;
 }

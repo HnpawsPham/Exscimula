@@ -36,7 +36,6 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const name = parseInt(req.body.id);
-        console.log(req.body.id);
 
         if(!name) return cb(new Error("ID not found."), null);
         cb(null, `${name}.zip`);
@@ -60,6 +59,8 @@ app.use("/assets", express.static(path.join(__dirname, "./assets")));
 app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
 app.use("/js", express.static(path.join(__dirname, "./js")));
 app.use("/public", express.static(path.join(__dirname, "topics")));
+app.use("/fonts", express.static(path.join(__dirname, "./fonts")));
+
 
 // FIREBASE CONFIG
 app.get("/firebase-config", (req, res) => {
@@ -166,6 +167,7 @@ function updateAuSim(subject){
 
 // LOAD ALL SIM IN TOPICS DIRECTORY 
 app.get("/topics", (req, res) => {
+    const subject = req.query.subject;
     // updateAuSim(subject);
 
     res.render("topics_menu");

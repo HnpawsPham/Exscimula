@@ -1,6 +1,5 @@
 body{
     background-color: var(--dark-blue);
-    font-family: nimbus;
     overflow-x: hidden;
     font-size: 15px;
 }

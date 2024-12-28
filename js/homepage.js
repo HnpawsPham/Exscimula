@@ -1,13 +1,21 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { visibleNoti } from "./notification.js";
 import { app, getData } from "./firebase.js";
-import { getUserRank, setToLeaderBoard } from "./auth/storing.js";
+import { getUserRank} from "./auth/storing.js";
 
 const auth = getAuth(app);
 
 const account = document.getElementById("account");
 const login_btn = document.getElementById("login-btn");
 const manage_btn = document.getElementById("manage-btn");
+const setting = document.getElementById("setting");
+const font_change_btn = document.querySelector("#setting>ul>li");
+const font_selector = document.getElementById("font-selector");
+
+const settingBarWidth = {
+    start: "50px",
+    expanded: "170px"
+}
 
 auth.onAuthStateChanged(async (user) => {
     if (!user) {
@@ -36,6 +44,52 @@ auth.onAuthStateChanged(async (user) => {
     if(data.role) manage_btn.parentNode.classList.remove("hidden");
     
     visibleNoti(`Welcome, ${data.name}`, 3000);
+});
+
+// SETTING OPTIONS HANDLE
+setting.addEventListener("mouseleave", function(){
+    if(!font_selector.classList.contains("hidden")) return;
+
+    setting.querySelector("ul").style.width = settingBarWidth.start;
+    setting.querySelector("ul").style.opacity = "0";
+    setting.querySelector("svg").style.filter = "invert(0)";
+});
+
+[setting, font_selector].forEach(elm => elm.addEventListener("mouseover", function(){
+    setting.querySelector("ul").style.width = settingBarWidth.expanded;
+    setting.querySelector("ul").style.opacity = "1";
+    setting.querySelector("svg").style.filter = "invert(1)";
+}));
+
+// Set selected font
+document.querySelector(`li[name=${localStorage.getItem("font") || "nimbus"}]`).classList.add("selected");
+
+font_change_btn.addEventListener("click", function(){
+    font_selector.classList.remove("hidden");
+
+    const rect = font_change_btn.getBoundingClientRect();
+
+    font_selector.style.margin = `${rect.top - 190}px 0 0 ${rect.left}px`;
+    font_selector.style.display = "block";
+})
+
+const font_selector_li = font_selector.querySelectorAll("li");
+for(let font of font_selector_li){
+    font.addEventListener("click", function(){
+        font_selector.querySelector(".selected").classList.remove("selected");
+        font.classList.add("selected");
+        
+        let font_name = font.getAttribute("name");
+        localStorage.setItem("font", font_name);
+        document.documentElement.style.fontFamily = font_name;
+
+        font_selector.classList.add("hidden");
+    })
+}
+
+document.addEventListener('click', function (e) {
+    if (!font_selector.contains(e.target) && !font_change_btn.contains(e.target)) 
+        font_selector.classList.add("hidden");
 });
 
 // TOPIC SELECT HANDLE
@@ -69,6 +123,7 @@ function loadLeaderCard(user, index){
 
     let top = document.createElement("h2");
     top.innerHTML = `Top ${parseInt(index) + 1}`;
+    top.classList.add("notranslate");
     div.appendChild(top);
     
     let avt = document.createElement("img");
@@ -78,6 +133,7 @@ function loadLeaderCard(user, index){
 
     let name = document.createElement("h3");
     name.innerHTML = user.name;
+    name.classList.add("notranslate");
     div.appendChild(name);
 
     let point = document.createElement("p");

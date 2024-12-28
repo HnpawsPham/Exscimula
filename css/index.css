@@ -40,7 +40,6 @@ body {
     filter: drop-shadow(0 0 30px black);
 }
 
-
 #account {
     z-index: 10;
     position: fixed;
@@ -70,7 +69,7 @@ body {
 
 #account .user-info i {
     opacity: 0.6;
-    font-size: 0.8rem;
+    font-size: 0.8em;
 }
 
 #account .user-info i::after {
@@ -115,6 +114,67 @@ body {
 }
 #nav .btn:hover{
     transform: scale(1.1);
+}
+
+#setting{
+    border-radius: 100px;
+    position: fixed;
+    margin: 90vh 95vw;
+    cursor: pointer;
+    z-index: 100;
+    filter: drop-shadow(0 0 10px black);
+}
+
+#setting svg{
+    transition: all 0.3s;
+}
+
+#setting ul{
+    z-index: -1;
+    position: absolute;
+    top: -8px;
+    right: -15%;
+    display: flex;
+    list-style-type: none;
+    width: 50px;
+    opacity: 0;
+    transition: all 0.3s;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#setting ul li{
+    position: relative;
+    padding: 10px 17px;
+}
+
+#font-selector{
+    z-index: 1000;
+    position: fixed;
+    list-style-type: none;
+    filter: drop-shadow(0 0 5px rgb(255, 255, 255));
+}
+
+#font-selector li {
+    padding: 10px;
+    color: rgb(41, 41, 41);
+    font-size: 0.8em;
+    cursor: pointer;
+    background-color: white;
+}
+
+#font-selector .selected{
+    filter: invert(0.7);
+}
+
+#google_translate_element{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
 }
 
 #avt {
@@ -331,7 +391,7 @@ b {
 
 #leader-board{
     width: 90vw;
-    margin: 0 5vw;
+    margin: 0 auto;
     background-color: white;
     border-radius: 20px;
     min-height: 20vh;
@@ -395,7 +455,7 @@ b {
     height: 50px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 950px) {
     #nav{
         margin-top: 25px;
         margin-left: 5vw;
@@ -413,6 +473,11 @@ b {
         width: 50px;
         height: 50px;
     }
+
+    #introduction{
+        margin: 30px 0;
+    }
+
     #introduction p{
         font-size: 0.8em;
         line-height: 15px;
@@ -470,5 +535,9 @@ b {
 
     #credit button{
         border-radius: 10px;
+    }
+
+    #setting{
+        margin: 90vh 85vw;
     }
 }

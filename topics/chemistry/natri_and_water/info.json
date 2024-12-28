@@ -12,5 +12,9 @@
     "star": {
         "rate_times": 0,
         "value": 0
-    }
+    },
+    "preview": [
+        "../../assets/preview_sim_imgs/natri_and_water2.jpg",
+        "../../assets/preview_sim_imgs/natri_and_water.jpg"
+    ]
 }

@@ -266,19 +266,59 @@ body{
     flex-direction: row;
     justify-content: flex-start;
     overflow-x: auto;
-    white-space: nowrap;
     width: 100%;
 }
 
 #suggestion div .card{
     cursor: pointer;
-    flex: 0 0 calc(30% - 20px); 
+    width: 40vw;
+    box-sizing: border-box;
+    flex: 0 0 30%; 
     margin: 0 0 2% 10px;
     min-height: 20vh;
     background-color: white;
     border-radius: 20px;
-    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
+
+#suggestion div .card img{
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    object-fit: cover;
+    height: 50%;
+}
+
+#suggestion div .card div{
+    width: 90%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#suggestion div .card div p{
+    font-size: 1.3em;
+}
+
+#suggestion div .card div u{
+    margin-top: 10px;
+    opacity: 0.7;
+    font-size: 0.9em;
+}
+
+#suggestion div .card .star-range{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
 #suggestion div:last-child{
     margin-right: 10px;
 }

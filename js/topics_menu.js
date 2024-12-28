@@ -1,7 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import moment from 'https://cdn.skypack.dev/moment';
 import { delData, getData, updateData_list } from "./firebase.js";
-import { defaultImg, loadStarRange, searchQuery } from "./auth/storing.js";
+import { defaultImg, loadDate, loadStarRange, searchQuery } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
 const container = document.querySelector(".main");
@@ -83,7 +83,7 @@ async function loadSim(work) {
     }
 
     let date = document.createElement("i");
-    date.innerHTML = "&ensp; " + moment(work.date, "MMDDYYYY").fromNow();
+    date.innerHTML = "&ensp; " + loadDate(work.date);
     date.classList.add("date");
     div.appendChild(date);
 

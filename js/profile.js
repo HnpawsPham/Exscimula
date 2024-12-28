@@ -1,11 +1,15 @@
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import moment from 'https://cdn.skypack.dev/moment';
 import { app, delData, getData, setData } from "./firebase.js";
-import { forkOff, getBase64, ranksList, defaultAvt, getUserRank, setToLeaderBoard, defaultImg } from "./auth/storing.js";
+import { forkOff, getBase64, loadDate, defaultAvt, getUserRank, defaultImg, reloadLeaderBoard, deleteZip } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
 const auth = getAuth(app);
 let data;
+
+const popup = document.getElementById("popup");
+const workContainer = document.querySelector("#user-works>.inside");
+const savedContainer = document.querySelector("#saved>.inside");
+const achievementContainer = document.querySelector("#achievement>div");
 
 // RANK HANDLE
 function setInterface(data) {
@@ -17,7 +21,64 @@ function setInterface(data) {
     avt.src = data.avt || defaultAvt;
     nickname.innerHTML = data.name;
     email.innerHTML = data.email;
-    joinSince.innerHTML = data.joined_since;
+    joinSince.innerHTML = loadDate(data.joined_since);
+}
+
+// DELETE SIM HANDLE
+popup.querySelector(".cancel").addEventListener("click", function () {
+    popup.classList.add("hidden");
+})
+
+function deleteSim(card, work) {
+    popup.classList.remove("hidden");
+
+    popup.querySelector(".yes").addEventListener("click", async () => {
+        try {
+            await delData(`users/${work.author.uid}/works/${work.id}`);
+            await delData(`works/${work.id}`);
+            await deleteZip(work.id);
+
+            popup.classList.add("hidden");
+            workContainer.removeChild(card);
+
+            visibleNoti("Work deleted successfully.", 2000);
+        }
+        catch (err){
+            console.log(err);
+            visibleNoti("There was an error occur. Please try again.", 4000);
+        }
+    })
+}
+
+function deleteAccount() {
+    popup.classList.remove("hidden");
+
+    popup.querySelector(".yes").addEventListener("click", async () => {
+        try {
+            // Reset leaderboard
+            let user_top = curUser.activities.top ?? null;
+            if(user_top){
+                await delData(`leaderboard/${curUser.activities.top}`);
+                reloadLeaderBoard();
+            } 
+
+            // Delete user info in database
+            const user = auth.currentUser;
+
+            await user.delete().then(async () => {
+                visibleNoti("Deleted successfully.", 2000);
+                await delData(`users/${UID}`);
+            })
+            .catch(err => {
+                visibleNoti(err.message, 5000);
+            })
+
+            window.location.href = "/index";
+        }
+        catch {
+            visibleNoti("There was an error occur. Please try again.", 4000);
+        }
+    });
 }
 
 function setCurrentRank(data) {
@@ -26,12 +87,12 @@ function setCurrentRank(data) {
     const progressBar = document.querySelector("#progress-bar>div");
 
     let userRank = getUserRank(userPoint);
-    
+
     for (let img of rankImgs) img.src = userRank.img;
     progressBar.style.width = `${userPoint / userRank.max * 100}%`;
 }
 
-function loadSimCard(work){
+function loadSimCard(work) {
     let div = document.createElement("div");
     div.classList.add("card");
 
@@ -51,11 +112,18 @@ function loadSimCard(work){
     info.appendChild(subject);
 
     let date = document.createElement("i");
-    date.innerHTML = `Release: ${moment(work.date, "MMDDYYYY").fromNow()}`;
+    date.innerHTML = `Release: ${loadDate(work.date)}`;
     info.appendChild(date);
     div.appendChild(info);
 
-    div.addEventListener("click", () => {
+    let delBtn = document.createElement("span");
+    delBtn.classList.add("delete-btn");
+    delBtn.innerHTML = "x";
+    div.appendChild(delBtn);
+
+    delBtn.onclick = () => deleteSim(div, work)
+
+    info.addEventListener("click", () => {
         window.location.href = `/preview?id=${work.id}&subject=${work.subject}`;
     })
     return div;
@@ -63,54 +131,50 @@ function loadSimCard(work){
 
 async function loadWorks(data) {
     const workIds = data.works || {};
-    const container = document.querySelector("#user-works>.inside");
 
-    if (workIds.length == 0) {
+    if (Object.values(workIds).length == 0) {
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You haven't contributed anything.";
-        container.appendChild(p);
+        workContainer.appendChild(p);
         return;
     }
-    console.log(workIds)
 
-    for(let id of Object.values(workIds)){
+    for (let id of Object.values(workIds)) {
         const work = await getData(`works/${id}`);
-        container.appendChild(loadSimCard(work));
+        workContainer.appendChild(loadSimCard(work));
     }
 }
 
 async function loadSaved(data) {
     const saveIds = data.activities?.saved || [];
-    const container = document.querySelector("#saved>.inside");
 
     if (saveIds.length == 0) {
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You haven't saved anything.";
-        container.appendChild(p);
+        savedContainer.appendChild(p);
         return;
     }
 
-    for(let id of saveIds){
+    for (let id of saveIds) {
         const save = await getData(`works/${id}`);
-        container.appendChild(loadSimCard(save));
+        savedContainer.appendChild(loadSimCard(save));
     }
 }
 
-async function loadAchievement(data){
+async function loadAchievement(data) {
     const achievementIds = data.activities.achievement || [];
-    const container = document.querySelector("#achievement>div");
 
-    if(achievementIds.length == 0){
+    if (achievementIds.length == 0) {
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You don't have any achievement.";
-        container.appendChild(p);
+        achievementContainer.appendChild(p);
         return;
     }
 
-    for(let id of achievementIds){
+    for (let id of achievementIds) {
         const achievement = await getData(`achievements/${id}`);
     }
 }
@@ -130,14 +194,14 @@ function changeAvt(data, UID) {
 
     // INPUT AVT
     const input = document.querySelector("#avt>div>input");
-    input.addEventListener("change", async function(){
+    input.addEventListener("change", async function () {
         let base64 = await getBase64(input.files[0]);
         avtImg.src = base64;
 
         data["avt"] = base64;
         let err = await setData(`users/${UID}`, data);
 
-        if(err) return visibleNoti("There was an error occur. Please try again", 3000);
+        if (err) return visibleNoti("There was an error occur. Please try again", 3000);
 
         await visibleNoti("Avatar updated successfully!", 2000);
     });
@@ -145,9 +209,12 @@ function changeAvt(data, UID) {
 
 // MAIN EVENT
 let UID = null;
+let curUser = null;
+
 auth.onAuthStateChanged(async (user) => {
     if (!user) forkOff();
 
+    curUser = user;
     UID = user.uid;
     data = await getData(`users/${UID}`);
 
@@ -175,18 +242,4 @@ logoutBtn.addEventListener("click", function () {
 
 // DELETE ACCOUNT HANDLE
 const deleteBtn = document.getElementById("delete-account");
-
-deleteBtn.addEventListener("click", async function(){
-    await delData(`users/${UID}`);
-
-    const user = auth.currentUser;
-    
-    await user.delete().then(() => {
-        visibleNoti("Deleted successfully.", 2000);
-    })
-    .catch(err => {
-        visibleNoti(err.message, 5000);
-    })
-
-    window.location.href = "/index";
-})
+deleteBtn.onclick = () => deleteAccount();

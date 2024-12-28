@@ -1,8 +1,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import moment from 'https://cdn.skypack.dev/moment';
 import { setData, getData } from "./firebase.js";
 import { visibleNoti } from "./notification.js";
-import { getBase64, searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip, getZip, sleep } from "./auth/storing.js";
+import { searchQuery, shortenNum, loadStarRange, getDate, loadPreviewImg, defaultImg, unZip, getZip, sleep, loadDate } from "./auth/storing.js";
 
 // GET USER UID
 let UID = null;
@@ -89,11 +88,12 @@ async function loadDiscuss() {
         div.appendChild(personAvt);
 
         let personName = document.createElement("u");
+        personName.classList.add("notranslate");
         personName.innerHTML = person.name;
         div.appendChild(personName);
 
         let date = document.createElement("i");
-        date.innerHTML = moment(mess.date, "MMDDYYYY").fromNow();
+        date.innerHTML = loadDate(mess.date);
         div.appendChild(date);
 
         if (optionChosen == "rates") {
@@ -145,9 +145,25 @@ function loadSugg(data) {
         let card = document.createElement("div");
         card.classList.add("card");
 
+        let img = document.createElement("img");
+        img.src = work.preview?.[0] || defaultImg;
+        card.appendChild(img)
+
+        let info = document.createElement("div");
+
         let name = document.createElement("p");
         name.innerHTML = work.name;
-        card.appendChild(name);
+        info.appendChild(name);
+
+        let subject = document.createElement("u");
+        subject.innerHTML = work.subject;
+        info.appendChild(subject);
+        card.appendChild(info);
+
+        let starContainer = document.createElement("div");
+        starContainer.classList.add("star-range");
+        loadStarRange(work.star.value / work.star.rate_times, starContainer);
+        card.appendChild(starContainer);
 
         card.addEventListener("click", () => {
             window.location.href = `/preview?id=${work.id}&subject=${encodeURIComponent(curSim.subject)}`;
@@ -377,6 +393,7 @@ else {
     // Navigate to sim page when click play button
     playSimBtn.addEventListener("click", async function () {
         const srcCode = await unZip(zipFile);
+        console.log(srcCode);
 
         // Create new tab
         const tab = window.open();
@@ -405,10 +422,11 @@ else {
             }
 
             // Add assets
-            await sleep(500);
+            await sleep(20);
 
             for (let [name, val] of Object.entries(srcCode.images)) {
                 doc.querySelectorAll("img").forEach(img => {
+                    console.log(img.src.split('/').pop(), name.split('/').pop())
                     if (img.src.split("/").pop() == name.split('/').pop()) img.src = val;
                 })
             }

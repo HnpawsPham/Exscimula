@@ -1,15 +1,16 @@
+
 html, body{
+    top: 0 !important;
     overflow-x: hidden;
     font-size: 15px;
     scroll-behavior: smooth;
 }
 html{
-    font-size: 16px;
+    font-size: 26px;
 }
 *{
     margin: 0;
     padding: 0;
-    font-family: nimbus !important;
 }
 .hidden{
     display: none !important;
@@ -58,10 +59,27 @@ html{
     font-size: 50px;
   }
 }
+
 @font-face {
     font-family: nimbus;
     src: url(../fonts/tannimbus.otf)
 }
+
+@font-face {
+    font-family: tonos;
+    src: url(../fonts/tonos.ttf);
+}
+
+@font-face {
+    font-family: lcsac;
+    src: url(../fonts/lcsac.ttf);
+}
+
+@font-face {
+    font-family: grotesk;
+    src: url(../fonts/grotesk-black.otf);
+}
+
 /* icons */
 .material-symbols-outlined {
   font-variation-settings:
@@ -222,8 +240,9 @@ a{
     }
 }
 
-.gg-translate{
-    position: fixed;
+.skiptranslate iframe{
+    height: 0;
+    display: none !important;
 }
 
 @media only screen and (max-width: 800px){

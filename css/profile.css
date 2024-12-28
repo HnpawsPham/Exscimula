@@ -200,6 +200,7 @@ body{
     height: 250px;
 }
 .container .inside .card{
+    position: relative;
     cursor: pointer;
     width: 90%;
     height: 20vh;
@@ -218,6 +219,15 @@ body{
 }
 .container .inside .card div{
     width: 45%;
+}
+.container .inside .card .delete-btn{
+    padding: 10px 15px;
+    border-radius: 100px;
+    color: white;
+    background-color: brown;
+    position: absolute;
+    top: calc(50% - 15px);
+    right: 10px;
 }
 .container .add-btn{
     left: 20%;
@@ -280,6 +290,37 @@ body{
     right: 30px;
     top: 15px;
     color: brown;
+}
+
+#popup{
+    position: fixed;
+    margin: 40vh 20vw;
+    z-index: 100;
+    width: 60vw;
+    height: 20vh;
+    background-color: var(--cwhite);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 0 30px black);
+}
+
+#popup div{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+#popup button{
+    width: 30%;
+    padding: 10px 0;
+    cursor: pointer;
+    color: var(--cwhite);
+    background-color: brown;
+    border-radius: 10px;
+    border: none;
 }
 
 @media only screen and (max-width: 800px){

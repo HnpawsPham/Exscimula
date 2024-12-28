@@ -12,5 +12,8 @@
     "star": {
         "rate_times": 0,
         "value": 0
-    }
+    },
+    "preview": [
+        "../../assets/preview_sim_imgs/salt_chemical_properties.jpeg"
+    ]
 }

@@ -1,26 +1,41 @@
 body{
-    background-color: crimson;
+    background-color: var(--cwhite);
+    color: var(--dark-blue);
 }
+
+.elms{
+    margin: 30px 0 10px 5vw;
+    width: 90vw;
+}
+
 h1 {
-    margin: 70px 0 50px 32vw;
-    font-family: goodwater;
-    font-size: 80px;
+    text-align: center;
+    font-size: 5em;
+}
+
+h4{
+    text-align: center;
 }
 
 ul {
-    margin: 0 0 0 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
     list-style-type: decimal;
+    list-style-position: inside;
 }
 
 ul li {
+    width: 100%;
     font-family: monospace;
-    font-size: 20px;
+    font-size: 1.5em;
+    text-align: left;
     padding-bottom: 10px;
 }
 
 ul img {
     cursor: pointer;
-    width: 1000px;
+    max-width: 90vw;
     padding-bottom: 30px;
     object-fit: cover;
 }
