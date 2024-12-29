@@ -1,6 +1,6 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import moment from 'https://cdn.skypack.dev/moment';
-import { delData, getData, updateData_list } from "./firebase.js";
+import { delData, getData, setData, updateData_list } from "./firebase.js";
 import { defaultImg, loadDate, loadStarRange, searchQuery } from "./auth/storing.js";
 import { visibleNoti } from "./notification.js";
 
@@ -51,7 +51,7 @@ async function loadSim(work) {
         div.appendChild(saveBtn);
 
         // Change color if the sim is already saved
-        let ok = curUser.activities?.saved?.includes(work.id);
+        let ok = curUser.activities?.saved?.hasOwnProperty(work.id) ?? false;
         if (ok) saveBtn.classList.add("clicked");
         else saveBtn.classList.remove("clicked");
 
@@ -59,17 +59,16 @@ async function loadSim(work) {
         saveBtn.addEventListener("click", async () => {
             try {
                 if (!saveBtn.classList.contains("clicked")) {
-                    await updateData_list(`users/${curUser.uid}/activities/saved`, work.id);
+                    await setData(`users/${curUser.uid}/activities/saved/${work.id}`, work.id);
                     saveBtn.classList.add("clicked");
-                    curUser.activities.saved.push(work.id);
+                    curUser.activities.saved[work.id] = work.id;
 
                     visibleNoti("Saved successfully!", 2000);
                 }
                 else {
-                    let index = curUser.activities.saved.indexOf(work.id);
-                    await delData(`users/${curUser.uid}/activities/saved/${index}`);
+                    await delData(`users/${curUser.uid}/activities/saved/${work.id}`);
                     saveBtn.classList.remove("clicked");
-                    curUser.activities.saved.splice(index, 1);
+                    delete curUser.activities?.saved?.[work.id]; 
 
                     visibleNoti("Unsaved successfully!", 2000);
                 }

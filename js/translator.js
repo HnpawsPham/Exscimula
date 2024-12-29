@@ -5,7 +5,7 @@ const font = localStorage.getItem("font") || "nimbus"; //tan nimbus font as defa
 
 // CHANGE FONT AUTOMATICALLY
 document.addEventListener("DOMContentLoaded", function() {
-    document.documentElement.style.fontFamily = font;
+    document.querySelectorAll("*").forEach(elm => elm.style.fontFamily = font);
 });
 
 

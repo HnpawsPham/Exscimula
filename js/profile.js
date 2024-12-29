@@ -50,6 +50,19 @@ function deleteSim(card, work) {
     })
 }
 
+async function deleteSave(card, work){
+    try {
+        await delData(`users/${curUser.uid}/activities/saved/${work.id}`);
+
+        savedContainer.removeChild(card);
+        visibleNoti("Unsaved successfully.", 2000);
+    }
+    catch (err){
+        console.log(err);
+        visibleNoti("There was an error occur. Please try again.", 4000);
+    }
+}
+
 function deleteAccount() {
     popup.classList.remove("hidden");
 
@@ -121,8 +134,6 @@ function loadSimCard(work) {
     delBtn.innerHTML = "x";
     div.appendChild(delBtn);
 
-    delBtn.onclick = () => deleteSim(div, work)
-
     info.addEventListener("click", () => {
         window.location.href = `/preview?id=${work.id}&subject=${work.subject}`;
     })
@@ -142,14 +153,18 @@ async function loadWorks(data) {
 
     for (let id of Object.values(workIds)) {
         const work = await getData(`works/${id}`);
-        workContainer.appendChild(loadSimCard(work));
+
+        const card = loadSimCard(work);
+        card.querySelector(".delete-btn").onclick = () => deleteSim(card, work);
+
+        workContainer.appendChild(card);
     }
 }
 
 async function loadSaved(data) {
-    const saveIds = data.activities?.saved || [];
+    const saveIds = data.activities?.saved || {};
 
-    if (saveIds.length == 0) {
+    if (Object.values(saveIds).length == 0) {
         let p = document.createElement("p");
         p.style.textAlign = "center";
         p.innerHTML = "You haven't saved anything.";
@@ -157,9 +172,13 @@ async function loadSaved(data) {
         return;
     }
 
-    for (let id of saveIds) {
+    for (let id of Object.values(saveIds)) {
         const save = await getData(`works/${id}`);
-        savedContainer.appendChild(loadSimCard(save));
+
+        const card = loadSimCard(save);
+        card.querySelector(".delete-btn").onclick = () => deleteSave(card, save);
+
+        savedContainer.appendChild(card);
     }
 }
 
