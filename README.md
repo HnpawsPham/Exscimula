@@ -1,7 +1,7 @@
-Exscimula - Simulated natural science experiment
+<b>Exscimula - Simulated natural science experiment<b><br>
 
-Language: English
-Programming: Javascript, HTML, CSS
-Framework: NodeJS
-Database: Firebase, self-hosted
-Leader: HnpawsPham
+Language: English <br>
+Programming: Javascript, HTML, CSS <br>
+Framework: NodeJS <br>
+Database: Firebase, self-hosted <br>
+Leader: HnpawsPham <br>
