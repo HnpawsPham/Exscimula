@@ -27,6 +27,8 @@ const noClueCirculationSrc = "./assets/no_clue.png";
 const heartSrc = "./assets/heart.png";
 const heartBeatSrc = "./assets/heart_beat.png";
 
+bigLoop.src = greatCirculationSrc
+
 // hiện phần thông tin
 let isOn = false
     document.getElementById("conclu").addEventListener("click", function () {
